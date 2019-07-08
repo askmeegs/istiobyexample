@@ -35,7 +35,7 @@
   <span class="token key atrule">name</span><span class="token punctuation">:</span> helloworld
 <span class="token key atrule">spec</span><span class="token punctuation">:</span>
   <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> helloworld.svc.cluster.local
+    <span class="token punctuation">-</span> helloworld
   <span class="token key atrule">http</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">route</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token key atrule">destination</span><span class="token punctuation">:</span>
@@ -45,7 +45,20 @@
     <span class="token punctuation">-</span> <span class="token key atrule">destination</span><span class="token punctuation">:</span>
         <span class="token key atrule">host</span><span class="token punctuation">:</span> helloworld
         <span class="token key atrule">subset</span><span class="token punctuation">:</span> v2
-      <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre></div></div><ul style="display:flex;flex-wrap:wrap;justify-content:space-between;list-style:none;padding:0"><li></li><li></li></ul></main><footer><p style="font-family:Inconsolata, monospace;font-size:1.0em;margin-top:0"> Made with 💙 by <a href="https://twitter.com/askmeegs">Megan O&#x27;Keefe</a> — <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">License</a></p></footer></div></div></div><script>
+      <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">10</span></code></pre></div>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.istio.io/v1alpha3
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> DestinationRule
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> helloworld
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> helloworld
+  <span class="token key atrule">subsets</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> v1
+    <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">version</span><span class="token punctuation">:</span> v1
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> v2
+    <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">version</span><span class="token punctuation">:</span> v2</code></pre></div></div><ul style="display:flex;flex-wrap:wrap;justify-content:space-between;list-style:none;padding:0"><li></li><li></li></ul></main><footer><p style="font-family:Inconsolata, monospace;font-size:1.0em;margin-top:0"> Made with 💙 by <a href="https://twitter.com/askmeegs">Megan O&#x27;Keefe</a> — <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">License</a></p></footer></div></div></div><script>
   
   
   if(true) {
