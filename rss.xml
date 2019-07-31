@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 29 Jul 2019 16:31:27 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 31 Jul 2019 20:31:26 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
@@ -181,4 +181,53 @@
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/authn-policy/&quot;&gt;Task - Authentication Policies&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/mutual-tls/&quot;&gt;Task - Mutual TLS Deep-Dive&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/faq/security/#enabling-disabling-mtls&quot;&gt;FAQ - mTLS&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item></channel></rss>
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[path-based routing]]></title><description><![CDATA[Istio and Envoy work the Application traffic layer (L7), allowing you to direct and load-balance traffic based on attributes like HTTP…]]></description><link>https://istiobyexample.dev//pathmatch/</link><guid isPermaLink="false">https://istiobyexample.dev//pathmatch/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Istio and &lt;a href=&quot;https://istio.io/docs/concepts/what-is-istio/#envoy&quot;&gt;Envoy&lt;/a&gt; work the Application traffic layer (L7), allowing you to direct and load-balance traffic based on attributes like HTTP headers. This example shows how to direct traffic &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#match-request-uri&quot;&gt;based on the request URI&lt;/a&gt; path.&lt;/p&gt;
+&lt;p&gt;In this example, &lt;code class=&quot;language-text&quot;&gt;myapp&lt;/code&gt; is the server backend for a website, used by the &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt;. An engineering team has implemented a new user authentication service, &lt;code class=&quot;language-text&quot;&gt;auth&lt;/code&gt;, which now operates as a separate service.&lt;/p&gt;
+&lt;p&gt;Using an Istio &lt;a href=&quot;https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#HTTPMatchRequest&quot;&gt;match rule&lt;/a&gt;, we redirect any request with the &lt;code class=&quot;language-text&quot;&gt;/login&lt;/code&gt; prefix to the new &lt;code class=&quot;language-text&quot;&gt;auth&lt;/code&gt; service, and direct all other &lt;code class=&quot;language-text&quot;&gt;myapp&lt;/code&gt; requests to the existing backend.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/549fa78eb8e1f4245156becb55891d6c/4b018/urimatch.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 55.709009153685564%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAJnKAACZygHjkaQiAAABwElEQVQoz32TCVPbMBCF8///VWc6HShlSsnVAgnEIbaxY/mWLUvy1w2loVyVZ2e9Op7evl1N+GCM43j0b8xbRp7MO5k7mH9cm7x74Gj+3cucK+i3ASaLMe2KvrqhL3/hhorJ+/RehrZXDDrE2xZrEprdCf1C0c0jOrWQtXtMvZZ9GZPa1URDSDxEZC4jN4rMy2Yvh9sdOp/SpifiLzFNICz2dLEw+pmhpyE6vhCg5BnwADbrpgQ24K5Yoc9Cyr0iUKd06Sn0AaNrhLV7Ttkqmd5goh1GrzGSsqmu/qQc25gv9Wdmbs5yeQ7BQL2MuMkDvi5i5hvRaxjxIoP3/qkoDicFsaMVPeVfYu/do1aTQ6rn7TeWZsm6uKa7fCAPYyr5us4zv0v59GPL9DY9Mixaw15p8saQlpqk0MSqRfeWSeMbEpuwtyn5mFNIBZV47fQRoB8cm4eSTVyijRWwluZ7jN6WLLaK26jgcp2iqu5Vlce3vejH8QXwSoBPzzb4m5xqljC7euA6zLlYJeR1//8+/HvLyxiirKEQsGqTE6Q14b7h6l6h6u6DPnzF8t9XcxitaKW0oewHsrJ71C+TdAfr+Q3Af1DuJHpbcwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;URI Match with Istio&quot;
+        title=&quot;URI Match with Istio&quot;
+        src=&quot;/static/549fa78eb8e1f4245156becb55891d6c/b9e4f/urimatch.png&quot;
+        srcset=&quot;/static/549fa78eb8e1f4245156becb55891d6c/cf440/urimatch.png 148w,
+/static/549fa78eb8e1f4245156becb55891d6c/d2d38/urimatch.png 295w,
+/static/549fa78eb8e1f4245156becb55891d6c/b9e4f/urimatch.png 590w,
+/static/549fa78eb8e1f4245156becb55891d6c/f9b6a/urimatch.png 885w,
+/static/549fa78eb8e1f4245156becb55891d6c/2d849/urimatch.png 1180w,
+/static/549fa78eb8e1f4245156becb55891d6c/4b018/urimatch.png 6227w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; VirtualService
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; auth&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;redirect
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; myapp
+  &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;uri&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;prefix&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/login&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; auth
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; myapp&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
