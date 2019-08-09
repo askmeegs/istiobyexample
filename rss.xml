@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 07 Aug 2019 15:15:14 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 09 Aug 2019 16:29:20 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
@@ -342,4 +342,53 @@
   &lt;span class=&quot;token key atrule&quot;&gt;trafficPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;token key atrule&quot;&gt;loadBalancer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;token key atrule&quot;&gt;simple&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; LEAST_CONN&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Check out the &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#load-balancing-3-subsets&quot;&gt;Istio docs&lt;/a&gt; to see how to add multiple load balancing methods for a single host.&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;Check out the &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#load-balancing-3-subsets&quot;&gt;Istio docs&lt;/a&gt; to see how to add multiple load balancing methods for a single host.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[jwt]]></title><description><![CDATA[A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the…]]></description><link>https://istiobyexample.dev//jwt/</link><guid isPermaLink="false">https://istiobyexample.dev//jwt/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A &lt;a href=&quot;https://jwt.io/introduction/&quot;&gt;JSON Web Token&lt;/a&gt; (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A &lt;a href=&quot;https://auth0.com/docs/jwks&quot;&gt;JSON Web Key Set&lt;/a&gt; (JWKS) contains the cryptographic keys used to verify incoming JWTs.&lt;/p&gt;
+&lt;p&gt;You can use Istio’s &lt;a href=&quot;https://istio.io/docs/reference/config/istio.authentication.v1alpha1/#Jwt&quot;&gt;Authentication API&lt;/a&gt; to &lt;a href=&quot;https://istio.io/docs/concepts/security/#origin-authentication&quot;&gt;configure JWT policies&lt;/a&gt; for your services.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/29ed7235f86b47337cbda24bc10ac9bd/700db/jwt.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 49.64447317388494%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAJnKAACZygHjkaQiAAABfElEQVQoz32S207bQBRF/e2ID6hEqFSpP1BV4qGv5amioik8VFRUuSAlLokdZ4gdO75hz5zFYAdwCulIW+cizd7n5vCfJyINun4Ty27chfNWsiF4/MUL2b9CW+9VEc6+ytgRENJSNzCmJalrsQBtrdYtnisMw5BFEKACxTqKn7UbbIu4uas5HaZcL0qKTNisrUhkSDeQWBsqQ5ZYwqqo6Y9/cJJ84oM64ufNOVQxUvlIHSGmtHQFcZLgX86IVMYmh9JVVEOXcJ4TzA3ziSaYaRxdaS5Gfb6sP/MxeM/Z4CvkEyS/RkoXuZ/bvjz09Jz6doWe3FJEY/Lf39DukKD/i5mrmQ40/l9L6Ps+x71jDg8O6b3rMRqNd1vezlVnFdmfBZUXkqbW9wryYchqlnIXCN5UozyDk9hWlsslSqlmlk/bEzHtALubt900C6kgW03JwwFZnBLbb+uV4b6U11t+6/a6p9IaK1Zcwea7TSQ7J7T/DveRNvFT8dKxLR4AvPcEvB1yW9UAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;jwt&quot;
+        title=&quot;jwt&quot;
+        src=&quot;/static/29ed7235f86b47337cbda24bc10ac9bd/b9e4f/jwt.png&quot;
+        srcset=&quot;/static/29ed7235f86b47337cbda24bc10ac9bd/cf440/jwt.png 148w,
+/static/29ed7235f86b47337cbda24bc10ac9bd/d2d38/jwt.png 295w,
+/static/29ed7235f86b47337cbda24bc10ac9bd/b9e4f/jwt.png 590w,
+/static/29ed7235f86b47337cbda24bc10ac9bd/f9b6a/jwt.png 885w,
+/static/29ed7235f86b47337cbda24bc10ac9bd/2d849/jwt.png 1180w,
+/static/29ed7235f86b47337cbda24bc10ac9bd/700db/jwt.png 6188w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In this example, we require a JWT for all routes in the &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt; service except for the home page (&lt;code class=&quot;language-text&quot;&gt;/&lt;/code&gt;) and the pod health check (&lt;code class=&quot;language-text&quot;&gt;/_healthz&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;In the Istio policy, we specify the path to a test public key (&lt;code class=&quot;language-text&quot;&gt;jwksUri&lt;/code&gt;), which will be mounted into the frontend’s sidecar proxy. All unauthenticated requests will receive a &lt;code class=&quot;language-text&quot;&gt;401 - Unauthorized&lt;/code&gt; status from Envoy.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;authentication.istio.io/v1alpha1&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Policy&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;frontend-jwt&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; frontend
+  &lt;span class=&quot;token key atrule&quot;&gt;origins&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;jwt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;issuer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;testing@secure.istio.io&quot;&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;jwksUri&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;https://raw.githubusercontent.com/istio/istio/release-1.2/security/tools/jwt/samples/jwks.json&quot;&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;trigger_rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;excluded_paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;exact&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /_healthz
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;exact&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+  &lt;span class=&quot;token key atrule&quot;&gt;principalBinding&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; USE_ORIGIN&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
