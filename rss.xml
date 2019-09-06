@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 23 Aug 2019 15:24:34 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 06 Sep 2019 16:30:20 GMT</lastBuildDate><item><title><![CDATA[canary deployment]]></title><description><![CDATA[A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic…]]></description><link>https://istiobyexample.dev//canary/</link><guid isPermaLink="false">https://istiobyexample.dev//canary/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#routing-versions&quot;&gt;traffic splitting&lt;/a&gt; to direct a small amount of traffic to the new version. Then you can run a &lt;a href=&quot;https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze&quot;&gt;canary analysis&lt;/a&gt; on v2 (like check latency and error rate), and finally direct more traffic at the new version until it’s serving all traffic.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
@@ -823,4 +823,134 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#traffic-routing-and-configuration&quot;&gt;Istio docs - Traffic Management&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://cloud.google.com/solutions/using-istio-for-internal-load-balancing-of-grpc-services&quot;&gt;Blog post - gRPC + Istio + Cloud Internal Load Balancer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item></channel></rss>
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[database traffic]]></title><description><![CDATA[Applications often span multiple environments, and databases are a great example. You might choose to run your database outside of…]]></description><link>https://istiobyexample.dev//databases/</link><guid isPermaLink="false">https://istiobyexample.dev//databases/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Applications often span multiple environments, and databases are a great example. You might choose to run your database &lt;a href=&quot;https://cloud.google.com/blog/products/databases/to-run-or-not-to-run-a-database-on-kubernetes-what-to-consider&quot;&gt;outside of Kubernetes&lt;/a&gt; for legacy or storage reasons, or you might use a managed database service.&lt;/p&gt;
+&lt;p&gt;But fear not! You can still add external databases to your Istio service mesh. Let’s see how.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/04b33c04eb17ac4c154c609022875b8b/ba4ff/diagram.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 72.52528602221854%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAAACXBIWXMAAJnKAACZygHjkaQiAAACLUlEQVQ4y5WTy27TQBSG89JIPAILVmxBbJB4AlasWbCoKlQpbZO0iRPq+BI7vo09Hl/m49hORUH0wkhHc5yMvnPO/P/MGJd9NHRtOb8w7P1uOmntGI+tWRRbXA/84EH44Mlvhwi+nxnevMv4+Fmhtf0D+q+Y3blQVj25qsmUJis0aaVJqgpVainW8v5TwZevFW17D+TxDsMQVJ1xVD5ZFZGaCB0cqbcxqi/GQ86OcfTf3fXYvsV2tYQ5RTN1GAgwLRPW3jVutMPZL6iuQtplSrp16RsP3y0wZgAKqFF00ZxeBZLn9CbDSvRVKHt+Dzyy9q8Jkj27/Yry0qfbFCRXN3TFHG+9Q2cRVgd0uUP57TX6xyswMSRLAayw6c1YYAQWVUZcBGTSaaJjTCoCrGNyuYpB6UGouu7G3DY1zeYDrfNW8gpbJ7IXUiyWPGXmyeGu7zGtptSF2MPlp78ll2p1o0eIJ6rX5mSwvpkAA+w07jjyAJY7HYF9P0luTMN2u+NwONBILnc/Ls+3Apx8+YTAk8rDyHlecDzGxHGMFwbotCQ7phRK/QV82oOjyuEBgSU4zobwEBIHEc15SDkPUKp8AORZD04+FGAcH1ktl4TRgWjj096kqAufPEjHQ3vvf4DyvLIs4e5uK2DpMAow4sNi7soLmoztBwKsXwgcXsHtumaxylgsM1brkltHy65YOzXDHV8uRLDmhcCus/JGB+ucQuw2fp9200z/36/ngL8ADFWH7FgjayIAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;diagram&quot;
+        title=&quot;diagram&quot;
+        src=&quot;/static/04b33c04eb17ac4c154c609022875b8b/b9e4f/diagram.png&quot;
+        srcset=&quot;/static/04b33c04eb17ac4c154c609022875b8b/cf440/diagram.png 148w,
+/static/04b33c04eb17ac4c154c609022875b8b/d2d38/diagram.png 295w,
+/static/04b33c04eb17ac4c154c609022875b8b/b9e4f/diagram.png 590w,
+/static/04b33c04eb17ac4c154c609022875b8b/f9b6a/diagram.png 885w,
+/static/04b33c04eb17ac4c154c609022875b8b/2d849/diagram.png 1180w,
+/static/04b33c04eb17ac4c154c609022875b8b/ba4ff/diagram.png 6031w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here, we have a &lt;code class=&quot;language-text&quot;&gt;plants&lt;/code&gt; service running inside a Kubernetes cluster, with Istio enabled. &lt;code class=&quot;language-text&quot;&gt;plants&lt;/code&gt; writes inventory to a &lt;a href=&quot;https://firebase.google.com/docs/firestore&quot;&gt;Firestore&lt;/a&gt; NoSQL database running in Google Cloud, using the Golang client library for Firestore. Its logs look like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;writing a new plant to Firestore&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.
+✅success&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Let’s say we want to monitor outgoing traffic to Firestore. To do this, we’ll add an Istio &lt;a href=&quot;https://istio.io/docs/reference/config/networking/v1alpha3/service-entry/&quot;&gt;ServiceEntry&lt;/a&gt; corresponding to the hostname of the &lt;a href=&quot;https://cloud.google.com/firestore/docs/reference/rpc/&quot;&gt;Firestore API&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ServiceEntry
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; firestore
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;firestore.googleapis.com&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; https
+    &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;443&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; HTTPS
+  &lt;span class=&quot;token key atrule&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; MESH_EXTERNAL
+  &lt;span class=&quot;token key atrule&quot;&gt;resolution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; DNS&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From here, we can see Firestore appear in Istio’s &lt;a href=&quot;https://istio.io/docs/tasks/telemetry/kiali/&quot;&gt;service graph&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/ef259db8094d26ee52e769e902d4c25d/5b907/kiali-no-vs.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 24.67043314500942%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAwUlEQVQY052QzWrDMBCE/f4v0qfIoZfWVQ/GkCj4YIf+QOr84NiSLCuW/VVq6aXJIWRgdliYWdhJ+Id5ni94K6I38d5jrcUYgx/Hq8ZhGLB9jwvK5HFuoA97pHPuJx81IlFKIaXkRQjePj45+wnrzvQhrLWm7TqWK0kqXlnKNY/Pgqc0Jcsy8jynLEuKoqCu69+DcXg/0inNrumoA3cnxXZ/pKoqqs2Gr0PDoTWBmoeF4H0bwvN0/eV7uvoLh3nR9TeaAoKaMCX85AAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kiali&quot;
+        title=&quot;kiali&quot;
+        src=&quot;/static/ef259db8094d26ee52e769e902d4c25d/b9e4f/kiali-no-vs.png&quot;
+        srcset=&quot;/static/ef259db8094d26ee52e769e902d4c25d/cf440/kiali-no-vs.png 148w,
+/static/ef259db8094d26ee52e769e902d4c25d/d2d38/kiali-no-vs.png 295w,
+/static/ef259db8094d26ee52e769e902d4c25d/b9e4f/kiali-no-vs.png 590w,
+/static/ef259db8094d26ee52e769e902d4c25d/f9b6a/kiali-no-vs.png 885w,
+/static/ef259db8094d26ee52e769e902d4c25d/5b907/kiali-no-vs.png 1062w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Note that the traffic appears as TCP because the sidecar proxy for &lt;code class=&quot;language-text&quot;&gt;plants&lt;/code&gt; is receiving the firestore TLS traffic &lt;a href=&quot;https://github.com/istio/istio/issues/14933&quot;&gt;as plain TCP&lt;/a&gt;. The edge of the graph denote the number of request throughput to Firestore, in bits per second.&lt;/p&gt;
+&lt;p&gt;Now let’s say we want to test &lt;code class=&quot;language-text&quot;&gt;plants&lt;/code&gt;’s behavior when it cannot connect to the database. We can do this with Istio, without changing any application code.&lt;/p&gt;
+&lt;p&gt;While Istio currently does not support TCP fault injection, what we can do is create a &lt;a href=&quot;https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#TCPRoute&quot;&gt;TCP traffic rule&lt;/a&gt; to send firestore API traffic to another “black hole” service, effectively breaking the client connection to Firestore.&lt;/p&gt;
+&lt;p&gt;To do this, we can deploy a small &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt; service inside the cluster, and forward all &lt;code class=&quot;language-text&quot;&gt;firestore&lt;/code&gt; traffic to the &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt; service instead:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; VirtualService
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; fs
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; firestore.googleapis.com
+  &lt;span class=&quot;token key atrule&quot;&gt;tcp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; echo
+        &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When we apply this Istio VirtualService to the cluster, the &lt;code class=&quot;language-text&quot;&gt;plants&lt;/code&gt; logs report errors:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;writing a new plant to Firestore&lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.
+🚫 Failed adding plant: rpc error: code &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Unavailable desc &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; all SubConns are &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; TransientFailure&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And in the service graph, we can see that the &lt;code class=&quot;language-text&quot;&gt;firestore&lt;/code&gt; node has a purple &lt;code class=&quot;language-text&quot;&gt;VirtualService&lt;/code&gt; icon, meaning we’ve applied an Istio traffic rule against that service. Eventually, throughput to firestore will appear as &lt;code class=&quot;language-text&quot;&gt;0&lt;/code&gt; over the last minute, since we’ve redirected all outgoing connections to the database.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/008f5f1c59fb77af16c1aeea0e230655/0309e/kiali.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 35%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAwklEQVQoz5VRbQuCMBj0//+qPvUxEiKQgkokdTab25wvc15TkZKs7ODg4XbP2O0cWLRtO+GozZ19YwdnHF4xGDAxLkHndcZBSgnOOXRdvxmLXPcsLdEApWqQiwpK1na2eqGfLxwv9H0fW9dFFBNo06LSDRhjCMMIwYXCPzF4e4LV+gBvF+LspQisFgcC5CrnI1e1RioUbpkA5RIkoUgIwV1wZEqB2hSb4wVFqX5H/uev+h2bouenUpY2aYwZlmca7vAA4L0lhYC56bsAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kiali&quot;
+        title=&quot;kiali&quot;
+        src=&quot;/static/008f5f1c59fb77af16c1aeea0e230655/b9e4f/kiali.png&quot;
+        srcset=&quot;/static/008f5f1c59fb77af16c1aeea0e230655/cf440/kiali.png 148w,
+/static/008f5f1c59fb77af16c1aeea0e230655/d2d38/kiali.png 295w,
+/static/008f5f1c59fb77af16c1aeea0e230655/b9e4f/kiali.png 590w,
+/static/008f5f1c59fb77af16c1aeea0e230655/f9b6a/kiali.png 885w,
+/static/008f5f1c59fb77af16c1aeea0e230655/2d849/kiali.png 1180w,
+/static/008f5f1c59fb77af16c1aeea0e230655/0309e/kiali.png 1280w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Note that you can also use Istio to manage traffic for databases &lt;em&gt;inside&lt;/em&gt; the cluster, including Redis, SQL, and &lt;a href=&quot;https://istio.io/blog/2018/egress-mongo/&quot;&gt;MongoDB&lt;/a&gt;. See the Istio docs to learn more.&lt;/p&gt;</content:encoded></item></channel></rss>
