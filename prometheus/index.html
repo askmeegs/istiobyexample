@@ -14,7 +14,7 @@
       <span class="token punctuation">-</span> <span class="token key atrule">source_labels</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>__meta_kubernetes_service_name<span class="token punctuation">,</span> __meta_kubernetes_endpoint_port_name<span class="token punctuation">]</span>
         <span class="token key atrule">action</span><span class="token punctuation">:</span> keep
         <span class="token key atrule">regex</span><span class="token punctuation">:</span> istio<span class="token punctuation">-</span>pilot;http<span class="token punctuation">-</span>monitoring</code></pre></div>
-<p>See <a href="">configmap.yaml</a> for a full example.</p>
+<p>See <a href="https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/configmap.yaml">configmap.yaml</a> for a full example.</p>
 <p>Second, <strong>update your Prometheus deployment</strong> to mount Istio’s certificates into Prometheus. This allows Prometheus to scrape Istio workloads when mutual TLS is enabled. To do this, mount in the <code class="language-text">istio.default</code> secret into your Prometheus deployment YAML:</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml">    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> config<span class="token punctuation">-</span>volume
@@ -25,7 +25,7 @@
             <span class="token key atrule">defaultMode</span><span class="token punctuation">:</span> <span class="token number">420</span>
             <span class="token key atrule">optional</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
             <span class="token key atrule">secretName</span><span class="token punctuation">:</span> istio.default</code></pre></div>
-<p>See <a href="">deployment.yaml</a> for a complete example.</p>
+<p>See <a href="https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/deployment.yaml">deployment.yaml</a> for the full example.</p>
 <p>Once we deploy Prometheus with this new configuration, we have a Deployment and a Service running in a separate <code class="language-text">monitoring</code> namespace:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ kubectl get <span class="token function">service</span> -n monitoring
 
