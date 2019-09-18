@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 11 Sep 2019 14:02:23 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Sep 2019 17:19:18 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
 &lt;p&gt;With gRPC, you can generate boilerplate code from &lt;code class=&quot;language-text&quot;&gt;.proto&lt;/code&gt; files into &lt;a href=&quot;https://grpc.io/docs/quickstart/&quot;&gt;multiple programming languages&lt;/a&gt;, making gRPC an ideal choice for polyglot microservices.&lt;/p&gt;
 &lt;p&gt;While gRPC supports some networking use cases like &lt;a href=&quot;https://grpc.io/docs/guides/auth/&quot;&gt;TLS&lt;/a&gt; and &lt;a href=&quot;https://grpc.io/blog/loadbalancing/&quot;&gt;client-side load balancing&lt;/a&gt;, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting &lt;a href=&quot;https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization&quot;&gt;RPC-level authorization&lt;/a&gt;. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://istio.io/about/feature-stages/#traffic-management&quot;&gt;Istio&lt;/a&gt; and its data plane proxy, &lt;a href=&quot;https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc&quot;&gt;Envoy&lt;/a&gt;, both  support gRPC. Let’s see how to manage gRPC traffic with Istio.&lt;/p&gt;
@@ -1087,4 +1087,72 @@ prometheus   LoadBalancer   10.0.3.155   &lt;span class=&quot;token operator&quo
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
   &lt;/a&gt;
-    &lt;/span&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
+    &lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[modify response headers]]></title><description><![CDATA[With Istio, you can apply traffic rules to route based on HTTP request headers. You can also use Istio to modify response headers. This…]]></description><link>https://istiobyexample.dev//response-headers/</link><guid isPermaLink="false">https://istiobyexample.dev//response-headers/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;With Istio, you can apply traffic rules to route based on &lt;a href=&quot;https://istio.io/docs/tasks/policy-enforcement/control-headers/&quot;&gt;HTTP request headers&lt;/a&gt;. You can also use Istio to &lt;a href=&quot;https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#Headers&quot;&gt;modify response headers&lt;/a&gt;. This could be useful if you want to strip headers generated by your application, or if you want to add response headers without changing your application code.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c8d7b3515f03624b7f7daeac033d0d40/83aca/headers.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 41.9443103170771%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAJnKAACZygHjkaQiAAABJklEQVQoz3WSYU+DMBiE9///0RI/7ZOJiTE6F50CZkPQwdiAtkBb+ghkm+K2Sy6XvHl7ucvbiXOOHr2ekyt6mT0mR7P/+J25A4ch55vjN5O/Ceu6xlp7MrOtO1HqTvuxtshCo4RB5g3lrh7UNHacUEqJ1po8zxFliawNd7FjnjhuI8ds5fD3sIgM4rOgiguyb0WRViSrEtEZnwyNMUM6IQRBEKCURCjFawaPKbzv4GEDT50++wrlb1HLhOB+Q+TlrBcZZVaPE/aGVVUN5lrXFKpl6kVMgzmz2ONmteQlFoRxTbPeobyUzUeB2Dd8+Tnl9mB46SBHtJuQJnzDlAkmCWGf0kg91JRdxb5yGgq2kaQSepzw2jcYXfGwa007sLUdu4O19nf/B44MbpvBqBg2AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;headers&quot;
+        title=&quot;headers&quot;
+        src=&quot;/static/c8d7b3515f03624b7f7daeac033d0d40/b9e4f/headers.png&quot;
+        srcset=&quot;/static/c8d7b3515f03624b7f7daeac033d0d40/cf440/headers.png 148w,
+/static/c8d7b3515f03624b7f7daeac033d0d40/d2d38/headers.png 295w,
+/static/c8d7b3515f03624b7f7daeac033d0d40/b9e4f/headers.png 590w,
+/static/c8d7b3515f03624b7f7daeac033d0d40/f9b6a/headers.png 885w,
+/static/c8d7b3515f03624b7f7daeac033d0d40/2d849/headers.png 1180w,
+/static/c8d7b3515f03624b7f7daeac033d0d40/83aca/headers.png 6213w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In this example, we will apply an Istio &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#virtual-services&quot;&gt;VirtualService&lt;/a&gt; to add a new header (&lt;code class=&quot;language-text&quot;&gt;hello:world&lt;/code&gt;), then remove the &lt;code class=&quot;language-text&quot;&gt;set-cookie&lt;/code&gt; header. Then, all client requests entering the service mesh through the &lt;code class=&quot;language-text&quot;&gt;default&lt;/code&gt; gateway will receive those modified headers.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; VirtualService
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; frontend&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;ingress
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;gateways&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; frontend&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;gateway
+  &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; frontend
+        &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token key atrule&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; world
+          &lt;span class=&quot;token key atrule&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;set-cookie&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Before we apply the VirtualService, the &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt; service returns the following response headers:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;HTTP/1.1 200 OK
+set-cookie: shop_session-id=432bef95-0d25-4754-80c8-3904c2e329e9; Max-Age=172800
+date: Wed, 18 Sep 2019 16:26:01 GMT
+content-type: text/html; charset=utf-8
+x-envoy-upstream-service-time: 45
+server: istio-envoy
+transfer-encoding: chunked&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then when we &lt;code class=&quot;language-text&quot;&gt;kubectl apply&lt;/code&gt; the VirtualService, we see that Envoy is successfully configured to modify the response headers:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;HTTP/1.1 200 OK
+date: Wed, 18 Sep 2019 16:26:24 GMT
+content-type: text/html; charset=utf-8
+x-envoy-upstream-service-time: 85
+hello: world
+server: istio-envoy
+transfer-encoding: chunked&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
