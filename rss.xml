@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Sep 2019 17:21:41 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 Oct 2019 22:30:25 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
 &lt;p&gt;With gRPC, you can generate boilerplate code from &lt;code class=&quot;language-text&quot;&gt;.proto&lt;/code&gt; files into &lt;a href=&quot;https://grpc.io/docs/quickstart/&quot;&gt;multiple programming languages&lt;/a&gt;, making gRPC an ideal choice for polyglot microservices.&lt;/p&gt;
 &lt;p&gt;While gRPC supports some networking use cases like &lt;a href=&quot;https://grpc.io/docs/guides/auth/&quot;&gt;TLS&lt;/a&gt; and &lt;a href=&quot;https://grpc.io/blog/loadbalancing/&quot;&gt;client-side load balancing&lt;/a&gt;, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting &lt;a href=&quot;https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization&quot;&gt;RPC-level authorization&lt;/a&gt;. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://istio.io/about/feature-stages/#traffic-management&quot;&gt;Istio&lt;/a&gt; and its data plane proxy, &lt;a href=&quot;https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc&quot;&gt;Envoy&lt;/a&gt;, both  support gRPC. Let’s see how to manage gRPC traffic with Istio.&lt;/p&gt;
@@ -1155,4 +1155,177 @@ content-type: text/html; charset=utf-8
 x-envoy-upstream-service-time: 85
 hello: world
 server: istio-envoy
-transfer-encoding: chunked&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
+transfer-encoding: chunked&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[locality load balancing]]></title><description><![CDATA[If you’re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the…]]></description><link>https://istiobyexample.dev//locality-load-balancing/</link><guid isPermaLink="false">https://istiobyexample.dev//locality-load-balancing/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;If you’re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.&lt;/p&gt;
+&lt;p&gt;Istio can help you automatically handle regional traffic using a feature called &lt;strong&gt;locality load balancing.&lt;/strong&gt; Let’s see how.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/ecbb11b64aa2ac2aa426660e3a034bbb/4072e/default.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.34368308351178%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAFxGAABcRgEUlENBAAACa0lEQVQ4y32UCW/aQBCF+f//K5XaSOmVhMMlEDD4wvba4HPt/TqLIThRWtAyaD3z5r05PDGG/37MyMH8w3l8P7E/XWfIc8PpZHB3hs3GMJubN0drrzFxbAgCw35veH21MbzzEUBx8OHpNywd+P4Azhy+foFDBFoPSH1vzscmW68Ny+Vgj0dz9rkmnOgWvEON6lMOTYLqFAmZfFPiY4VKz/nPgZZZUQxKrLXH3ruuEZUXwF4LszjkVb+wb/d4vUe9OJD7AZFWHNUNsGk+r3OWcQM0Arg4eDxU98zaOYvomW6qOM09giQSoBtgWZrz/6Fe1xob0tR8BPRZtgs27ZZduYXHnHLqExUpeXauILkFrG6A4+6m6YhhJzV0k5yNXuE2WxbCcnNaE9Qiv44vkqEUpm017uhHhgP4pG0NSl0ySUPui2/cFXf8rH+wKlycRJgaj6XyWB335+bd5m+wqWIMaCkPfGflE3+qGdPmF77eiOSERPV01MR5w7FsibWPU02lCjZGn08a64tkI4Byp/xYUB10vICTR+W4EAV0ojPLBhZ2gOuih8ShtX75Cu16dBthHcbotr8wFGTlyQQnMs1lRBfuqKcZzSKgTmQu82uXoSolKJQNyFxMsqWeRTRzmdelxPVjwH0oazHFFAF9tKN6UjTPMo9J+gngI6ZMMKkknoU004R4HowARXIWSqHzpch+AWlEH1rGHrrML5IHwLqy2Z3B77gWUPHzfYkfS5amRNGwj3UNTS0bIQ9boW6HWVS/AWaZwU5F3Vz8mg7d9URhf2uKXXg7mJaJDRjscOz9sB3DS0Ip3j0fn+uQ/wX/BNYXcPkE6wAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;default&quot;
+        title=&quot;default&quot;
+        src=&quot;/static/ecbb11b64aa2ac2aa426660e3a034bbb/b9e4f/default.png&quot;
+        srcset=&quot;/static/ecbb11b64aa2ac2aa426660e3a034bbb/cf440/default.png 148w,
+/static/ecbb11b64aa2ac2aa426660e3a034bbb/d2d38/default.png 295w,
+/static/ecbb11b64aa2ac2aa426660e3a034bbb/b9e4f/default.png 590w,
+/static/ecbb11b64aa2ac2aa426660e3a034bbb/f9b6a/default.png 885w,
+/static/ecbb11b64aa2ac2aa426660e3a034bbb/2d849/default.png 1180w,
+/static/ecbb11b64aa2ac2aa426660e3a034bbb/4072e/default.png 3736w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here, we have two Kubernetes clusters running in two different cloud regions, &lt;code class=&quot;language-text&quot;&gt;us-central&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;us-east&lt;/code&gt;.
+The Istio control plane is running in &lt;code class=&quot;language-text&quot;&gt;us-east&lt;/code&gt;, and we have set up &lt;a href=&quot;https://github.com/GoogleCloudPlatform/istio-samples/tree/191859c03e73da7e98d451c967cefe24101d1933/multicluster-gke/single-control-plane#demo-multicluster-istio--single-control-plane&quot;&gt;single control plane&lt;/a&gt; Istio multicluster, so that services running in both clusters can reach each other.&lt;/p&gt;
+&lt;p&gt;When we started both clusters, the cloud provider added region-specific &lt;code class=&quot;language-text&quot;&gt;failure-domain&lt;/code&gt; labels to the Kubernetes nodes:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;failure-domain.beta.kubernetes.io/region: us-central1
+failure-domain.beta.kubernetes.io/zone: us-central1-b&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Istio will populate requests with these locality labels, allowing Istio to redirect requests to the closest available region.&lt;/p&gt;
+&lt;p&gt;Both clusters are running an Istio-injected service called &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt;, which prints its location when accessed on port &lt;code class=&quot;language-text&quot;&gt;80&lt;/code&gt;. The central cluster is also running a &lt;code class=&quot;language-text&quot;&gt;loadgen&lt;/code&gt; service that calls &lt;code class=&quot;language-text&quot;&gt;echo.default.svc.cluster.local:80&lt;/code&gt; every second.&lt;/p&gt;
+&lt;p&gt;By default, the Kubernetes Service behavior is round-robin, between the two &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt; servers on both clusters:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL
+$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can enable locality load balancing by adding an &lt;a href=&quot;https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/#OutlierDetection&quot;&gt;outlier detection&lt;/a&gt; Istio DestinationRule on the &lt;code class=&quot;language-text&quot;&gt;east&lt;/code&gt; cluster:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; DestinationRule
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; echo&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;outlier&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;detection
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; echo.default.svc.cluster.local
+  &lt;span class=&quot;token key atrule&quot;&gt;trafficPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;connectionPool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;tcp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;maxConnections&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1000&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;http2MaxRequests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1000&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;maxRequestsPerConnection&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;outlierDetection&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;consecutiveErrors&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;7&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;interval&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 30s
+      &lt;span class=&quot;token key atrule&quot;&gt;baseEjectionTime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 30s&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, all &lt;code class=&quot;language-text&quot;&gt;loadgen&lt;/code&gt; requests are routed to the closest instance of &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt;, running in &lt;code class=&quot;language-text&quot;&gt;us-central&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ ✨ Hello World! - CENTRAL
+$ ✨ Hello World! - CENTRAL
+$ ✨ Hello World! - CENTRAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/938519d153fa72945f4be94f2a0f96ec/7570e/locality.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 84.3732590529248%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAAFxGAABcRgEUlENBAAACf0lEQVQ4y32UC2/aQBCE8///V6q2Uqo0TQIFlKhgDPh1Z+MXtm+/rm0caNoU6biVb252dnbtGxHhf7/r8zGWf2Im3E3/V1VCkghpJixXwuurcHcntK38dSHLwPOEzUaYz2WIr4lvnNPDNTz9gNUCvt/DyxK+fAJ/C3U9kTIkCENhvR6JVpr8cJABMyW/sQZMWWJdQtIaUmcxWFIS4rzAJAMdTQO7nVAUl1WWQp5rZakQBIJzSni0sK32rE4L/GaL73zqRUy63RO0CZkZCU8n9OLHXlvl6TotOddgXfh8Lm55bB5ZRTNklnGc++zjYPBsIjRmbMrk6cVbGc66jpFwU/r8rJ/xWo9tvkEeLPmDR5DFZOmFsFcx+TntU2wMI2Ff8q4Mea5VXb1k2Sy12zFRvmdbBxzfSpYz4VnVRwr7ptSNG7IUrmRez/nVrXlungYrjvZKoTl3fBqTq3hUqB72QXNSQnHMy0fujp/5mt8yq74riXtTdVHokK7VrdNdW08fNxeFRj1qMovkvpb6glQRVbKHPKIpUswfCjVxFSJFrCvU0hJcHA27CY50biK0AQQ62amHJB7Vt4RmEQyJTPqO0CyR+EVfmTWd71F8DWk3CTZMrxQaVXR4QDRTt/N0DlNOTzqPuxB7fE+4wJmNGpZRPyxpDjX1Dx/jm4vCkzlANEd6hbqqmZa78mm0xW8lq10m6QlXyHGPZBtcsqW839N6ATawZ4X9hFeF+qBll0HPrvdVltjhub320GpPnU56eRixbTpinXod1bTD2CgoihWsuF5tn6DvvNU4VN+jaByM/uUPgvG5Sa+wuhLFx8n5a9PPZdPIh8u5y+T1c/YxbsT8BrhLJFDfRuQGAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;locality&quot;
+        title=&quot;locality&quot;
+        src=&quot;/static/938519d153fa72945f4be94f2a0f96ec/b9e4f/locality.png&quot;
+        srcset=&quot;/static/938519d153fa72945f4be94f2a0f96ec/cf440/locality.png 148w,
+/static/938519d153fa72945f4be94f2a0f96ec/d2d38/locality.png 295w,
+/static/938519d153fa72945f4be94f2a0f96ec/b9e4f/locality.png 590w,
+/static/938519d153fa72945f4be94f2a0f96ec/f9b6a/locality.png 885w,
+/static/938519d153fa72945f4be94f2a0f96ec/2d849/locality.png 1180w,
+/static/938519d153fa72945f4be94f2a0f96ec/7570e/locality.png 3590w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;If we delete the &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt; Deployment running in &lt;code class=&quot;language-text&quot;&gt;us-central&lt;/code&gt;, Istio will redirect &lt;code class=&quot;language-text&quot;&gt;loadgen&lt;/code&gt; requests to the &lt;code class=&quot;language-text&quot;&gt;echo&lt;/code&gt; Pod running in &lt;code class=&quot;language-text&quot;&gt;us-east&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/f926ea8027cb05d1c3bece596305f312/caaa1/failover.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.25171561899533%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAFxGAABcRgEUlENBAAACdklEQVQ4y3VUaXPbIBT0//9bmem3NI3bRPERy3V0WhfoRqC3fUh2ZKcTNAgEy/KWfWhFRPiu2Knr9Nynb3DL+Mq++p4gBEGWhP2e4LwRDgcLopsFcz8MCWnKGIdwPBKMWTAWthpHgvcBbF4Bdw+sn4DdG/DMbZ4DwzAv0JpQVcD7O8H3CS8vM2HJQbQtfUa5kgIougaxCRGoAIJyCEh+ChR1Dztvo7PkVWUjApTC1A6DVQecz0ukq1oCfhdhpzYIdcCkPrp1jCpLkWiB8kJYFDPJLP22go/LKsBC+NGG+NU+wjUuTtEeoyNRb0OcywylXAitbNu/mnX1oijoMnch9NoIT90jHPWKoPb4IEt0LkfYCdQXwpwXDZ+EdOfuHaGVlPUSsQ4hWOJ22OBv7bLcGHGfIy2GCWhxpJd8IqJP92fCeeOVTRd1cdIbPPxofuChecC6X+PYeNhnMRIKsU1DfHQBirG4y9MpQoElwulAew0zlHirfsJvtjgwWdhtULY1Kmn3VYjzHj3bmvQnHBrOMa1AY8uTNYpUQZtrhCXbL1O26h2m5IRsMiiHv6sGuq2m3W2x6WOahsNxoeWJcQGUm2D0I4hEfiEUZ74CnMl9Bn08otsIqG0ExeGJyZRxllXzK3rmzUKM0Qm9c8bgRMhPOWbFt4SJAxokjO+h/V1g2J2hyhtCbnVlHdyyVIUx43z9w5g1n6tXQI83hLriayB2LOcAcAqNKUtuEuiuvhDSFKHpO8bx/RSMq08gkfH9DL5IZmDT0HRnleLaj+y64W+Dup4T+prY9s7e4ZRhdw3/LMaF0AIsqZT/VztuF9vyHc6O2Z/GNcn/AbYp1e8nLXMJAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;failover&quot;
+        title=&quot;failover&quot;
+        src=&quot;/static/f926ea8027cb05d1c3bece596305f312/b9e4f/failover.png&quot;
+        srcset=&quot;/static/f926ea8027cb05d1c3bece596305f312/cf440/failover.png 148w,
+/static/f926ea8027cb05d1c3bece596305f312/d2d38/failover.png 295w,
+/static/f926ea8027cb05d1c3bece596305f312/b9e4f/failover.png 590w,
+/static/f926ea8027cb05d1c3bece596305f312/f9b6a/failover.png 885w,
+/static/f926ea8027cb05d1c3bece596305f312/2d849/failover.png 1180w,
+/static/f926ea8027cb05d1c3bece596305f312/caaa1/failover.png 3643w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;We can also add a percentage-based load balancing rule for mesh-wide traffic, in the global Istio installation settings:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;    localityLbSetting:
+      distribute:
+      - from: us-central1/*
+        to:
+          us-central1/*: 20
+          us-east1/*: 80&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, all services running in both clusters will share requests 80/20, between &lt;code class=&quot;language-text&quot;&gt;us-east&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;us-central&lt;/code&gt;. No VirtualServices are needed.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/a1ecb7dd29b7381cae395f758e69f395/dd1f1/splittraffic.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 84.5488613433266%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAYAAADdRIy+AAAACXBIWXMAAFxGAABcRgEUlENBAAACsElEQVQ4y31Ui1biMBTk/79rPe5DxYUFAUGFQimPJn2mSR+ZnbSg4DkK5zahuZ3OnTuXnrUW330uz79LPef13EUVFqGwSBKL+aKLft9CKfuefH7ArQueR5HFYNDti+LjrNc0Fss3YDQEFnPg8QF4eQZ+3wKrJaC1fWdW10CeW0ynHeBoZOF5tr1XVYDD6kkBhJmCrCIIEyPierQRQn5jk+F4AMrKIVoEgcXxyIoUEMfdmqbd/nCwXAmYRsCmCDAvp1iXHrYIYJYS8XoHBxtJApYdoJRnHe2nQMswIlYv4+Ut36Cv7rCslpiLCeqRRDrcQuZ7yPgDUAhXWrd3wJ22nRxaXwAuCfhb/cTYjPEm57DjGOmjD5EG14CSgHXDXXPVpCtAV7KnAszMBEG5xaJaINrtIDcEg0BMjeuqYxGzZGKdfPIFQ6dRbgzC+sCy7/FX9TGtJpjXcwT1BoEokBiFEhqrMMaP5AZL80qgphW0Y2hbN7jO95zQmiU9k9mNukVmi/aNpqlR8Ds7Bm3TDvUOk6OPX9kd7vXDJdGOoTkxlLyUWcL+b+ALJir6RFM4zTdVGRKe21PJTh735Er+QZl49E0IS6uBVjNMjKRj6EQXW4DNQLJrgYvBHvppTfGoYmubphVPELCKA0C8Mo9r5kGPfZjxDialxUR1Agw3QPCIptij3qygFwmKfz5sSNukFz4kYJ3sYbd9WFZQ+wR82qLyMuSzNeKkOTP0+VbaRUew0ocaSKg7MlTiyjYtoGMoX2CbkrmsZhhAD0MoNwhR3QFWCedJTgk6Y8vJNmOdUdCW3Gp8Adjk9JHksAtGtmLwd3xAmR5ZMhmGIe+ltn2I7oEpGhhd0QYVStNwRj8A2znOXd4pdJdbljVSltt22f1FCdG1/HM4Rm7gz+bNsq9zXbix/A/aIh+xtESi/gAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;split&quot;
+        title=&quot;split&quot;
+        src=&quot;/static/a1ecb7dd29b7381cae395f758e69f395/b9e4f/splittraffic.png&quot;
+        srcset=&quot;/static/a1ecb7dd29b7381cae395f758e69f395/cf440/splittraffic.png 148w,
+/static/a1ecb7dd29b7381cae395f758e69f395/d2d38/splittraffic.png 295w,
+/static/a1ecb7dd29b7381cae395f758e69f395/b9e4f/splittraffic.png 590w,
+/static/a1ecb7dd29b7381cae395f758e69f395/f9b6a/splittraffic.png 885w,
+/static/a1ecb7dd29b7381cae395f758e69f395/2d849/splittraffic.png 1180w,
+/static/a1ecb7dd29b7381cae395f758e69f395/dd1f1/splittraffic.png 3469w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;To learn more about Locality-based load balancing with Istio, see the &lt;a href=&quot;https://istio.io/docs/ops/traffic-management/locality-load-balancing/&quot;&gt;Istio documentation&lt;/a&gt;.&lt;/p&gt;</content:encoded></item></channel></rss>
