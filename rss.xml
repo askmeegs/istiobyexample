@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 Oct 2019 22:30:25 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 15 Nov 2019 22:45:37 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
 &lt;p&gt;With gRPC, you can generate boilerplate code from &lt;code class=&quot;language-text&quot;&gt;.proto&lt;/code&gt; files into &lt;a href=&quot;https://grpc.io/docs/quickstart/&quot;&gt;multiple programming languages&lt;/a&gt;, making gRPC an ideal choice for polyglot microservices.&lt;/p&gt;
 &lt;p&gt;While gRPC supports some networking use cases like &lt;a href=&quot;https://grpc.io/docs/guides/auth/&quot;&gt;TLS&lt;/a&gt; and &lt;a href=&quot;https://grpc.io/blog/loadbalancing/&quot;&gt;client-side load balancing&lt;/a&gt;, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting &lt;a href=&quot;https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization&quot;&gt;RPC-level authorization&lt;/a&gt;. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://istio.io/about/feature-stages/#traffic-management&quot;&gt;Istio&lt;/a&gt; and its data plane proxy, &lt;a href=&quot;https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc&quot;&gt;Envoy&lt;/a&gt;, both  support gRPC. Let’s see how to manage gRPC traffic with Istio.&lt;/p&gt;
@@ -1328,4 +1328,139 @@ $ ✨ Hello World! - CENTRAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;To learn more about Locality-based load balancing with Istio, see the &lt;a href=&quot;https://istio.io/docs/ops/traffic-management/locality-load-balancing/&quot;&gt;Istio documentation&lt;/a&gt;.&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;To learn more about Locality-based load balancing with Istio, see the &lt;a href=&quot;https://istio.io/docs/ops/traffic-management/locality-load-balancing/&quot;&gt;Istio documentation&lt;/a&gt;.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[virtual machines]]></title><description><![CDATA[Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource…]]></description><link>https://istiobyexample.dev//virtual-machines/</link><guid isPermaLink="false">https://istiobyexample.dev//virtual-machines/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you’re operating lots of containers.&lt;/p&gt;
+&lt;p&gt;But what about stateful services, or legacy applications are running in virtual machines? Or what if you’re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let’s see how.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/5aa6be26035def23daebd8254eb4399b/76ebb/call-flow.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 55.20622041920217%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAFxGAABcRgEUlENBAAABlElEQVQoz5WTX3PSQBTF86n9Fn4Vnxyf1AdFHa3FEQqB0kL+GPKfkCwhDdnNzw20Cm1nxDtz5t59yNk9554YbdvyL3T1eH7o6gjd2eCMenKJ+kv+uIwwK/HTDV4i9j1al4SiItpU/IrF/uYT8qP5rpFMkpxZWjDVPRBbjImTYmq4ccHEXZGVNcUnl3Ka4OVbpFRIpWikZKc7smXz0YG8JpcNg2CFr4luVgXDMMMYWQnDRYxpp/ywYsbfHBozoRnHzH4u6ZlL3vVtTCvn6yzi9sOCnZNTffcxvRVf3IjrNKfnhAweCD+PPG69jEtN/P71mNpa0/iCCz0vsi3jucvLVy8Y2HOu3twgxR1brWJoJ3u5oban0vIXmcCYapmd1FTLm2nSoqhoLn12/YBY+3soxZX9lloKaED0HNqlQChJf5ky10SjKNNYY3TGW0GOFeY4YYGvSYJ72FGhvVMnSzk+Kb3tzj+vKLHWgk3dYHTrPxjfHsxv1J5kp3v3wZ+86dc8l88nsTkng88G+4j4JNj/86ecU78BmApPCp+f/YoAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;call flow&quot;
+        title=&quot;call flow&quot;
+        src=&quot;/static/5aa6be26035def23daebd8254eb4399b/b9e4f/call-flow.png&quot;
+        srcset=&quot;/static/5aa6be26035def23daebd8254eb4399b/cf440/call-flow.png 148w,
+/static/5aa6be26035def23daebd8254eb4399b/d2d38/call-flow.png 295w,
+/static/5aa6be26035def23daebd8254eb4399b/b9e4f/call-flow.png 590w,
+/static/5aa6be26035def23daebd8254eb4399b/f9b6a/call-flow.png 885w,
+/static/5aa6be26035def23daebd8254eb4399b/2d849/call-flow.png 1180w,
+/static/5aa6be26035def23daebd8254eb4399b/76ebb/call-flow.png 2958w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In this example, we are running a web application for a local library. This web app has multiple backends, all running in a Kubernetes cluster. One of our Kubernetes workloads, &lt;code class=&quot;language-text&quot;&gt;inventory&lt;/code&gt;, talks to a PostgreSQL database, and writes a record for each new book added to the library. This database is running in a virtual machine in another cloud region.&lt;/p&gt;
+&lt;p&gt;In order to get the full Istio functionality for PostgreSQL, our VM-based database, we need to install the Istio sidecar proxy on the VM, and configure it to talk to the Istio control plane running in the cluster. (Note that this is different from adding external &lt;a href=&quot;/external-services&quot;&gt;ServiceEntries&lt;/a&gt;.) We can add our Postgres database to the mesh with three steps. You can follow along with the commands in the &lt;a href=&quot;https://github.com/askmeegs/postgres-library/tree/0241acce9d7e2cede0de8ac9baa1338624f716eb#-postgres-library&quot;&gt;demo on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/3f551cc3dee50629373db7558e62170c/efc60/architecture.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 53.55693805788477%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAFxGAABcRgEUlENBAAACFElEQVQoz1WTSZObMBCF/evnjyT3OeeUyjFVs+927PGKWY1AIGQM0pfGrokdqpqGlvT6ve7WCDzGePZ7z/nxF/707f3XS1zf4juLd534Bt9W/06MlPJcXXmurz07+Y5SSDJPvvOUBZQSa9sT8IB3PJyPcdkrXq9wyTMufsSbTBIdGB0Onu/f4MdPT1B5Eu1ZK6hbeIk9byHo8szdNRmm1lhrsU1D3xt6V9LvY0mmGQ2bagGJ5NB9AoUA2c4R5yX6U7Ec79iEFY2pqOuGPFqyWi5IkphNEKOKDxr7wMGujuxHg5RCGCXC7jFxrEvPQvWk2tJOUvRUkcm/Ezld79jr5AiYS8K6UnTtO66b49rgDDjUKtxZVmnFPDH8Sa3ELLtSGBUHkXbRr14LWE7nZL1eCoGStSSvjEg81CfASsNsU/IyT/kMC6K4xN1GVItckjQ8jRX30w/iomFf5ei7Nd12ykzAPlLNbZgTqBw6cwacCuBsq9gWhrubFZ3UL3/Y8j7JGS81N5NfxFXD5nWOfoswLwm/JyGLQlSpmp0Wmd0lw6DkfZWxEHaLUGGfY4pZRla2WHMh2ciagHXLik8BWpVSImWkqReAA9swaVnHhk3cSIf3xKolUuLTDqWOxcPJHDqb4WTmOJTS+R1BuiXIIhodfdWQ4y0ZEtQVR7bD3A1WiRUS/2+wvRPr5Zb0w5UZJvNkQ0w2/AVo6klzRTj/SAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;architecture&quot;
+        title=&quot;architecture&quot;
+        src=&quot;/static/3f551cc3dee50629373db7558e62170c/b9e4f/architecture.png&quot;
+        srcset=&quot;/static/3f551cc3dee50629373db7558e62170c/cf440/architecture.png 148w,
+/static/3f551cc3dee50629373db7558e62170c/d2d38/architecture.png 295w,
+/static/3f551cc3dee50629373db7558e62170c/b9e4f/architecture.png 590w,
+/static/3f551cc3dee50629373db7558e62170c/f9b6a/architecture.png 885w,
+/static/3f551cc3dee50629373db7558e62170c/2d849/architecture.png 1180w,
+/static/3f551cc3dee50629373db7558e62170c/efc60/architecture.png 3697w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/askmeegs/postgres-library#5-allow-pod-ip-traffic-to-the-vm&quot;&gt;Create a firewall rule&lt;/a&gt; for pod-to-VM traffic&lt;/strong&gt;. This allows traffic from the Kubernetes pod CIDR range directly into our VM-based workload.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/askmeegs/postgres-library#6-prepare-a-clusterenv-file-to-send-to-the-vm&quot;&gt;Install Istio&lt;/a&gt; on the VM&lt;/strong&gt;. Copy the service account keys, and the ports the VM service exposes (in this case, PostgreSQL client port &lt;code class=&quot;language-text&quot;&gt;5432&lt;/code&gt;). Update the &lt;code class=&quot;language-text&quot;&gt;/etc/hosts&lt;/code&gt; on the VM to route &lt;code class=&quot;language-text&quot;&gt;istio.pilot&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;istio.citadel&lt;/code&gt; traffic through the Istio IngressGateway running on the cluster. Then, install the Istio sidecar proxy and node agent on the VM. The node agent is responsible for generating client certificates to mount into the sidecar proxy, for mutual TLS authentication. Start the proxy and node agent using &lt;code class=&quot;language-text&quot;&gt;systemctl&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/askmeegs/postgres-library#8-register-the-vm-with-istio-running-on-the-gke-cluster&quot;&gt;Register the VM&lt;/a&gt; workload with Kubernetes&lt;/strong&gt;. We need two Kubernetes resources to add our Postgres database to the mesh. The first is a &lt;code class=&quot;language-text&quot;&gt;ServiceEntry&lt;/code&gt;. This will route the Kubernetes DNS name to the virtual machine IP address. Finally, we need a Kubernetes &lt;code class=&quot;language-text&quot;&gt;Service&lt;/code&gt; to create that DNS entry. This is what will allow our client pod to &lt;a href=&quot;https://github.com/askmeegs/postgres-library/blob/master/main.go#L39&quot;&gt;start a database connection&lt;/a&gt; at &lt;code class=&quot;language-text&quot;&gt;postgres-1-vm.default.svc.cluster.local&lt;/code&gt;. We can use the &lt;code class=&quot;language-text&quot;&gt;istioctl register&lt;/code&gt; command to do this.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We can now verify that the Kubernetes-based client can successfully write to the database, by viewing the pod logs:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;postgres-library-6bb956f86b-dt94x server ✅ inserted Fun Home
+postgres-library-6bb956f86b-dt94x server ✅ inserted Infinite Jest
+postgres-library-6bb956f86b-dt94x server ✅ inserted To the Lighthouse&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And we can verify that the sidecar proxy running on the VM is intercepting inbound traffic on port &lt;code class=&quot;language-text&quot;&gt;5432&lt;/code&gt;, by viewing the Envoy access logs on the VM.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ tail /var/log/istio/istio.log
+
+[2019-11-14T19:09:00.174Z] &amp;quot;- - -&amp;quot; 0 - &amp;quot;-&amp;quot; &amp;quot;-&amp;quot; 268 441 194 - &amp;quot;-&amp;quot; &amp;quot;-&amp;quot; &amp;quot;-&amp;quot; &amp;quot;-&amp;quot;
+&amp;quot;127.0.0.1:5432&amp;quot; inbound|5432|tcp|postgresql-1-vm.default.svc.cluster.local
+127.0.0.1:54104 10.128.0.14:5432 10.24.2.23:40190
+outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can also see TCP metrics flowing in the Kiali service graph:&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/cfd71c3c1d641f6486d87cdbfb40c7b8/1589a/kiali.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 46.86520376175549%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz61S0Q6CMAzk/z/JT/AVlwWToTi3lylmxhAIjJMOMZOMwINNbm2663Jtl+DPlkxB3/dfH8ahLXFCXhIm54gVO+cGxHn+wbmKmKKY2iWeV1jXNTjnyLIMQggcBy+l9ISu6zzITnmO9MDAGMOlKKCUgrX2VyEd1EbTNKiqCveyhDYjbvYFeVVQWsM8njClxW6fgoszXNuiHUC1qy1TikDkaU5j/Llba3k+4C22uJTYd9iK2LLedxPE51JRirYAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;kiali&quot;
+        title=&quot;kiali&quot;
+        src=&quot;/static/cfd71c3c1d641f6486d87cdbfb40c7b8/b9e4f/kiali.png&quot;
+        srcset=&quot;/static/cfd71c3c1d641f6486d87cdbfb40c7b8/cf440/kiali.png 148w,
+/static/cfd71c3c1d641f6486d87cdbfb40c7b8/d2d38/kiali.png 295w,
+/static/cfd71c3c1d641f6486d87cdbfb40c7b8/b9e4f/kiali.png 590w,
+/static/cfd71c3c1d641f6486d87cdbfb40c7b8/f9b6a/kiali.png 885w,
+/static/cfd71c3c1d641f6486d87cdbfb40c7b8/2d849/kiali.png 1180w,
+/static/cfd71c3c1d641f6486d87cdbfb40c7b8/1589a/kiali.png 1276w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;From here, we can use any Istio traffic or security policies to our multi-environment service mesh. For instance, we can encrypt all traffic between the cluster and the VM, by adding a mesh-wide mutual TLS policy:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;authentication.istio.io/v1alpha1&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;MeshPolicy&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;default&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;peers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;mtls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;networking.istio.io/v1alpha3&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;DestinationRule&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;default&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;istio-system&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*.local&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;trafficPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ISTIO_MUTUAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To learn more:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/askmeegs/postgres-library&quot;&gt;Run this example in your environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/GoogleCloudPlatform/istio-samples/tree/master/mesh-expansion-gce&quot;&gt;Try another example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/examples/virtual-machines/single-network/&quot;&gt;See the Istio documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item></channel></rss>
