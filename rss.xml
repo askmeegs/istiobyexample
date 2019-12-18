@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 15 Nov 2019 22:45:37 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Dec 2019 21:37:23 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
 &lt;p&gt;With gRPC, you can generate boilerplate code from &lt;code class=&quot;language-text&quot;&gt;.proto&lt;/code&gt; files into &lt;a href=&quot;https://grpc.io/docs/quickstart/&quot;&gt;multiple programming languages&lt;/a&gt;, making gRPC an ideal choice for polyglot microservices.&lt;/p&gt;
 &lt;p&gt;While gRPC supports some networking use cases like &lt;a href=&quot;https://grpc.io/docs/guides/auth/&quot;&gt;TLS&lt;/a&gt; and &lt;a href=&quot;https://grpc.io/blog/loadbalancing/&quot;&gt;client-side load balancing&lt;/a&gt;, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting &lt;a href=&quot;https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization&quot;&gt;RPC-level authorization&lt;/a&gt;. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://istio.io/about/feature-stages/#traffic-management&quot;&gt;Istio&lt;/a&gt; and its data plane proxy, &lt;a href=&quot;https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc&quot;&gt;Envoy&lt;/a&gt;, both  support gRPC. Let’s see how to manage gRPC traffic with Istio.&lt;/p&gt;
@@ -1463,4 +1463,185 @@ outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -&lt;/code&gt;&lt;/p
 &lt;li&gt;&lt;a href=&quot;https://github.com/askmeegs/postgres-library&quot;&gt;Run this example in your environment&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/GoogleCloudPlatform/istio-samples/tree/master/mesh-expansion-gce&quot;&gt;Try another example&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/examples/virtual-machines/single-network/&quot;&gt;See the Istio documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[secure ingress]]></title><description><![CDATA[If you’re running workloads in a Kubernetes cluster, it’s likely that some need to be exposed outside of the cluster. The Istio Ingress…]]></description><link>https://istiobyexample.dev//secure-ingress/</link><guid isPermaLink="false">https://istiobyexample.dev//secure-ingress/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;If you’re running workloads in a Kubernetes cluster, it’s likely that some need to be exposed outside of the cluster. The &lt;a href=&quot;/ingress&quot;&gt;Istio Ingress Gateway&lt;/a&gt; is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?&lt;/p&gt;
+&lt;p&gt;Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services. When you set up secure ingress with Istio, the Ingress Gateway handles all TLS operations (handshake, certs/keys exchange), allowing you to decouple TLS from your application code. Further, using the Ingress Gateway for TLS traffic allows you to centralize and automate the management of certs and keys across your organization.&lt;/p&gt;
+&lt;p&gt;Istio supports securing the Ingress Gateway through two methods. The first is through &lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-mount/&quot;&gt;file mount&lt;/a&gt;, where you generate certs and keys for the IngressGateway, then mount them manually into the IngressGateway as a Kubernetes Secret. The second way is through the &lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-sds/&quot;&gt;Secrets Discovery Service&lt;/a&gt; (SDS), an agent that runs in the IngressGateway pod, alongside the Istio proxy. The SDS agent  monitors the &lt;code class=&quot;language-text&quot;&gt;istio-system&lt;/code&gt; namespace for new secrets, and mounts them into the Gateway’s proxy on your behalf. Like the file mount method, SDS supports both server-side and mutual TLS.&lt;/p&gt;
+&lt;p&gt;Let’s see how to set up the Ingress Gateway with mutual HTTPS authentication for two backend services.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/05f251a3f8f4b636d25e1c352003285d/0478f/arch.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 100.48426150121065%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAFxGAABcRgEUlENBAAACqUlEQVQ4y5VUyVLcMBCdf+djOHPOMVXZDknBgAtmgFk9eLxK8iLLi15aljdISBFXdWlx6/Xr11Iv8M6ntX41fvT/Av/4BueiKCCEAOe8G9u2fTfYYvgxmF1PzlmWgTGGKIq6UakScRy/C7qYrwegOWCSJB1oZ3kOWSoEQYimaTCRsWd7hpp+akhpdubRhnmLo+cjJnaZiJAmHlrdvvGZCHUpX11pXFxonM8aaQpwpkkvGjkFyoH9SSIIa5SihKR0iSwEH3xAUgB5bgl1gDc3GpeXlqnJpK7tvFR0SAI/1glWXg3PT+C6LuICkMr6WF8jjYaRdTHQJnlmKdgxVcDtGfjy3ODaA5YvTWc+MUxkX8De1zDtAUGVs/RfV5j2anLcCGjHhy80lgQaUuBzapnPq2zSHgGrijQRbwC1BWR3EbCNcXQ4Pm0Bx9OICJRL/Z+AxJDR/nmbI78NcAhs2vvEmEZS9HfgY4BWnYrEdnmDY1IhKmkeZjjEFV7IV1Y26F8Y6g6Qi8nB2BA5SDKqZN3TIVpVPN7P6XXpHlAPDPXIcP5JVSPgRZ8aWa3QSgb9x30wDGfXxhCIkxa5qsBzYwqirPFwYhA0H6WgE614glYxdElNomRdADQFGB8ZEjJp9eyW2Pgp3KggjUowEmr94EOoegSkk1CrX6hOvANF7kHzPaUSvNbQPM3Hg8T1JsTTKcbnaxfR8ozcCZAwOabWmuZwu4N0ItS7rxC7byiP3wnQn2toAZ+I4f0xwPrRgbMLobYJilUIlpWTqJWEuttC3dPdSfdYOz8RH5b0VsPu3Y8MzVvcHCqs3BTOI4EeU3iRws4r4MUKVAtqW0BJuhbBCzUIBskCIrZB4e+oaTCE0azKZmK6jOki5k2b0VwjkZp93a2N2bmx9s3+1At+A+kRFELYJyYTAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;arch&quot;
+        title=&quot;arch&quot;
+        src=&quot;/static/05f251a3f8f4b636d25e1c352003285d/b9e4f/arch.png&quot;
+        srcset=&quot;/static/05f251a3f8f4b636d25e1c352003285d/cf440/arch.png 148w,
+/static/05f251a3f8f4b636d25e1c352003285d/d2d38/arch.png 295w,
+/static/05f251a3f8f4b636d25e1c352003285d/b9e4f/arch.png 590w,
+/static/05f251a3f8f4b636d25e1c352003285d/f9b6a/arch.png 885w,
+/static/05f251a3f8f4b636d25e1c352003285d/2d849/arch.png 1180w,
+/static/05f251a3f8f4b636d25e1c352003285d/0478f/arch.png 3304w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here, a construction materials company called FooCorp runs one production Kubernetes cluster. One team, &lt;code class=&quot;language-text&quot;&gt;ux&lt;/code&gt;, runs a customer-facing web &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt;. The other, &lt;code class=&quot;language-text&quot;&gt;corp-services&lt;/code&gt;, runs an internal-facing &lt;code class=&quot;language-text&quot;&gt;inventory&lt;/code&gt; for supply chain tracking. Both services have their own &lt;code class=&quot;language-text&quot;&gt;foocorp&lt;/code&gt; subdomain, and the security team has mandated that every service has its own certs and keys. Let’s walk through the configuration of secure ingress on this cluster.&lt;/p&gt;
+&lt;p&gt;First, we’ll install Istio, enabling the &lt;a href=&quot;https://istio.io/docs/reference/config/installation-options/#gateways-options%20option&quot;&gt;global SDS ingress&lt;/a&gt; option. When we enable this, the Istio &lt;code class=&quot;language-text&quot;&gt;ingress-gateway&lt;/code&gt; pod will have two containers, &lt;code class=&quot;language-text&quot;&gt;istio-proxy&lt;/code&gt; (Envoy) and &lt;code class=&quot;language-text&quot;&gt;ingress-sds&lt;/code&gt;, which is the Secrets Discovery agent:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;istio-ingressgateway-6f7d65d984-m2zmn     2/2     Running     0          44s&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then we’ll create two namespaces, &lt;code class=&quot;language-text&quot;&gt;ux&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;corp-services&lt;/code&gt;, and label both for Istio sidecar proxy injection. Next, we’ll apply Deployments and Services for the &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt; (&lt;code class=&quot;language-text&quot;&gt;ux&lt;/code&gt; namespace) and the &lt;code class=&quot;language-text&quot;&gt;inventory&lt;/code&gt; (&lt;code class=&quot;language-text&quot;&gt;corp-services&lt;/code&gt; namespace).&lt;/p&gt;
+&lt;p&gt;Now, we’re ready to generate certs and keys for two domains, &lt;code class=&quot;language-text&quot;&gt;frontend.foocorp.com&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;inventory.foocorp.com&lt;/code&gt;. (Note: you don’t need to purchase domain names to try this out - we’ll test with the &lt;code class=&quot;language-text&quot;&gt;host&lt;/code&gt; header in a few steps.) We generate Kubernetes secrets from these keys:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;kubectl create -n istio-system secret generic frontend-credential  \
+--from-file=key=frontend.foocorp.com/3_application/private/frontend.foocorp.com.key.pem \
+--from-file=cert=frontend.foocorp.com/3_application/certs/frontend.foocorp.com.cert.pem \
+--from-file=cacert=frontend.foocorp.com/2_intermediate/certs/ca-chain.cert.pem
+
+kubectl create -n istio-system secret generic inventory-credential  \
+--from-file=key=inventory.foocorp.com/3_application/private/inventory.foocorp.com.key.pem \
+--from-file=cert=inventory.foocorp.com/3_application/certs/inventory.foocorp.com.cert.pem \
+--from-file=cacert=inventory.foocorp.com/2_intermediate/certs/ca-chain.cert.pem&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, we’re ready to expose &lt;code class=&quot;language-text&quot;&gt;frontend&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;inventory&lt;/code&gt; with Istio resources. First, create a &lt;code class=&quot;language-text&quot;&gt;Gateway&lt;/code&gt; resource, punching port &lt;code class=&quot;language-text&quot;&gt;443&lt;/code&gt; for HTTPS traffic. Note that &lt;code class=&quot;language-text&quot;&gt;mode: MUTUAL&lt;/code&gt; indicates that we’re enforcing mutual TLS for inbound traffic. And for each service, we specify two different sets of credentials, corresponding to the Secrets we just created.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Gateway
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; foocorp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;gateway
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; default
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;istio&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ingressgateway &lt;span class=&quot;token comment&quot;&gt;# use istio default ingress gateway&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;443&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; https&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;frontend
+      &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; HTTPS
+    &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; MUTUAL
+      &lt;span class=&quot;token key atrule&quot;&gt;credentialName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;frontend-credential&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;frontend.foocorp.com&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;443&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; https&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;inventory
+      &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; HTTPS
+    &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; MUTUAL
+      &lt;span class=&quot;token key atrule&quot;&gt;credentialName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;inventory-credential&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;inventory.foocorp.com&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, create two Istio VirtualServices to handle routing from the Gateway. Since both services are mapped to port &lt;code class=&quot;language-text&quot;&gt;443&lt;/code&gt; in the Gateway, we’ll use the &lt;code class=&quot;language-text&quot;&gt;host&lt;/code&gt; header (or a domain name) to specify the backend service we’re requesting.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; VirtualService
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; frontend
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;frontend.foocorp.com&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;gateways&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; foocorp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;gateway
+  &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;uri&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;exact&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+    &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; frontend.ux.svc.cluster.local
+        &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; VirtualService
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; inventory
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;inventory.foocorp.com&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;gateways&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; foocorp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;gateway
+  &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;uri&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;exact&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+    &lt;span class=&quot;token key atrule&quot;&gt;route&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; inventory.corp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;services.svc.cluster.local
+        &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Apply these YAML resources, then get the &lt;code class=&quot;language-text&quot;&gt;istio-ingressgateway&lt;/code&gt; pod logs for the &lt;code class=&quot;language-text&quot;&gt;ingress-sds&lt;/code&gt; container. You should see that when we applied a resource using specific credentials, the SDS agent mounted those certs and keys into the ingress proxy:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;istio-ingressgateway-6f7d65d984-m2zmn &lt;span class=&quot;token punctuation&quot;&gt;..&lt;/span&gt;.
+RESOURCE NAME:inventory-credential, EVENT: pushed key/cert pair to proxy&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, we’re ready to make requests to our two services from outside the cluster. Note that because we’ve configured mutual TLS, we have to specify &lt;code class=&quot;language-text&quot;&gt;cert&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;key&lt;/code&gt; in addition to &lt;code class=&quot;language-text&quot;&gt;ca-cert&lt;/code&gt;, in order for the server (the Ingress Gateway) to verify the identity of the client.&lt;/p&gt;
+&lt;p&gt;First, from any host outside the cluster, curl the frontend, with the frontend client keys:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ curl -HHost:frontend.foocorp.com \
+--resolve frontend.foocorp.com:$SECURE_INGRESS_PORT:$INGRESS_HOST \
+--cacert frontend.foocorp.com/2_intermediate/certs/ca-chain.cert.pem \
+--cert frontend.foocorp.com/4_client/certs/frontend.foocorp.com.cert.pem \
+--key frontend.foocorp.com/4_client/private/frontend.foocorp.com.key.pem \
+https://frontend.foocorp.com:$SECURE_INGRESS_PORT/
+
+🏗 Welcome to FooCorp - Public Site&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And the internal inventory, with the inventory keys:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ curl -HHost:inventory.foocorp.com \
+--resolve inventory.foocorp.com:$SECURE_INGRESS_PORT:$INGRESS_HOST \
+--cacert inventory.foocorp.com/2_intermediate/certs/ca-chain.cert.pem \
+--cert inventory.foocorp.com/4_client/certs/inventory.foocorp.com.cert.pem \
+--key inventory.foocorp.com/4_client/private/inventory.foocorp.com.key.pem \
+https://inventory.foocorp.com:$SECURE_INGRESS_PORT/
+
+🛠 FooCorp - Inventory [INTERNAL]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What’s actually happening here? Let’s look at the inventory service, and walk through exactly how the Ingress Gateway authenticates the client.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/f2a8f6d3c0ecf6088269d7005e23defc/e7325/auth-steps.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 105.83140877598152%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAAACXBIWXMAAFxGAABcRgEUlENBAAADF0lEQVQ4y41Uy27bMBDM/59z60fkEhQ9FAgKBGiLpmneaVI7jiXbkvUWKYkSKXK6pCs/YrcoAYIURQ5nZ2d5BGrGGGw3+62U2lsHFBS7AMR3GJVh++wwHg2Tvu/BGEOWZVgul4jj2K3XdQ1WlvSvAitiiOwCbf6ZEDi0O2p2Ll4Ddl2HIAgwn8+xWCwceOmAmAO3o5TKzeta0KURJpOJO3eQoR2rqnKhDi3Pc8fYrrdt69hyzt1ee2kURW5uIVaj2QDazRZMa+02pmnquud5jvkAbBkO8+1Q9xg2TePoW/0siO/7SBLSTDQUekHrIWYzH+PxiFgyYiycflrbBG6iPBoSYgHdnBjWNSWAcVpTKIqKmJYYjaZ4mfjuu2kk/a/pMuD0lOHkpNwHFPbvKmmulaWmw4bC5xRySXpKWuuJHRAtK5p3CEOFd+8yHB+nxFivQnYZVh0YhWHRlFZuzPNVchgrwFm+vknRXk76aQwX9ySH2jAs+wLT9hU3xTUe2nvMuhlqVKgIv5XAYyhx/tLjcg78WABnTwK3c4mookRKIiCtO/QGMFIRPrD3+FSf4UZc47q5wox7SCOBpGgwJ3leUoGolEhIZka2IwnBW4qCVJKddix3GHrdFKkim6gEWZ9hnvlIYwFOB5IyIUN+hH72UUUtLgJgmhksuXHgFpCxLcDBkNpoW0QQXYuHh3sEi9IxyfJvJNRXyLsI4VOBcx8YJwZpbVC2pKkD1LtZ3n0Y4HyWZ5IYGszSAOQBsKQl+1TwSIKAGSdFsQY8wND1rUK3tulI8JCS8+yluJ+EePZjxFwirgySyjrCoGv/wnAbeLCNndY8x+PDHcK5Ry+ND9OQhXqiJ1LKTgjB6AHhZv3qHL2txWEsip4Mv3qFoiiG6lv0foj2Z4E+G9OGERBfQRQpAWIf8C2wBRxqdNVIybspmtsM+vUS08cvyEfnkCw7zPAQoNZm57XWUQDl0UstcxTBL4joEbLK/x/QVoCtUSH+9KZGKyrSjRMQ9ZqjJHdz/k/bDDVrXPbs5k03q05lZ1lZ7Thlu+83+v8G5mVZN5IjiuMAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;auth steps&quot;
+        title=&quot;auth steps&quot;
+        src=&quot;/static/f2a8f6d3c0ecf6088269d7005e23defc/b9e4f/auth-steps.png&quot;
+        srcset=&quot;/static/f2a8f6d3c0ecf6088269d7005e23defc/cf440/auth-steps.png 148w,
+/static/f2a8f6d3c0ecf6088269d7005e23defc/d2d38/auth-steps.png 295w,
+/static/f2a8f6d3c0ecf6088269d7005e23defc/b9e4f/auth-steps.png 590w,
+/static/f2a8f6d3c0ecf6088269d7005e23defc/f9b6a/auth-steps.png 885w,
+/static/f2a8f6d3c0ecf6088269d7005e23defc/2d849/auth-steps.png 1180w,
+/static/f2a8f6d3c0ecf6088269d7005e23defc/e7325/auth-steps.png 3464w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Client requests the host &lt;code class=&quot;language-text&quot;&gt;https://inventory.foocorp.com:443&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;DNS for &lt;code class=&quot;language-text&quot;&gt;inventory.foocorp.com&lt;/code&gt; resolves to the Istio Ingress Gateway’s public IP, provisioned by default with a Kubernetes Service &lt;code class=&quot;language-text&quot;&gt;type=LoadBalancer&lt;/code&gt;. The Ingress Gateway presents its cert and key to the client.&lt;/li&gt;
+&lt;li&gt;Client verifies the Ingress Gateway’s identity with the Certificate Authority (CA).&lt;/li&gt;
+&lt;li&gt;Client presents its cert and key to the Ingress Gateway.&lt;/li&gt;
+&lt;li&gt;Server (Ingress Gateway) verifies client’s identity with the CA.&lt;/li&gt;
+&lt;li&gt;A secure connection is established between the client and the Ingress Gateway, and the Ingress Gateway forwards requests to the &lt;code class=&quot;language-text&quot;&gt;inventory&lt;/code&gt; Service.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;🎊 We did it! From here, you can keep adding new services, and scale out the Ingress Gateway replicas to support a secure, centrally-managed ingress for your cluster.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Learn More:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#gateways&quot;&gt;Istio Ingress Gateway - Concepts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-sds/#configure-a-tls-ingress-gateway-for-multiple-hosts&quot;&gt;Istio SDS Ingress, server-side TLS only&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-mount/#before-you-begin&quot;&gt;Istio SDS Ingress, manual file-mount approach&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded></item></channel></rss>
