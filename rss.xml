@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 18 Dec 2019 21:39:46 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Istio By Example]]></title><description><![CDATA[Service Mesh Made Simple]]></description><link>https://istiobyexample.dev/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 27 Dec 2019 21:46:52 GMT</lastBuildDate><item><title><![CDATA[grpc]]></title><description><![CDATA[gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on…]]></description><link>https://istiobyexample.dev//grpc/</link><guid isPermaLink="false">https://istiobyexample.dev//grpc/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot;&gt;gRPC&lt;/a&gt; is a communication protocol for services, built on &lt;a href=&quot;https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/&quot;&gt;HTTP/2&lt;/a&gt;. Unlike REST over HTTP/1, which is based on &lt;a href=&quot;https://en.wikipedia.org/wiki/Representational_state_transfer&quot;&gt;resources&lt;/a&gt;, gRPC is based on &lt;a href=&quot;https://grpc.io/docs/guides/concepts/&quot;&gt;Service Definitions&lt;/a&gt;. You specify service definitions in a format called &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot;&gt;protocol buffers&lt;/a&gt; (“proto”), which can be serialized into an small binary format for transmission.&lt;/p&gt;
 &lt;p&gt;With gRPC, you can generate boilerplate code from &lt;code class=&quot;language-text&quot;&gt;.proto&lt;/code&gt; files into &lt;a href=&quot;https://grpc.io/docs/quickstart/&quot;&gt;multiple programming languages&lt;/a&gt;, making gRPC an ideal choice for polyglot microservices.&lt;/p&gt;
 &lt;p&gt;While gRPC supports some networking use cases like &lt;a href=&quot;https://grpc.io/docs/guides/auth/&quot;&gt;TLS&lt;/a&gt; and &lt;a href=&quot;https://grpc.io/blog/loadbalancing/&quot;&gt;client-side load balancing&lt;/a&gt;, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting &lt;a href=&quot;https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization&quot;&gt;RPC-level authorization&lt;/a&gt;. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://istio.io/about/feature-stages/#traffic-management&quot;&gt;Istio&lt;/a&gt; and its data plane proxy, &lt;a href=&quot;https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc&quot;&gt;Envoy&lt;/a&gt;, both  support gRPC. Let’s see how to manage gRPC traffic with Istio.&lt;/p&gt;
@@ -689,73 +689,7 @@
     &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; hello.default.svc.cluster.local
         &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[mutual tls]]></title><description><![CDATA[A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual…]]></description><link>https://istiobyexample.dev//mtls/</link><guid isPermaLink="false">https://istiobyexample.dev//mtls/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. &lt;a href=&quot;https://en.wikipedia.org/wiki/Mutual_authentication&quot;&gt;Mutual TLS&lt;/a&gt; (mTLS) authentication is a way to encrypt services traffic using &lt;a href=&quot;https://www.internetsociety.org/deploy360/tls/basics/&quot;&gt;certificates&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, &lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;, are shown establishing a secure connection with the mTLS policy in place.&lt;/p&gt;
-&lt;p&gt;&lt;span
-      class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
-    &gt;
-      &lt;a
-    class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/3e8e9/mtls.png&quot;
-    style=&quot;display: block&quot;
-    target=&quot;_blank&quot;
-    rel=&quot;noopener&quot;
-  &gt;
-    &lt;span
-    class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 34.11169170476813%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAJnKAACZygHjkaQiAAABQElEQVQoz4WRXU/jMBBF8/9/Eu+LQLuiBR7QlhIKTQtNGyf+jB0nPrjhCQnBSFdjWbrHcz0Fv1T65jxNE0MYGYaRGM+aZqWUKJwbaBpL1/WfXUW6g6EVnt42meJIYUfqV+DumcI7rYxI7bMG2i5kr+N4NDOjEMKx3bZUVUf5LPCyxv6tUKsKKR7B/iOZG5K9B3NN1Eu6astYdvkhzamuOTU9+51kl1W0rWO9PrFaHXnN0EksCIsd/cMC061BX5H0NcmX0D8ymUvU8oLhSRDKOzZPS8pSsdk081AzcL+XSNlT1xo/QDharErIepkhdxlW5eT/58gxNIh3g1vnNC7RtB6tPIeD5u1NUYzjhDEBlS+1zl06pPEoHYnyT458O8OSfyFFMS/F5n+X9uzps8fP3vNA3keKX7ec4pctnzf5U30ADZwaIEs3XGIAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
-  &gt;&lt;/span&gt;
-  &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;Diagram&quot;
-        title=&quot;Diagram&quot;
-        src=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/b9e4f/mtls.png&quot;
-        srcset=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/cf440/mtls.png 148w,
-/static/4023fdf6c75d10290a6dd65f63b7471e/d2d38/mtls.png 295w,
-/static/4023fdf6c75d10290a6dd65f63b7471e/b9e4f/mtls.png 590w,
-/static/4023fdf6c75d10290a6dd65f63b7471e/f9b6a/mtls.png 885w,
-/static/4023fdf6c75d10290a6dd65f63b7471e/2d849/mtls.png 1180w,
-/static/4023fdf6c75d10290a6dd65f63b7471e/3e8e9/mtls.png 6124w&quot;
-        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
-      /&gt;
-  &lt;/a&gt;
-    &lt;/span&gt;&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; authentication.istio.io/v1alpha1
-&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; MeshPolicy
-&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; default
-&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token key atrule&quot;&gt;peers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;mtls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; STRICT&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
-&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; DestinationRule
-&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; default
-  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; istio&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;system
-&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; *.local
-  &lt;span class=&quot;token key atrule&quot;&gt;trafficPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ISTIO_MUTUAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Here, a &lt;code class=&quot;language-text&quot;&gt;MeshPolicy&lt;/code&gt; enforces TLS for all services &lt;em&gt;receiving&lt;/em&gt; requests (server-side), and a &lt;code class=&quot;language-text&quot;&gt;DestinationRule&lt;/code&gt; enforces TLS for all services &lt;em&gt;sending&lt;/em&gt; requests (client-side), resulting in mutual (“both”) TLS.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Authentication Flow:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; application container sends a plain-text HTTP request to &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy container intercepts the outbound request.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy performs a TLS &lt;a href=&quot;https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660_.htm&quot;&gt;handshake&lt;/a&gt; with the server-side proxy. This handshake includes an exchange of certificates. These certs are pre-loaded into the proxy containers by Istio.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy performs a &lt;a href=&quot;https://istio.io/docs/concepts/security/#secure-naming&quot;&gt;secure naming&lt;/a&gt; check on the server’s certificate, verifying that an authorized identity is running the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; establish a mutual TLS connection, and the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; proxy forwards the request to the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; application container.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;Learn more&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/concepts/security/#authentication&quot;&gt;Istio Docs - Authentication&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/GoogleCloudPlatform/istio-samples/tree/77fb1dfb690d28517e410df2911e255d54e3450e/security-intro#authentication&quot;&gt;Samples: Authentication&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/authn-policy/&quot;&gt;Task - Authentication Policies&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/mutual-tls/&quot;&gt;Task - Mutual TLS Deep-Dive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://istio.io/faq/security/#enabling-disabling-mtls&quot;&gt;FAQ - mTLS&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[retry policy]]></title><description><![CDATA[Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like…]]></description><link>https://istiobyexample.dev//retry/</link><guid isPermaLink="false">https://istiobyexample.dev//retry/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.&lt;/p&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[retry policy]]></title><description><![CDATA[Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like…]]></description><link>https://istiobyexample.dev//retry/</link><guid isPermaLink="false">https://istiobyexample.dev//retry/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.&lt;/p&gt;
 &lt;p&gt;Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is &lt;a href=&quot;https://upgear.io/blog/simple-golang-retry-function/&quot;&gt;built into source code&lt;/a&gt;. But with Istio, you can define retry policies &lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#set-number-and-timeouts-for-retries&quot;&gt;with a traffic rule&lt;/a&gt;, offloading this logic to your services’ &lt;a href=&quot;https://istio.io/docs/concepts/what-is-istio/#architecture&quot;&gt;sidecar proxies&lt;/a&gt;. This can help you standardize around the same policies across many services, protocols, and programming languages.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -1644,4 +1578,70 @@ https://inventory.foocorp.com:$SECURE_INGRESS_PORT/
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/concepts/traffic-management/#gateways&quot;&gt;Istio Ingress Gateway - Concepts&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-sds/#configure-a-tls-ingress-gateway-for-multiple-hosts&quot;&gt;Istio SDS Ingress, server-side TLS only&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-mount/#before-you-begin&quot;&gt;Istio SDS Ingress, manual file-mount approach&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[mutual tls]]></title><description><![CDATA[A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual…]]></description><link>https://istiobyexample.dev//mtls/</link><guid isPermaLink="false">https://istiobyexample.dev//mtls/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. &lt;a href=&quot;https://en.wikipedia.org/wiki/Mutual_authentication&quot;&gt;Mutual TLS&lt;/a&gt; (mTLS) authentication is a way to encrypt services traffic using &lt;a href=&quot;https://www.internetsociety.org/deploy360/tls/basics/&quot;&gt;certificates&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, &lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;, are shown establishing a secure connection with the mTLS policy in place.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/3e8e9/mtls.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34.11169170476813%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAJnKAACZygHjkaQiAAABQElEQVQoz4WRXU/jMBBF8/9/Eu+LQLuiBR7QlhIKTQtNGyf+jB0nPrjhCQnBSFdjWbrHcz0Fv1T65jxNE0MYGYaRGM+aZqWUKJwbaBpL1/WfXUW6g6EVnt42meJIYUfqV+DumcI7rYxI7bMG2i5kr+N4NDOjEMKx3bZUVUf5LPCyxv6tUKsKKR7B/iOZG5K9B3NN1Eu6astYdvkhzamuOTU9+51kl1W0rWO9PrFaHXnN0EksCIsd/cMC061BX5H0NcmX0D8ymUvU8oLhSRDKOzZPS8pSsdk081AzcL+XSNlT1xo/QDharErIepkhdxlW5eT/58gxNIh3g1vnNC7RtB6tPIeD5u1NUYzjhDEBlS+1zl06pPEoHYnyT458O8OSfyFFMS/F5n+X9uzps8fP3vNA3keKX7ec4pctnzf5U30ADZwaIEs3XGIAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Diagram&quot;
+        title=&quot;Diagram&quot;
+        src=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/b9e4f/mtls.png&quot;
+        srcset=&quot;/static/4023fdf6c75d10290a6dd65f63b7471e/cf440/mtls.png 148w,
+/static/4023fdf6c75d10290a6dd65f63b7471e/d2d38/mtls.png 295w,
+/static/4023fdf6c75d10290a6dd65f63b7471e/b9e4f/mtls.png 590w,
+/static/4023fdf6c75d10290a6dd65f63b7471e/f9b6a/mtls.png 885w,
+/static/4023fdf6c75d10290a6dd65f63b7471e/2d849/mtls.png 1180w,
+/static/4023fdf6c75d10290a6dd65f63b7471e/3e8e9/mtls.png 6124w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; authentication.istio.io/v1alpha1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; MeshPolicy
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; default
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;peers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;mtls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; STRICT&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;yaml&quot;&gt;&lt;pre class=&quot;language-yaml&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.istio.io/v1alpha3
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; DestinationRule
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; default
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; istio&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;system
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*.local&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;trafficPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ISTIO_MUTUAL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here, a &lt;code class=&quot;language-text&quot;&gt;MeshPolicy&lt;/code&gt; enforces TLS for all services &lt;em&gt;receiving&lt;/em&gt; requests (server-side), and a &lt;code class=&quot;language-text&quot;&gt;DestinationRule&lt;/code&gt; enforces TLS for all services &lt;em&gt;sending&lt;/em&gt; requests (client-side), resulting in mutual (“both”) TLS.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Authentication Flow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; application container sends a plain-text HTTP request to &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy container intercepts the outbound request.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy performs a TLS &lt;a href=&quot;https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660_.htm&quot;&gt;handshake&lt;/a&gt; with the server-side proxy. This handshake includes an exchange of certificates. These certs are pre-loaded into the proxy containers by Istio.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; proxy performs a &lt;a href=&quot;https://istio.io/docs/concepts/security/#secure-naming&quot;&gt;secure naming&lt;/a&gt; check on the server’s certificate, verifying that an authorized identity is running the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;client&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; establish a mutual TLS connection, and the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; proxy forwards the request to the &lt;code class=&quot;language-text&quot;&gt;server&lt;/code&gt; application container.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Learn more&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/concepts/security/#authentication&quot;&gt;Istio Docs - Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/GoogleCloudPlatform/istio-samples/tree/77fb1dfb690d28517e410df2911e255d54e3450e/security-intro#authentication&quot;&gt;Samples: Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/authn-policy/&quot;&gt;Task - Authentication Policies&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/docs/tasks/security/mutual-tls/&quot;&gt;Task - Mutual TLS Deep-Dive&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://istio.io/faq/security/#enabling-disabling-mtls&quot;&gt;FAQ - mTLS&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded></item></channel></rss>
