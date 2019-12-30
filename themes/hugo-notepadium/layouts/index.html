@@ -1,0 +1,40 @@
+{{- define "main" -}}
+
+<h2 class="category-header">Traffic Management</h2>
+    <div class="wrapper">
+    {{ range $.Site.Data.items.traffic }}
+    <div>
+        <a class="example-link" href="{{- .url | relURL -}}">
+        <img class="example-thumbnail" src="{{.thumb}}" alt="{{.title}}" />
+        <span class="example-title">{{- .title -}}</span>
+        </a>
+    </div>
+{{ end }}
+</div>
+
+<h2 class="category-header">Security</h2>
+    <div class="wrapper">
+    {{ range $.Site.Data.items.security }}
+    <div>
+        <a class="example-link" href="{{- .url | relURL -}}">
+        <img class="example-thumbnail" src="{{.thumb}}" alt="{{.title}}" />
+        <span class="example-title">{{- .title -}}</span>
+        </a>
+    </div>
+{{ end }}
+</div>
+
+<h2 class="category-header">Observability</h2>
+    <div class="wrapper">
+    {{ range $.Site.Data.items.observability }}
+    <div>
+        <a class="example-link" href="{{- .url | relURL -}}">
+        <img class="example-thumbnail" src="{{.thumb}}" alt="{{.title}}" />
+        <span class="example-title">{{- .title -}}</span>
+        </a>
+    </div>
+{{ end }}
+</div>
+
+
+{{- end -}}
