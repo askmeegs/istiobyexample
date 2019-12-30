@@ -2,7 +2,7 @@
 {{- $justify := false -}}
 {{- if and (isset .Params "justify") (eq .Params.justify true) -}} {{- $justify = true -}} {{- end -}}
 <section class="article-header" {{- if $justify -}}style="text-align: justify;" {{- end -}}>
-    <h1>{{- .Title | safeHTML -}}</h1>
+    <h1 class="article-title">{{- .Title | safeHTML -}}</h1>
 </section>
 <div class="flex-body">
 <article class="markdown-body" {{- if $justify -}}style="text-align: justify;" {{- end -}}>

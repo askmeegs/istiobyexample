@@ -1,7 +1,12 @@
 :root {
   color-scheme: light dark;
   supported-color-schemes: light dark;
+  --spacing: 24px;
+  --min-card-width: 250px;
+  --ratio-percent: 75%;
+  --addl-height: 100px;
 }
+
 
 *,
 :after,
@@ -13,17 +18,18 @@
 
 html {
   font-family: 'Noto Sans', Arial, sans-serif;
-  font-size: 17px;
+  display: inline-block;
+  font-size:calc(12px + 0.3vw);
   font-weight: 400;
   line-height: 1.7;
 }
 
 body {
   text-align: center;
-  display: block;
+  display: inline-block;
   color: #303033;
   background-color: #fff;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   word-wrap: break-word;
 
@@ -46,18 +52,17 @@ body {
 .wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  text-align: center;
   grid-gap: 10px;
-  padding-bottom: 2rem;
-  padding-top: 1rem;
+  padding-bottom: 2vw;
+  padding-top: 1vw;
   justify-content: center;
   justify-self: center;
   align-self: center;
 }
 
-.wrapper > div {
-  justify-self: center;
-  align-self: center;
-  padding: 15px;
+.wrapper-box {
+  padding: 10px;
   border-top: 1px solid gray;
   border-left: 1px solid gray;
   border-bottom: 1px solid gray;
@@ -65,21 +70,26 @@ body {
 }
 
 
+
 .category-header {
-  font-size: 1.6rem;
-  padding-top: 1rem;
+  font-size:calc(20px + 0.6vw);
+  padding-top: 1vw;
 }
 
 .example-thumbnail {
-  height: 15rem;
+  width: 35vw;
+  height: 18vw;
+  text-align: left;
+  align-self: left;
+  justify-content: left;
   object-fit: cover;
 }
 
 .example-title {
   color: black;
   font-family: 'Chivo';
-  font-weight: 300;
-  font-size: 1.3rem;
+  font-weight: 200;
+  font-size:calc(14px + 0.5vw);
 }
 
 
@@ -271,7 +281,7 @@ figure {
 figcaption>h4,
 .markdown-body .image-container .caption .title {
   text-align: left;
-  display: inline-block;
+  display: block;
   color: currentColor;
   font-size: 14px;
   font-weight: 400;
@@ -297,11 +307,12 @@ strong {
 }
 
 .max-width {
-  max-width: 68%;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 .max-body-width {
-  max-width: 100%;
+  max-width: 68%;
 }
 
 .base-body {
@@ -338,7 +349,7 @@ strong {
   color: black;
   font-family: 'Chivo';
   display: inline-block;
-  font-size: 2.6rem;
+  font-size:calc(24px + 1.2vw);
   font-weight: 300;
   padding-left: 0.7rem;
   vertical-align: middle;
@@ -352,7 +363,7 @@ strong {
 }
 
 .site-logo {
-  height: 3rem;
+  height:calc(24px + 2.2vw);
   vertical-align: middle;
   border-radius: 3px;
 }
@@ -386,6 +397,8 @@ strong {
 
 .flex-body {
   margin: auto;
+  min-width: 70%;
+  display: block;
   padding-bottom: 20px;
   text-align: center;
 }
@@ -496,7 +509,11 @@ strong {
 
 
 .article-header {
-  padding-top: 10px;
+  padding-top: 0.5vw;
+}
+
+.article-title {
+  font-size:calc(20px + 0.7vw);
 }
 
 .article-tag:hover,
@@ -604,13 +621,12 @@ strong {
 
 .markdown-body {
   text-align: left;
-  max-width: 65%;
   display: block;
-  margin: 0 auto;
+  min-width: 50%;
+  max-width: 65%;
+  margin: auto;
   color: #838387;
   padding-top: 30px;
-  justify-content: center;
-  align-self: center;
 }
 
 .markdown-body> :first-child {
@@ -872,32 +888,3 @@ strong {
   overflow: auto;
 }
 
-@media (max-width: 375px) {
-  html {
-    font-size: 15px;
-  }
-
-  h1 {
-    font-size: 25px;
-  }
-
-  h2 {
-    font-size: 23px;
-  }
-
-  h3 {
-    font-size: 21px;
-  }
-
-  h4 {
-    font-size: 19px;
-  }
-
-  h5 {
-    font-size: 17px;
-  }
-
-  h6 {
-    font-size: 15px;
-  }
-}
