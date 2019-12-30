@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only"><title>Path-Based Routing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.810fae1cc4b2e46d723e67ea65ca0166c0fe859456e33f25105ecb35735da01bc23a987693d5e51563cb918ef9544c88.css" integrity="sha384-gQ&#43;uHMSy5G1yPmfqZcoBZsD&#43;hZRW4z8lEF7LNXNdoBvCOph2k9XlFWPLkY75VEyI"><body>
+    <div class="base-body max-width"><section id="header" class="header max-body-width">
+    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+            <span class="site-name">Istio By Example</span></a></p>
+</section><div id="content" class="flex-body max-body-width"><section class="article-header">
+    <h1 class="article-title">Path-Based Routing</h1>
+</section>
+<div class="flex-body">
+<article class="markdown-body"><p>Istio and <a href="https://istio.io/docs/concepts/what-is-istio/#envoy"target="_blank">Envoy</a> work at the Application traffic layer (L7), allowing you to direct and load-balance traffic based on attributes like HTTP headers. This example shows how to direct traffic <a href="https://istio.io/docs/concepts/traffic-management/#match-request-uri"target="_blank">based on the request URI</a> path.</p>
+<p>In this example, <code>myapp</code> is the server backend for a website, used by the <code>frontend</code>. An engineering team has implemented a new user authentication service, <code>auth</code>, which now operates as a separate service.</p>
+<p>Using an Istio <a href="https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#HTTPMatchRequest"target="_blank">match rule</a>, we redirect any request with the <code>/login</code> prefix to the new <code>auth</code> service, and direct all other <code>myapp</code> requests to the existing backend.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="/images/path-based-urimatch.png"><img class="img" src="/images/path-based-urimatch.png"
+        alt="URI Match with Istio"/></a></p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>auth-redirect<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>myapp<span class="w">
+</span><span class="w">  </span>http<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>match<span class="p">:</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>uri<span class="p">:</span><span class="w">
+</span><span class="w">        </span>prefix<span class="p">:</span><span class="w"> </span><span class="s2">&#34;/login&#34;</span><span class="w">
+</span><span class="w">    </span>route<span class="p">:</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
+</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>auth<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
+</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>myapp<span class="w">
+</span></code></pre></div></article>
+</div><section id="footer" class="footer">
+    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a></p>
+</section></div>
+    </div>
+</body>
+
+</html>
