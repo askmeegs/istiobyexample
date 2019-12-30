@@ -1,0 +1,17 @@
+[Envoy (Epoch 0)] [2019-12-30 20:07:29.679][25][debug][rbac] [external/envoy/source/extensions/filters/http/rbac/rbac_filter.cc:67] checking request: remoteAddress: 10.60.1.14:47640, localAddress: 10.60.1.13:8080, ssl: none, headers: ':authority', 'shoes'
+':path', '/'
+':method', 'GET'
+'user-agent', 'curl/7.64.0'
+'accept', '*/*'
+'x-forwarded-proto', 'http'
+'x-request-id', '1f0f6fd7-6fd8-49cd-93e4-9fd21523a24c'
+'x-istio-attributes', 'Cj0KGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIhEh9zaG9lcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCjsKF2Rlc3RpbmF0aW9uLnNlcnZpY2UudWlkEiASHmlzdGlvOi8vZGVmYXVsdC9zZXJ2aWNlcy9zaG9lcwojChhkZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWUSBxIFc2hvZXMKKgodZGVzdGluYXRpb24uc2VydmljZS5uYW1lc3BhY2USCRIHZGVmYXVsdAo/Cgpzb3VyY2UudWlkEjESL2t1YmVybmV0ZXM6Ly9pbnZlbnRvcnktNTk0YzVkNDliYi00Z3drcC5kZWZhdWx0'
+'x-b3-traceid', '3d14a32ff283a29248dc7d8dfbe10431'
+'x-b3-spanid', '48dc7d8dfbe10431'
+'x-b3-sampled', '0'
+'content-length', '0'
+, dynamicMetadata: filter_metadata {
+  key: "istio_authn"
+  value {
+  }
+}

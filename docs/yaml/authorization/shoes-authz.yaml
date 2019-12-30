@@ -1,0 +1,16 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "shoes-writer"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: shoes
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/inventory-sa"]
+    # to:
+    # - operation:
+    #     methods: ["POST"]

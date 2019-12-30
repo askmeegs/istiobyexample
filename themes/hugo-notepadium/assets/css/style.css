@@ -308,7 +308,7 @@ strong {
 
 .max-width {
   min-width: 100%;
-  max-width: 100%;
+
 }
 
 .max-body-width {
@@ -397,7 +397,6 @@ strong {
 
 .flex-body {
   margin: auto;
-  min-width: 70%;
   display: block;
   padding-bottom: 20px;
   text-align: center;

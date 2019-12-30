@@ -7,8 +7,9 @@
         {{- partial "header.html" . -}}
         <div id="content" class="flex-body max-body-width">
             {{- block "main" . -}}{{- end -}}
+            {{- partial "footer.html" . -}}
+
         </div>
-        {{- partial "footer.html" . -}}
     </div>
 </body>
 

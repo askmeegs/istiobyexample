@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: shoes-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shoes
+spec:
+  selector:
+    matchLabels:
+      app: shoes
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shoes
+    spec:
+      serviceAccountName: shoes-sa
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: gcr.io/pancakes20/echo:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "🥾 Shoes service"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shoes
+spec:
+  type: ClusterIP
+  selector:
+    app: shoes
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: inventory-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory
+spec:
+  selector:
+    matchLabels:
+      app: inventory
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      serviceAccountName: inventory-sa
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: gcr.io/pancakes20/echo:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "🗃 Inventory service 🌟"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+spec:
+  type: ClusterIP
+  selector:
+    app: inventory
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: users-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+spec:
+  selector:
+    matchLabels:
+      app: users
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      serviceAccountName: users-sa
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: gcr.io/pancakes20/echo:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "👥 Users service"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users
+spec:
+  type: ClusterIP
+  selector:
+    app: users
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
