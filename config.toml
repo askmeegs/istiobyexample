@@ -21,8 +21,8 @@ slogan = ""
 license = ""  # CC License
 
 [params.syntax]
-use = "none"  # builtin: "prismjs", "hljs". "none" means Chroma
-theme = "dracula"
+use = "chroma"  # builtin: "prismjs", "hljs". "none" means Chroma
+theme = "borland"
 darkTheme = "xcode-dark"  # apply this theme in dark mode
 webFonts = true  # builtin: 'Source Code Pro'
 

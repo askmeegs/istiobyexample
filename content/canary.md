@@ -1,3 +1,7 @@
++++
+title = "Canary Deployments"
++++
+
 
 A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based [traffic splitting](https://istio.io/docs/concepts/traffic-management/#routing-versions) to direct a small amount of traffic to the new version. Then you can run a [canary analysis](https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze) on v2 (like check latency and error rate), and finally direct more traffic at the new version until it's serving all traffic.
 
