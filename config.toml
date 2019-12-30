@@ -1,0 +1,31 @@
+baseURL = "/"
+title = "Istio By Example"
+theme = "hugo-notepadium"
+copyright = ""
+
+languageCode = "en-us"
+hasCJKLanguage = false
+
+enableRobotsTXT = false
+
+[markup.highlight]
+codeFences = true
+noClasses = false
+
+[markup.goldmark.renderer]
+unsafe = true  # enable raw HTML in Markdown
+
+[params]
+logo = "/images/istio-logo.png"  # if you have a logo png
+slogan = ""
+license = ""  # CC License
+
+[params.syntax]
+use = "chroma"  # builtin: "prismjs", "hljs". "none" means Chroma
+theme = "borland"
+darkTheme = "xcode-dark"  # apply this theme in dark mode
+webFonts = true  # builtin: 'Source Code Pro'
+
+[params.nav]
+showCategories = false       # /categories/
+showTags = false             # /tags/

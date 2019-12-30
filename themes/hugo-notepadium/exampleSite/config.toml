@@ -1,0 +1,50 @@
+baseURL = "https://example.com"
+title = "Notepadium"
+theme = "hugo-notepadium"
+copyright = "©2019 Notepadium."
+
+languageCode = "zh-cn"
+hasCJKLanguage = true
+
+enableRobotsTXT = true
+
+# Enable Disqus
+#disqusShortname = "XXX"
+
+# Google Analytics
+#googleAnalytics = "UA-123-45"
+
+[markup.highlight]
+codeFences = true
+noClasses = false
+
+[markup.goldmark.renderer]
+unsafe = true  # enable raw HTML in Markdown
+
+[params]
+style = "auto"  # default: auto. light: light theme, dark: dark theme, auto: based on system.
+logo = ""
+slogan = "100% JavaScript-free"
+#license = "<a rel=license href=http://creativecommons.org/licenses/by-nc-sa/4.0/><img alt=Creative Commons License style=border-width:0 src=https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png /></a><br />This work is licensed under a <a rel=license href=http://creativecommons.org/licenses/by-nc-sa/4.0/>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>."
+
+[params.math]
+enable = false # load math globally.  default: false
+use = "katex"  # builtin: "katex", "mathjax".  default: "katex"
+
+[params.syntax]
+use = "none"  # builtin: "prismjs", "hljs". "none" means Chroma
+theme = "xcode"
+darkTheme = "xcode-dark"
+webFonts = true  # builtin: 'Source Code Pro'
+
+[params.nav]
+showCategories = true       # /categories/
+showTags = true             # /tags/
+
+[[params.nav.custom]]
+title = "About"
+url = "/about"
+
+[[params.nav.custom]]
+title = "Hugo"
+url = "https://gohugo.io/"

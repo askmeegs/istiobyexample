@@ -1,0 +1,84 @@
+[[traffic]]
+title = "Canary Deployments"
+thumb = "/images/t-canary.png"
+url = "/canary"
+
+[[traffic]]
+title = "gRPC"
+thumb = "/images/t-grpc.png"
+url = "/grpc"
+
+[[traffic]]
+title = "Ingress"
+thumb = "/images/t-ingress.png"
+url = "/ingress"
+
+[[traffic]]
+title = "External Services"
+thumb = "/images/t-currency.png"
+url = "/external-services"
+
+[[traffic]]
+title = "Load Balancing"
+thumb = "/images/t-lb.png"
+url = "/load-balancing"
+
+[[traffic]]
+title = "Locality Load Balancing"
+thumb = "/images/t-locality.png"
+url = "/locality-load-balancing"
+
+[[traffic]]
+title = "Path-Based Routing"
+thumb = "/images/t-path.png"
+url = "/path-based-routing"
+
+[[traffic]]
+title = "Modify Response Headers"
+thumb = "/images/t-headers.png"
+url = "/response-headers"
+
+[[traffic]]
+title = "Retry Logic"
+thumb = "/images/t-retry.png"
+url = "/retry"
+
+[[traffic]]
+title = "Database Traffic"
+thumb = "/images/t-databases.png"
+url = "/databases"
+
+[[traffic]]
+title = "Traffic Mirroring"
+thumb = "/images/t-mirroring.png"
+url = "/traffic-mirroring"
+
+[[traffic]]
+title = "Virtual Machines"
+thumb = "/images/t-vms.png"
+url = "/virtual-machines"
+
+[[security]]
+title = "Mutual TLS"
+thumb = "/images/t-mtls.png"
+url = "/mtls"
+
+[[security]]
+title = "JWT"
+thumb = "/images/t-jwt.png"
+url = "/jwt"
+
+[[security]]
+title = "Authorization"
+thumb = "/images/t-authz.png"
+url = "/authorization"
+
+[[security]]
+title = "Secure Ingress"
+thumb = "/images/t-secure-ingress.png"
+url = "/secure-ingress"
+
+[[observability]]
+title = "Bring Your Own Prometheus"
+thumb = "/images/t-prometheus.png"
+url = "/prometheus"
