@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only"><title>Locality Load Balancing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.988c39bc0407abca60efde60cc162f7900ca228947877e93b72e80e2d7e1281beb7941359db3cc1efce23d5435dc05ae.css" integrity="sha384-mIw5vAQHq8pg795gzBYveQDKIolHh36Tty6A4tfhKBvreUE1nbPMHvziPVQ13AWu"><body>
+<div class="base-body max-width">
+<div id="content" class="flex-body max-body-width"><section id="header" class="header max-body-width"><p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+<span class="site-name">Istio By Example</span></a></p></section><h1 class="article-title">Locality Load Balancing</h1>
+</section>
+<article class="markdown-body"><p>If you're running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.</p>
+<p>Istio can help you automatically handle regional traffic using a feature called <strong>locality load balancing.</strong> Let's see how.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="/images/loc-default.png"><img class="img" src="/images/loc-default.png" alt="default"/></a></p>
+<p>Here, we have two Kubernetes clusters running in two different cloud regions, <code>us-central</code> and <code>us-east</code>.
+The Istio control plane is running in <code>us-east</code>, and we have set up <a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/191859c03e73da7e98d451c967cefe24101d1933/multicluster-gke/single-control-plane#demo-multicluster-istio--single-control-plane"target="_blank">single control plane</a> Istio multicluster, so that services running in both clusters can reach each other.</p>
+<p>When we started both clusters, the cloud provider added region-specific <code>failure-domain</code> labels to the Kubernetes nodes:</p>
+<pre><code>failure-domain.beta.kubernetes.io/region: us-central1
+failure-domain.beta.kubernetes.io/zone: us-central1-b
+</code></pre><p>Istio will populate requests with these locality labels, allowing Istio to redirect requests to the closest available region.</p>
+<p>Both clusters are running an Istio-injected service called <code>echo</code>, which prints its location when accessed on port <code>80</code>. The central cluster is also running a <code>loadgen</code> service that calls <code>echo.default.svc.cluster.local:80</code> every second.</p>
+<p>By default, the Kubernetes Service behavior is round-robin, between the two <code>echo</code> servers on both clusters:</p>
+<pre><code>$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL
+$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL
+</code></pre><p>We can enable locality load balancing by adding an <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/#OutlierDetection"target="_blank">outlier detection</a> Istio DestinationRule on the <code>east</code> cluster:</p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>echo-outlier-detection<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span>echo.default.svc.cluster.local<span class="w">
+</span><span class="w">  </span>trafficPolicy<span class="p">:</span><span class="w">
+</span><span class="w">    </span>connectionPool<span class="p">:</span><span class="w">
+</span><span class="w">      </span>tcp<span class="p">:</span><span class="w">
+</span><span class="w">        </span>maxConnections<span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">      </span>http<span class="p">:</span><span class="w">
+</span><span class="w">        </span>http2MaxRequests<span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">        </span>maxRequestsPerConnection<span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">    </span>outlierDetection<span class="p">:</span><span class="w">
+</span><span class="w">      </span>consecutiveErrors<span class="p">:</span><span class="w"> </span><span class="m">7</span><span class="w">
+</span><span class="w">      </span>interval<span class="p">:</span><span class="w"> </span>30s<span class="w">
+</span><span class="w">      </span>baseEjectionTime<span class="p">:</span><span class="w"> </span>30s<span class="w">
+</span></code></pre></div><p>Now, all <code>loadgen</code> requests are routed to the closest instance of <code>echo</code>, running in <code>us-central</code>:</p>
+<pre><code>$ ✨ Hello World! - CENTRAL
+$ ✨ Hello World! - CENTRAL
+$ ✨ Hello World! - CENTRAL
+</code></pre><p><a target="_blank" rel="noopener noreferrer" href="/images/loc-locality.png"><img class="img" src="/images/loc-locality.png" alt="locality"/></a></p>
+<p>If we delete the <code>echo</code> Deployment running in <code>us-central</code>, Istio will redirect <code>loadgen</code> requests to the <code>echo</code> Pod running in <code>us-east</code>:</p>
+<pre><code>$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+</code></pre><p><a target="_blank" rel="noopener noreferrer" href="/images/loc-failover.png"><img class="img" src="/images/loc-failover.png" alt="failover"/></a></p>
+<p>We can also add a percentage-based load balancing rule for mesh-wide traffic, in the global Istio installation settings:</p>
+<pre><code>    localityLbSetting:
+      distribute:
+      - from: us-central1/*
+        to:
+          us-central1/*: 20
+          us-east1/*: 80
+</code></pre><p>Now, all services running in both clusters will share requests 80/20, between <code>us-east</code> and <code>us-central</code>. No VirtualServices are needed.</p>
+<pre><code>$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ 🌊 Hello World! - EAST
+$ ✨ Hello World! - CENTRAL
+</code></pre><p><a target="_blank" rel="noopener noreferrer" href="/images/loc-splittraffic.png"><img class="img" src="/images/loc-splittraffic.png" alt="split"/></a></p>
+<p>To learn more about Locality-based load balancing with Istio, see the <a href="https://istio.io/docs/ops/traffic-management/locality-load-balancing/"target="_blank">Istio documentation</a>.</p>
+</article></div><section id="footer" class="footer max-body-width">
+<p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a></p>
+</section></div>
+</body>
+</html>

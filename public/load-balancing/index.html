@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet"><meta name="generator" content="Hugo 0.62.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only"><title>Load Balancing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.988c39bc0407abca60efde60cc162f7900ca228947877e93b72e80e2d7e1281beb7941359db3cc1efce23d5435dc05ae.css" integrity="sha384-mIw5vAQHq8pg795gzBYveQDKIolHh36Tty6A4tfhKBvreUE1nbPMHvziPVQ13AWu"><body>
+<div class="base-body max-width">
+<div id="content" class="flex-body max-body-width"><section id="header" class="header max-body-width"><p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+<span class="site-name">Istio By Example</span></a></p></section><h1 class="article-title">Load Balancing</h1>
+</section>
+<article class="markdown-body"><p>Kubernetes supports load balancing for <a href="https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer"target="_blank">inbound</a> traffic. But what about Kubernetes services inside the cluster?</p>
+<p>When in-cluster services <a href="https://kubernetes.io/docs/concepts/services-networking/#proxy-mode-iptables"target="_blank">communicate</a>, a load balancer called kube-proxy <a href="https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview#services"target="_blank">forwards</a> requests to service pods at random. You can use Istio to add more complex load balancing methods, enabled by Envoy.</p>
+<p>Envoy supports multiple load balancing methods, including <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#random"target="_blank">random</a>, <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-round-robin"target="_blank">round-robin</a>, and <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-least-request"target="_blank">least request</a>.</p>
+<p>Let's see how to use Istio to add <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#weighted-least-request"target="_blank"><strong>least request</strong></a> load balancing for a service called <code>payments</code>, which processes all transactions for a web <code>frontend</code>. The payments service is backed by three pods.</p>
+<p>In this least request algorithm, the client-side Envoy will first choose two instances at random. Then, it will forward the request to the instance with the fewest number of active requests, to help ensure even load balancing across all instances.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="/images/lb-least-requests.png"><img class="img" src="/images/lb-least-requests.png" alt="load balancing"/></a></p>
+<p>To enable this functionality, we create an Istio <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/"target="_blank">DestinationRule</a> with a <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/#LoadBalancerSettings-SimpleLB"target="_blank"><code>LEAST_CONN</code></a> load balancer:</p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>payments-load-balancer<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span>payments.prod.svc.cluster.local<span class="w">
+</span><span class="w">  </span>trafficPolicy<span class="p">:</span><span class="w">
+</span><span class="w">      </span>loadBalancer<span class="p">:</span><span class="w">
+</span><span class="w">        </span>simple<span class="p">:</span><span class="w"> </span>LEAST_CONN<span class="w">
+</span></code></pre></div><p>Check out the <a href="https://istio.io/docs/concepts/traffic-management/#load-balancing-3-subsets"target="_blank">Istio docs</a> to see how to add multiple load balancing methods for a single host.</p>
+</article></div><section id="footer" class="footer max-body-width">
+<p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a></p>
+</section></div>
+</body>
+</html>
