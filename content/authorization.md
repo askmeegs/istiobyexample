@@ -14,7 +14,7 @@ Here, the _ShoeStore_ application is deployed to the `default` Kubernetes namesp
 2. **users**: stores purchase history
 3. **inventory**: loads new shoe models into shoes.
 
-We want to authorize the inventory service to be able to `POST` data to the shoes services, and then lock down all access to the users service. To do this, we will create two `AuthorizationPolicies`: one for `shoes`, and one for `users.
+We want to authorize the inventory service to be able to `POST` data to the shoes services, and then lock down all access to the users service. To do this, we will create two `AuthorizationPolicies`: one for `shoes`, and one for `users`.
 
 Before deploying any policies, we can access both shoes and users from inside the inventory service's application container.
 

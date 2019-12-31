@@ -21,7 +21,7 @@
 <li><strong>users</strong>: stores purchase history</li>
 <li><strong>inventory</strong>: loads new shoe models into shoes.</li>
 </ol>
-<p>We want to authorize the inventory service to be able to <code>POST</code> data to the shoes services, and then lock down all access to the users service. To do this, we will create two <code>AuthorizationPolicies</code>: one for <code>shoes</code>, and one for `users.</p>
+<p>We want to authorize the inventory service to be able to <code>POST</code> data to the shoes services, and then lock down all access to the users service. To do this, we will create two <code>AuthorizationPolicies</code>: one for <code>shoes</code>, and one for <code>users</code>.</p>
 <p>Before deploying any policies, we can access both shoes and users from inside the inventory service's application container.</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -X GET shoes
 🥾 Shoes service
