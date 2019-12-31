@@ -30,7 +30,7 @@ Here, we have a plants service running inside a Kubernetes cluster, with Istio e
       
       <guid>/authorization/</guid>
       <description>Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &amp;ldquo;can this service do what they&#39;re asking to do?&amp;rdquo;
-While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource to define authorization rules for your services. Istio translates this resource into Envoy-readable config, and mounts that config into the Istio sidecar proxies. From here, authorization policy checks are performed by the sidecar proxies.</description>
+While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies.</description>
     </item>
     
     <item>
