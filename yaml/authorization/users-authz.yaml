@@ -1,0 +1,9 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "users-deny-all"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: users

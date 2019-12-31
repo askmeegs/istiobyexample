@@ -68,10 +68,10 @@ title = "JWT"
 thumb = "/images/t-jwt.png"
 url = "/jwt"
 
-# [[security]]
-# title = "Authorization"
-# thumb = "/images/t-authz.png"
-# url = "/authorization"
+[[security]]
+title = "Authorization"
+thumb = "/images/t-authz.png"
+url = "/authorization"
 
 [[security]]
 title = "Secure Ingress"

@@ -11,6 +11,6 @@ spec:
   - from:
     - source:
         principals: ["cluster.local/ns/default/sa/inventory-sa"]
-    # to:
-    # - operation:
-    #     methods: ["POST"]
+    to:
+    - operation:
+        methods: ["POST"]
