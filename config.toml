@@ -10,6 +10,8 @@ hasCJKLanguage = false
 
 enableRobotsTXT = false
 
+googleAnalytics = "UA-41949399-6"
+
 [markup.highlight]
 codeFences = true
 noClasses = false
