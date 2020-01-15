@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: meganokeefe/respy:v0.0.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "🦇 GothamNews Frontend"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: articles
+spec:
+  selector:
+    matchLabels:
+      app: articles
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: articles
+    spec:
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: gcr.io/megandemo/articles:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "🦇 GothamNews Frontend"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: articles
+spec:
+  type: ClusterIP
+  selector:
+    app: articles
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080

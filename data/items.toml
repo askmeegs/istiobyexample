@@ -54,6 +54,11 @@ thumb = "/images/t-mirroring.png"
 url = "/traffic-mirroring"
 
 [[traffic]]
+title = "Multiple Traffic Rules"
+thumb = "/images/t-multiple.png"
+url = "/multiple-traffic-rules"
+
+[[traffic]]
 title = "Virtual Machines"
 thumb = "/images/t-vms.png"
 url = "/virtual-machines"

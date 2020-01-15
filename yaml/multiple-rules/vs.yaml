@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: articles-vs
+spec:
+  hosts:
+  - articles
+  http:
+  - match:
+    - uri:
+        prefix: "/article/breaking-news"
+    route:
+    - destination:
+        host: articles
+      headers:
+        response:
+          add:
+            no-cache: "true"
+      timeout: 2s
+  - match:
+    - uri:
+        prefix: /blog
+    rewrite:
+      uri: /beta/blog
+    route:
+    - destination:
+        host: articles
+      timeout: 2s
+  - route:
+    - destination:
+        host: articles
+    timeout: 2s
+    weight: 100
