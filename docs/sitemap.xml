@@ -13,6 +13,7 @@
     <loc>/load-balancing/</loc></url><url>
     <loc>/locality-load-balancing/</loc></url><url>
     <loc>/response-headers/</loc></url><url>
+    <loc>/multiple-traffic-rules/</loc></url><url>
     <loc>/mtls/</loc></url><url>
     <loc>/path-based-routing/</loc></url><url>
     <loc>/retry/</loc></url><url>

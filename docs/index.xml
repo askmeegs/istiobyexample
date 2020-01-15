@@ -132,6 +132,16 @@ In this example, we will apply an Istio VirtualService to add a new header (hell
     </item>
     
     <item>
+      <title>Multiple Traffic Rules</title>
+      <link>/multiple-traffic-rules/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/multiple-traffic-rules/</guid>
+      <description>Istio supports lots of traffic management use cases, from redirects and traffic splitting to mirroring and retry logic. If you&#39;ve created an Istio VirtualService to define one of these policies for a service, it&#39;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
+Let&#39;s say that we&#39;re on the frontend engineering team for a newspaper&#39;s website.</description>
+    </item>
+    
+    <item>
       <title>Mutual TLS</title>
       <link>/mtls/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
