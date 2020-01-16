@@ -1,6 +1,6 @@
----
-title: Multiple Traffic Rules
----
++++
+title = "Multiple Traffic Rules"
++++
 
 Istio supports lots of [traffic management](https://istio.io/docs/concepts/traffic-management/) use cases, from [redirects](https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRewrite) and [traffic splitting](https://istio.io/docs/tasks/traffic-management/traffic-shifting/) to [mirroring](https://istio.io/docs/tasks/traffic-management/mirroring/) and [retry logic](https://istio.io/docs/concepts/traffic-management/#retries). If you've created an Istio [VirtualService](https://istio.io/docs/reference/config/networking/virtual-service/) to define one of these policies for a service, it's easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
 
@@ -67,7 +67,7 @@ If we request a path starting with `/blog`, that gets rewritten to `/beta/blog`,
 ```bash
 $ curl http://articles:80/blog/2020/new-engineering-blog
 
-{"id":91385,"title":"Welcome to the new News Blog!","publication_date":"2020-01-07T11:45:26.371Z","byline":"The Engineering Team","article_text":"This is our redesigned blog."}
+{"id":91385,"title":"Welcome to the new News Blog!" ...
 ```
 
 And finally, if we write in a 10-second sleep into the article service's application code, we can see our 2-second timeout in action:

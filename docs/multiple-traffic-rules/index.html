@@ -62,7 +62,7 @@
 </code></pre></div><p>If we request a path starting with <code>/blog</code>, that gets rewritten to <code>/beta/blog</code>, and articles knows to serve the <code>/beta/blog</code> path:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl http://articles:80/blog/2020/new-engineering-blog
 
-<span class="o">{</span><span class="s2">&#34;id&#34;</span>:91385,<span class="s2">&#34;title&#34;</span>:<span class="s2">&#34;Welcome to the new News Blog!&#34;</span>,<span class="s2">&#34;publication_date&#34;</span>:<span class="s2">&#34;2020-01-07T11:45:26.371Z&#34;</span>,<span class="s2">&#34;byline&#34;</span>:<span class="s2">&#34;The Engineering Team&#34;</span>,<span class="s2">&#34;article_text&#34;</span>:<span class="s2">&#34;This is our redesigned blog.&#34;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&#34;id&#34;</span>:91385,<span class="s2">&#34;title&#34;</span>:<span class="s2">&#34;Welcome to the new News Blog!&#34;</span> ...
 </code></pre></div><p>And finally, if we write in a 10-second sleep into the article service's application code, we can see our 2-second timeout in action:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl  http://articles:80/
 
