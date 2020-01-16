@@ -10,7 +10,7 @@ In order to lock in the behavior of articles on behalf of the frontend, we'll cr
 
 ![](/images/multiple-functionality.png)
 
-To get this aggregate functionality, we'll create one VirtualService for articles, with three `http` rules: [header modification](/modify-response-headers) for `/breaking-news`, URL rewrite for `/blog`, and a default fallthrough to the articles service. All three rules have a 2-second timeout.
+To get this aggregate functionality, we'll create one VirtualService for articles, with three `http` rules: [header modification](/response-headers) for `/breaking-news`, URL rewrite for `/blog`, and a default fallthrough to the articles service. All three rules have a 2-second timeout.
 
 ![](/images/multiple-vs.png)
 

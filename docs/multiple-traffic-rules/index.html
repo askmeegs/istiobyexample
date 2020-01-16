@@ -16,7 +16,7 @@
 <p>In order to lock in the behavior of articles on behalf of the frontend, we'll create an Istio traffic policy for articles. The frontend's traffic requirements for articles include: returning a <code>no-cache</code> header for any <code>/breaking-news</code> article, rewriting <code>/blog</code> to <code>/beta/blog</code>, and enforcing a 2-second timeout on every request.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-functionality.png"><img class="img" src="/images/multiple-functionality.png"
         alt/></a></p>
-<p>To get this aggregate functionality, we'll create one VirtualService for articles, with three <code>http</code> rules: <a href="/modify-response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
+<p>To get this aggregate functionality, we'll create one VirtualService for articles, with three <code>http</code> rules: <a href="/response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-vs.png"><img class="img" src="/images/multiple-vs.png"
         alt/></a></p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
