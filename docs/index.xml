@@ -65,6 +65,16 @@ Have no fear. Istio provides a resource called a ServiceEntry that lets you logi
     </item>
     
     <item>
+      <title>Fault Injection</title>
+      <link>/fault-injection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/fault-injection/</guid>
+      <description>Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&#39;s important to test your services&amp;rsquo; behavior when upstream dependencies fail.
+Chaos testing is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error.</description>
+    </item>
+    
+    <item>
       <title>gRPC</title>
       <link>/grpc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

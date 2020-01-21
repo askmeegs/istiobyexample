@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insights
+spec:
+  selector:
+    matchLabels:
+      app: insights
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: insights
+    spec:
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: meganokeefe/respy:v0.0.1
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insights
+spec:
+  type: ClusterIP
+  selector:
+    app: insights
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alerts
+spec:
+  selector:
+    matchLabels:
+      app: alerts
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alerts
+    spec:
+      terminationGracePeriodSeconds: 5
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: gcr.io/megandemo/echo:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ECHO
+          value: "🔔 this is the alerts service"
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alerts
+spec:
+  type: ClusterIP
+  selector:
+    app: alerts
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080

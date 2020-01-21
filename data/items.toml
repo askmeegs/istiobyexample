@@ -44,6 +44,11 @@ thumb = "/images/t-retry.png"
 url = "/retry"
 
 [[traffic]]
+title = "Fault Injection"
+thumb = "/images/t-fault-injection.png"
+url = "/fault-injection"
+
+[[traffic]]
 title = "Database Traffic"
 thumb = "/images/t-databases.png"
 url = "/databases"

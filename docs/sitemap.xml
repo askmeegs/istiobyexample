@@ -7,6 +7,7 @@
     <loc>/canary/</loc></url><url>
     <loc>/categories/</loc></url><url>
     <loc>/external-services/</loc></url><url>
+    <loc>/fault-injection/</loc></url><url>
     <loc>/grpc/</loc></url><url>
     <loc>/ingress/</loc></url><url>
     <loc>/jwt/</loc></url><url>
