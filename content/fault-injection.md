@@ -8,7 +8,7 @@ Adopting microservices often means more dependencies, and more services you migh
 
 In a Kubernetes environment, you can approach chaos testing at different layers - for instance, by [deleting pods at random](https://github.com/asobti/kube-monkey#kube-monkey--), or shutting off entire nodes.
 
-But failures also happen at the application layer. Infinite loops, broken client libraries - application code can fail in an infinite number of ways! This is where Istio **[fault injection](https://istio.io/docs/concepts/traffic-management/#fault-injection)** comes in. You can use Istio VirtualServices to do chaos testing at the application layer, by injecting timeouts or HTTP errors into your services at the [Envoy layer](https://www.envoyproxy.io/docs/envoy/v1.5.0/configuration/http_filters/fault_filter#config-http-filters-fault-injection). Let's see how.
+But failures also happen at the application layer. Infinite loops, broken client libraries - application code can fail in an infinite number of ways! This is where Istio **[fault injection](https://istio.io/docs/concepts/traffic-management/#fault-injection)** comes in. You can use Istio VirtualServices to do chaos testing at the application layer, by injecting timeouts or HTTP errors into your services, without actually updating your app code. Let's see how.
 
 ![](/images/fault-injection.png)
 
@@ -54,7 +54,6 @@ fault filter abort
 ```
 
 And we can examine the `insights` logs to see how the client side handled that failure.
-
 
 Note that you can customize these fault injection rules - for instance, fail multiple services at once (by adding more VirtualServices), fail only a [percentage of requests](https://istio.io/docs/reference/config/networking/virtual-service/#HTTPFaultInjection-Abort), or fail only on certain HTTP request headers (like `user-agent`, to test the behavior on certain web browsers).
 You might also want to create your own chaos testing wrapper around Istio, in order to automate the end-to-end chaos testing process (add fault injection rule, inspect client behavior / state). To do this, you could use the [Istio Golang client library](https://github.com/istio/client-go) to programmatically lifecycle VirtualServices on a cluster.
