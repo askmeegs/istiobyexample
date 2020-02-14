@@ -59,6 +59,11 @@ thumb = "/images/t-mirroring.png"
 url = "/traffic-mirroring"
 
 [[traffic]]
+title = "Monitoring Egress Traffic"
+thumb = "/images/t-ptbh.png"
+url = "/monitoring-egress-traffic"
+
+[[traffic]]
 title = "Multiple Traffic Rules"
 thumb = "/images/t-multiple.png"
 url = "/multiple-traffic-rules"

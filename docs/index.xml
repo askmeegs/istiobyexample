@@ -142,6 +142,16 @@ In this example, we will apply an Istio VirtualService to add a new header (hell
     </item>
     
     <item>
+      <title>Monitoring Egress Traffic</title>
+      <link>/monitoring-egress-traffic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/monitoring-egress-traffic/</guid>
+      <description>One way to think about a service mesh is as a domain of control. Within a Kubernetes namespace where Istio sidecar injection is enabled, you can monitor all traffic between Pods, and enforce security policies.
+But what about upstream services that live outside the mesh? How do you determine at runtime which services call external APIs? How do you know which database instance your service is writing to? Or how do you ensure that a service inside the mesh is only sending traffic within its own geographic region?</description>
+    </item>
+    
+    <item>
       <title>Multiple Traffic Rules</title>
       <link>/multiple-traffic-rules/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
