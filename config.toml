@@ -5,12 +5,12 @@ copyright = ""
 
 publishDir = "docs"
 
-languageCode = "en-us"
-hasCJKLanguage = false
+languageCode = "ja"
+hasCJKLanguage = true # use Japanese in summary and word count
 
 enableRobotsTXT = false
 
-googleAnalytics = "UA-41949399-6"
+#googleAnalytics = "UA-41949399-6"
 
 [markup.highlight]
 codeFences = true
@@ -23,6 +23,7 @@ unsafe = true  # enable raw HTML in Markdown
 logo = "/images/istio-logo.png"  # if you have a logo png
 slogan = ""
 license = ""  # CC License
+images = ["/images/istio-logo.png"]
 
 [params.syntax]
 use = "chroma"  # builtin: "prismjs", "hljs". "none" means Chroma
