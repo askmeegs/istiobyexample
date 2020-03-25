@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Modify Response Headers&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Modify Response Headers&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Modify Response Headers</h1>
@@ -15,27 +15,27 @@
 <p><a target="_blank" rel="noopener noreferrer" href="/images/modify-response-headers.png"><img class="img" src="/images/modify-response-headers.png"
         alt/></a></p>
 <p>In this example, we will apply an Istio <a href="https://istio.io/docs/concepts/traffic-management/#virtual-services"target="_blank">VirtualService</a> to add a new header (<code>hello:world</code>), then remove the <code>set-cookie</code> header. Then, all client requests entering the service mesh through the <code>default</code> gateway will receive those modified headers.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>frontend-ingress<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span><span class="s2">&#34;*&#34;</span><span class="w">
-</span><span class="w">  </span>gateways<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>frontend-gateway<span class="w">
-</span><span class="w">  </span>http<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>frontend<span class="w">
-</span><span class="w">        </span>port<span class="p">:</span><span class="w">
-</span><span class="w">          </span>number<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span><span class="w">      </span>headers<span class="p">:</span><span class="w">
-</span><span class="w">        </span>response<span class="p">:</span><span class="w">
-</span><span class="w">          </span>add<span class="p">:</span><span class="w">
-</span><span class="w">            </span>hello<span class="p">:</span><span class="w"> </span>world<span class="w">
-</span><span class="w">          </span>remove<span class="p">:</span><span class="w">
-</span><span class="w">          </span>-<span class="w"> </span><span class="s2">&#34;set-cookie&#34;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>frontend-ingress<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="s2">&#34;*&#34;</span><span class="w">
+</span><span class="w">  </span><span class="k">gateways</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- frontend-gateway<span class="w">
+</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">route</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>frontend<span class="w">
+</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">      </span><span class="k">headers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">response</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">add</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">hello</span><span class="p">:</span><span class="w"> </span>world<span class="w">
+</span><span class="w">          </span><span class="k">remove</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span>- <span class="s2">&#34;set-cookie&#34;</span><span class="w">
 </span></code></pre></div><p>Before we apply the VirtualService, the <code>frontend</code> service returns the following response headers:</p>
 <pre><code>HTTP/1.1 200 OK
 set-cookie: shop_session-id=432bef95-0d25-4754-80c8-3904c2e329e9; Max-Age=172800
@@ -55,18 +55,7 @@ transfer-encoding: chunked
 </code></pre></article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
 

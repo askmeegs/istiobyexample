@@ -1,85 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Istio By Example</title>
-    <link>/</link>
-    <description>Recent content on Istio By Example</description>
+    <title>Istio By Example-JA</title>
+    <link>https://istiobyexaple.github.io/istiobyexample/</link>
+    <description>Recent content on Istio By Example-JA</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>ja-jp</language>
     <lastBuildDate>Fri, 01 May 2015 22:12:03 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://istiobyexaple.github.io/istiobyexample/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Database Traffic</title>
-      <link>/databases/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/databases/</link>
       <pubDate>Fri, 01 May 2015 22:12:03 +0000</pubDate>
       
-      <guid>/databases/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/databases/</guid>
       <description>Applications often span multiple environments, and databases are a great example. You might choose to run your database outside of Kubernetes for legacy or storage reasons, or you might use a managed database service.
-But fear not! You can still add external databases to your Istio service mesh. Let&#39;s see how.
+But fear not! You can still add external databases to your Istio service mesh. Let&amp;rsquo;s see how.
 
 Here, we have a plants service running inside a Kubernetes cluster, with Istio enabled. plants writes inventory to a Firestore NoSQL database running in Google Cloud, using the Golang client library for Firestore.</description>
     </item>
     
     <item>
       <title>Authorization</title>
-      <link>/authorization/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/authorization/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/authorization/</guid>
-      <description>Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &amp;ldquo;can this service do what they&#39;re asking to do?&amp;rdquo;
+      <guid>https://istiobyexaple.github.io/istiobyexample/authorization/</guid>
+      <description>Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &amp;ldquo;can this service do what they&amp;rsquo;re asking to do?&amp;rdquo;
 While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies.</description>
     </item>
     
     <item>
       <title>Bring Your Own Prometheus</title>
-      <link>/prometheus/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/prometheus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/prometheus/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/prometheus/</guid>
       <description>Prometheus is an open-source monitoring tool. By default, Prometheus is installed alongside Istio, allowing you to use Grafana and Kiali to view metrics for both the Istio control plane and your Envoy-injected workloads.
-But what if you&#39;re already running Prometheus on your cluster, or you want to add extra customization to Istio&#39;s Prometheus installation (for instance, add Slack notifications for Istio )?
+But what if you&amp;rsquo;re already running Prometheus on your cluster, or you want to add extra customization to Istio&amp;rsquo;s Prometheus installation (for instance, add Slack notifications for Istio )?
 Not to worry. You can bring your own Prometheus to Istio, with three quick steps.</description>
     </item>
     
     <item>
       <title>Canary Deployments</title>
-      <link>/canary/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/canary/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/canary/</guid>
-      <description>A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic splitting to direct a small amount of traffic to the new version. Then you can run a canary analysis on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&#39;s serving all traffic.</description>
+      <guid>https://istiobyexaple.github.io/istiobyexample/canary/</guid>
+      <description>A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic splitting to direct a small amount of traffic to the new version. Then you can run a canary analysis on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&amp;rsquo;s serving all traffic.
+
+apiVersion:networking.istio.io/v1alpha3kind:VirtualServicemetadata:name:helloworldspec:hosts:- helloworldhttp:- route:- destination:host:helloworldsubset:v1weight:90- destination:host:helloworldsubset:v2weight:10apiVersion:networking.istio.io/v1alpha3kind:DestinationRulemetadata:name:helloworldspec:host:helloworldsubsets:- name:v1labels:version:v1- name:v2labels:version:v2</description>
     </item>
     
     <item>
       <title>External Services</title>
-      <link>/external-services/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/external-services/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/external-services/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/external-services/</guid>
       <description>A service mesh often spans one environment— for instance, one Kubernetes cluster. And together, all the connected services in that environment form the management domain of that mesh, from which you can view metrics and set policies.
 But what if you are also running services outside the cluster, or you depend on external APIs?
-Have no fear. Istio provides a resource called a ServiceEntry that lets you logically bring external services into your mesh &amp;ndash; even services you don&#39;t own.</description>
+Have no fear. Istio provides a resource called a ServiceEntry that lets you logically bring external services into your mesh &amp;ndash; even services you don&amp;rsquo;t own.</description>
     </item>
     
     <item>
       <title>Fault Injection</title>
-      <link>/fault-injection/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/fault-injection/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/fault-injection/</guid>
-      <description>Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&#39;s important to test your services&amp;rsquo; behavior when upstream dependencies fail.
+      <guid>https://istiobyexaple.github.io/istiobyexample/fault-injection/</guid>
+      <description>Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&amp;rsquo;s important to test your services&amp;rsquo; behavior when upstream dependencies fail.
 Chaos testing is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error.</description>
     </item>
     
     <item>
       <title>gRPC</title>
-      <link>/grpc/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/grpc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/grpc/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/grpc/</guid>
       <description>gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on Service Definitions. You specify service definitions in a format called protocol buffers (&amp;ldquo;proto&amp;rdquo;), which can be serialized into an small binary format for transmission.
 With gRPC, you can generate boilerplate code from .proto files into multiple programming languages, making gRPC an ideal choice for polyglot microservices.
 While gRPC supports some networking use cases like TLS and client-side load balancing, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting RPC-level authorization.</description>
@@ -87,10 +89,10 @@ While gRPC supports some networking use cases like TLS and client-side load bala
     
     <item>
       <title>Ingress</title>
-      <link>/ingress/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/ingress/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/ingress/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/ingress/</guid>
       <description>Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
 A Gateway is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default IngressGateway with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.
 Istio Gateways have two key advantages over traditional Kubernetes Ingress.</description>
@@ -98,44 +100,44 @@ Istio Gateways have two key advantages over traditional Kubernetes Ingress.</des
     
     <item>
       <title>JWT</title>
-      <link>/jwt/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/jwt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/jwt/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/jwt/</guid>
       <description>A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A JSON Web Key Set (JWKS) contains the cryptographic keys used to verify incoming JWTs.
-You can use Istio&#39;s Authentication API to configure JWT policies for your services.
+You can use Istio&amp;rsquo;s Authentication API to configure JWT policies for your services.
 
 In this example, we require a JWT for all routes in the frontend service except for the home page (/) and the pod health check (/_healthz).</description>
     </item>
     
     <item>
       <title>Load Balancing</title>
-      <link>/load-balancing/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/load-balancing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/load-balancing/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/load-balancing/</guid>
       <description>Kubernetes supports load balancing for inbound traffic. But what about Kubernetes services inside the cluster?
 When in-cluster services communicate, a load balancer called kube-proxy forwards requests to service pods at random. You can use Istio to add more complex load balancing methods, enabled by Envoy.
 Envoy supports multiple load balancing methods, including random, round-robin, and least request.
-Let&#39;s see how to use Istio to add least request load balancing for a service called payments, which processes all transactions for a web frontend.</description>
+Let&amp;rsquo;s see how to use Istio to add least request load balancing for a service called payments, which processes all transactions for a web frontend.</description>
     </item>
     
     <item>
       <title>Locality Load Balancing</title>
-      <link>/locality-load-balancing/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/locality-load-balancing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/locality-load-balancing/</guid>
-      <description>If you&#39;re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.
+      <guid>https://istiobyexaple.github.io/istiobyexample/locality-load-balancing/</guid>
+      <description>If you&amp;rsquo;re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.
 Istio can help you automatically handle regional traffic using a feature called locality load balancing.</description>
     </item>
     
     <item>
       <title>Modify Response Headers</title>
-      <link>/response-headers/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/response-headers/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/response-headers/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/response-headers/</guid>
       <description>With Istio, you can apply traffic rules to route based on HTTP request headers. You can also use Istio to modify response headers. This could be useful if you want to strip headers generated by your application, or if you want to add response headers without changing your application code.
 
 In this example, we will apply an Istio VirtualService to add a new header (hello:world), then remove the set-cookie header.</description>
@@ -143,40 +145,40 @@ In this example, we will apply an Istio VirtualService to add a new header (hell
     
     <item>
       <title>Monitoring Egress Traffic</title>
-      <link>/monitoring-egress-traffic/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/monitoring-egress-traffic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/monitoring-egress-traffic/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/monitoring-egress-traffic/</guid>
       <description>One way to think about a service mesh is as a domain of control. Within a Kubernetes namespace where Istio sidecar injection is enabled, you can monitor all traffic between Pods, and enforce security policies.
 But what about upstream services that live outside the mesh? How do you determine at runtime which services call external APIs? How do you know which database instance your service is writing to? Or how do you ensure that a service inside the mesh is only sending traffic within its own geographic region?</description>
     </item>
     
     <item>
       <title>Multiple Traffic Rules</title>
-      <link>/multiple-traffic-rules/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/multiple-traffic-rules/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/multiple-traffic-rules/</guid>
-      <description>Istio supports lots of traffic management use cases, from redirects and traffic splitting to mirroring and retry logic. If you&#39;ve created an Istio VirtualService to define one of these policies for a service, it&#39;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
-Let&#39;s say that we&#39;re on the frontend engineering team for a newspaper&#39;s website.</description>
+      <guid>https://istiobyexaple.github.io/istiobyexample/multiple-traffic-rules/</guid>
+      <description>Istio supports lots of traffic management use cases, from redirects and traffic splitting to mirroring and retry logic. If you&amp;rsquo;ve created an Istio VirtualService to define one of these policies for a service, it&amp;rsquo;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
+Let&amp;rsquo;s say that we&amp;rsquo;re on the frontend engineering team for a newspaper&amp;rsquo;s website.</description>
     </item>
     
     <item>
       <title>Mutual TLS</title>
-      <link>/mtls/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/mtls/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/mtls/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/mtls/</guid>
       <description>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual TLS (mTLS) authentication is a way to encrypt services traffic using certificates.
 With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, client and server, are shown establishing a secure connection with the mTLS policy in place.</description>
     </item>
     
     <item>
       <title>Path-Based Routing</title>
-      <link>/path-based-routing/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/path-based-routing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/path-based-routing/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/path-based-routing/</guid>
       <description>Istio and Envoy work at the Application traffic layer (L7), allowing you to direct and load-balance traffic based on attributes like HTTP headers. This example shows how to direct traffic based on the request URI path.
 In this example, myapp is the server backend for a website, used by the frontend. An engineering team has implemented a new user authentication service, auth, which now operates as a separate service.
 Using an Istio match rule, we redirect any request with the /login prefix to the new auth service, and direct all other myapp requests to the existing backend.</description>
@@ -184,42 +186,42 @@ Using an Istio match rule, we redirect any request with the /login prefix to the
     
     <item>
       <title>Retry Logic</title>
-      <link>/retry/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/retry/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/retry/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/retry/</guid>
       <description>Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.
 Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is built into source code. But with Istio, you can define retry policies with a traffic rule, offloading this logic to your services&amp;rsquo; sidecar proxies. This can help you standardize around the same policies across many services, protocols, and programming languages.</description>
     </item>
     
     <item>
       <title>Secure Ingress</title>
-      <link>/secure-ingress/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/secure-ingress/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/secure-ingress/</guid>
-      <description>If you&#39;re running workloads in a Kubernetes cluster, it&#39;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
+      <guid>https://istiobyexaple.github.io/istiobyexample/secure-ingress/</guid>
+      <description>If you&amp;rsquo;re running workloads in a Kubernetes cluster, it&amp;rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
 Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services.</description>
     </item>
     
     <item>
       <title>Traffic Mirroring</title>
-      <link>/traffic-mirroring/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/traffic-mirroring/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/traffic-mirroring/</guid>
+      <guid>https://istiobyexaple.github.io/istiobyexample/traffic-mirroring/</guid>
       <description>Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.
-Using Istio, you can use traffic mirroring to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a canary deployment pipeline, allowing you to analyze a service&#39;s behavior before sending live traffic to it.</description>
+Using Istio, you can use traffic mirroring to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a canary deployment pipeline, allowing you to analyze a service&amp;rsquo;s behavior before sending live traffic to it.</description>
     </item>
     
     <item>
       <title>Virtual Machines</title>
-      <link>/virtual-machines/</link>
+      <link>https://istiobyexaple.github.io/istiobyexample/virtual-machines/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/virtual-machines/</guid>
-      <description>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&#39;re operating lots of containers.
-But what about stateful services, or legacy applications are running in virtual machines? Or what if you&#39;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh.</description>
+      <guid>https://istiobyexaple.github.io/istiobyexample/virtual-machines/</guid>
+      <description>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&amp;rsquo;re operating lots of containers.
+But what about stateful services, or legacy applications are running in virtual machines? Or what if you&amp;rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh.</description>
     </item>
     
   </channel>

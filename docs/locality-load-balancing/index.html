@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Locality Load Balancing&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Locality Load Balancing&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Locality Load Balancing</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>If you're running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.</p>
-<p>Istio can help you automatically handle regional traffic using a feature called <strong>locality load balancing.</strong> Let's see how.</p>
+<article class="markdown-body"><p>If you&rsquo;re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.</p>
+<p>Istio can help you automatically handle regional traffic using a feature called <strong>locality load balancing.</strong> Let&rsquo;s see how.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/loc-default.png"><img class="img" src="/images/loc-default.png"
         alt="default"/></a></p>
 <p>Here, we have two Kubernetes clusters running in two different cloud regions, <code>us-central</code> and <code>us-east</code>.
@@ -28,23 +28,23 @@ $ ✨ Hello World! - CENTRAL
 $ 🌊 Hello World! - EAST
 $ ✨ Hello World! - CENTRAL
 </code></pre><p>We can enable locality load balancing by adding an <a href="https://istio.io/docs/reference/config/networking/v1alpha3/destination-rule/#OutlierDetection"target="_blank">outlier detection</a> Istio DestinationRule on the <code>east</code> cluster:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>echo-outlier-detection<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span>echo.default.svc.cluster.local<span class="w">
-</span><span class="w">  </span>trafficPolicy<span class="p">:</span><span class="w">
-</span><span class="w">    </span>connectionPool<span class="p">:</span><span class="w">
-</span><span class="w">      </span>tcp<span class="p">:</span><span class="w">
-</span><span class="w">        </span>maxConnections<span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
-</span><span class="w">      </span>http<span class="p">:</span><span class="w">
-</span><span class="w">        </span>http2MaxRequests<span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
-</span><span class="w">        </span>maxRequestsPerConnection<span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span><span class="w">    </span>outlierDetection<span class="p">:</span><span class="w">
-</span><span class="w">      </span>consecutiveErrors<span class="p">:</span><span class="w"> </span><span class="m">7</span><span class="w">
-</span><span class="w">      </span>interval<span class="p">:</span><span class="w"> </span>30s<span class="w">
-</span><span class="w">      </span>baseEjectionTime<span class="p">:</span><span class="w"> </span>30s<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>echo-outlier-detection<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>echo.default.svc.cluster.local<span class="w">
+</span><span class="w">  </span><span class="k">trafficPolicy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">connectionPool</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">tcp</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">maxConnections</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">      </span><span class="k">http</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">http2MaxRequests</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">        </span><span class="k">maxRequestsPerConnection</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">    </span><span class="k">outlierDetection</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">consecutiveErrors</span><span class="p">:</span><span class="w"> </span><span class="m">7</span><span class="w">
+</span><span class="w">      </span><span class="k">interval</span><span class="p">:</span><span class="w"> </span>30s<span class="w">
+</span><span class="w">      </span><span class="k">baseEjectionTime</span><span class="p">:</span><span class="w"> </span>30s<span class="w">
 </span></code></pre></div><p>Now, all <code>loadgen</code> requests are routed to the closest instance of <code>echo</code>, running in <code>us-central</code>:</p>
 <pre><code>$ ✨ Hello World! - CENTRAL
 $ ✨ Hello World! - CENTRAL
@@ -76,18 +76,7 @@ $ ✨ Hello World! - CENTRAL
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
 

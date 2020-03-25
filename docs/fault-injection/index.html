@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Fault Injection&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Fault Injection&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Fault Injection</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it's important to test your services&rsquo; behavior when upstream dependencies fail.</p>
+<article class="markdown-body"><p>Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&rsquo;s important to test your services&rsquo; behavior when upstream dependencies fail.</p>
 <p><strong><a href="https://en.wikipedia.org/wiki/Chaos_engineering"target="_blank">Chaos testing</a></strong> is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error.</p>
 <p>In a Kubernetes environment, you can approach chaos testing at different layers - for instance, by <a href="https://github.com/asobti/kube-monkey#kube-monkey--"target="_blank">deleting pods at random</a>, or shutting off entire nodes.</p>
-<p>But failures also happen at the application layer. Infinite loops, broken client libraries - application code can fail in an infinite number of ways! This is where Istio <strong><a href="https://istio.io/docs/concepts/traffic-management/#fault-injection"target="_blank">fault injection</a></strong> comes in. You can use Istio VirtualServices to do chaos testing at the application layer, by injecting timeouts or HTTP errors into your services, without actually updating your app code. Let's see how.</p>
+<p>But failures also happen at the application layer. Infinite loops, broken client libraries - application code can fail in an infinite number of ways! This is where Istio <strong><a href="https://istio.io/docs/concepts/traffic-management/#fault-injection"target="_blank">fault injection</a></strong> comes in. You can use Istio VirtualServices to do chaos testing at the application layer, by injecting timeouts or HTTP errors into your services, without actually updating your app code. Let&rsquo;s see how.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/fault-injection.png"><img class="img" src="/images/fault-injection.png"
         alt/></a></p>
 <p>In this example, a wind energy company runs two Kubernetes clusters: one in the cloud, and one in an offshore wind farm. These two clusters are connected together using <a href="https://istio.io/docs/setup/install/multicluster/shared-gateways/"target="_blank">multicluster Istio, with a single control plane</a> running in the cloud cluster (<em>note</em> - this example would also work in a single-cluster setup). There are three services: <code>ingest</code> processes sensor data from the turbines, and writes to an on-prem timeseries database. <code>insights</code> polls the database to detect anomalies in the power supply, sending a message to <code>alerts</code>, running in the cloud, when there is a potential threat to the power grid.</p>
-<p>When the insights service is unable to call home to <code>alerts</code>, we want to ensure that the anomaly does not get lost - ideally, insights will cache the alert, or we use Istio <a href="/retry">retry logic</a> to send the request again. To test what happens in this failure scenario, we will use Istio to inject a fault into the <code>alerts</code> service: first, we'll add a 5-second delay, followed by a <code>500 - Internal Server Error</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>alerts-fault<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>alerts<span class="w">
-</span><span class="w">  </span>http<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>fault<span class="p">:</span><span class="w">
-</span><span class="w">      </span>abort<span class="p">:</span><span class="w">
-</span><span class="w">        </span>httpStatus<span class="p">:</span><span class="w"> </span><span class="m">500</span><span class="w">
-</span><span class="w">        </span>percentage<span class="p">:</span><span class="w">
-</span><span class="w">          </span>value<span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
-</span><span class="w">      </span>delay<span class="p">:</span><span class="w">
-</span><span class="w">        </span>percentage<span class="p">:</span><span class="w">
-</span><span class="w">          </span>value<span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
-</span><span class="w">        </span>fixedDelay<span class="p">:</span><span class="w"> </span>5s<span class="w">
-</span><span class="w">    </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>alerts<span class="w">
+<p>When the insights service is unable to call home to <code>alerts</code>, we want to ensure that the anomaly does not get lost - ideally, insights will cache the alert, or we use Istio <a href="/retry">retry logic</a> to send the request again. To test what happens in this failure scenario, we will use Istio to inject a fault into the <code>alerts</code> service: first, we&rsquo;ll add a 5-second delay, followed by a <code>500 - Internal Server Error</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>alerts-fault<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- alerts<span class="w">
+</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">fault</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">abort</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">httpStatus</span><span class="p">:</span><span class="w"> </span><span class="m">500</span><span class="w">
+</span><span class="w">        </span><span class="k">percentage</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">value</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
+</span><span class="w">      </span><span class="k">delay</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">percentage</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">value</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
+</span><span class="w">        </span><span class="k">fixedDelay</span><span class="p">:</span><span class="w"> </span>5s<span class="w">
+</span><span class="w">    </span><span class="k">route</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>alerts<span class="w">
 </span></code></pre></div><p>When we apply this VirtualService, we can curl <code>alerts</code> from the <code>insights</code> application container, and see the configured timeout, followed by a 500 error:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -v alerts.default.svc.cluster.local:80/
 
@@ -61,18 +61,7 @@ Kubernetes (Kubecon China 2018)</a></li>
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
 

@@ -1,67 +1,56 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Traffic Mirroring&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Traffic Mirroring&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Traffic Mirroring</h1>
 </section>
 <div class="flex-body">
 <article class="markdown-body"><p>Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.</p>
-<p>Using Istio, you can use <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank"><strong>traffic mirroring</strong></a> to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a <a href="https://istiobyexample.dev/canary"target="_blank">canary deployment</a> pipeline, allowing you to analyze a service's behavior before sending live traffic to it.</p>
+<p>Using Istio, you can use <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank"><strong>traffic mirroring</strong></a> to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a <a href="https://istiobyexample.dev/canary"target="_blank">canary deployment</a> pipeline, allowing you to analyze a service&rsquo;s behavior before sending live traffic to it.</p>
 <p>In this example, we have deployed a video processing pipeline to Kubernetes. The <code>render</code> service has a dependency on the <code>encode-prod</code> service, and we want to roll out a new version of <code>encode</code>, <code>encode-test</code>.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/traffic-mirror.png"><img class="img" src="/images/traffic-mirror.png"
         alt="traffic mirroring"/></a></p>
 <p>We can use an Istio <code>VirtualService</code> to mirror all <code>encode-prod</code> traffic to <code>encode-test</code>. The client side Envoy proxy for <code>render</code> will then send requests to both <code>encode-prod</code> (request path) and <code>encode-test</code> (mirrored path). <code>prod</code> and <code>test</code> are two subsets of the <code>encode</code> Kubernetes service, specified in an Istio <code>DestinationRule</code>.</p>
 <p><strong>Note</strong>: <code>render</code> <a href="https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-routeaction-requestmirrorpolicy"target="_blank">will not wait</a> to receive responses from <code>encode-test</code> — mirrored requests are &ldquo;fire and forget.&rdquo;</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>encode-mirror<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>encode<span class="w">
-</span><span class="w">  </span>http<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>encode<span class="w">
-</span><span class="w">        </span>subset<span class="p">:</span><span class="w"> </span>prod<span class="w">
-</span><span class="w">      </span>weight<span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
-</span><span class="w">    </span>mirror<span class="p">:</span><span class="w">
-</span><span class="w">      </span>host<span class="p">:</span><span class="w"> </span>encode<span class="w">
-</span><span class="w">      </span>subset<span class="p">:</span><span class="w"> </span>test<span class="w">
-</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>encode<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span>encode<span class="w">
-</span><span class="w">  </span>subsets<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>prod<span class="w">
-</span><span class="w">    </span>labels<span class="p">:</span><span class="w">
-</span><span class="w">      </span>version<span class="p">:</span><span class="w"> </span>prod<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>test<span class="w">
-</span><span class="w">    </span>labels<span class="p">:</span><span class="w">
-</span><span class="w">      </span>version<span class="p">:</span><span class="w"> </span>test<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>encode-mirror<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- encode<span class="w">
+</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">route</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>encode<span class="w">
+</span><span class="w">        </span><span class="k">subset</span><span class="p">:</span><span class="w"> </span>prod<span class="w">
+</span><span class="w">      </span><span class="k">weight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
+</span><span class="w">    </span><span class="k">mirror</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>encode<span class="w">
+</span><span class="w">      </span><span class="k">subset</span><span class="p">:</span><span class="w"> </span>test<span class="w">
+</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>encode<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>encode<span class="w">
+</span><span class="w">  </span><span class="k">subsets</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>prod<span class="w">
+</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>prod<span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>test<span class="w">
+</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>test<span class="w">
 </span></code></pre></div></article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
 

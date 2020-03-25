@@ -1,54 +1,43 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
+    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">JWT</h1>
 </section>
 <div class="flex-body">
 <article class="markdown-body"><p>A <a href="https://jwt.io/introduction/"target="_blank">JSON Web Token</a> (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A <a href="https://auth0.com/docs/jwks"target="_blank">JSON Web Key Set</a> (JWKS) contains the cryptographic keys used to verify incoming JWTs.</p>
-<p>You can use Istio's <a href="https://istio.io/docs/reference/config/istio.authentication.v1alpha1/#Jwt"target="_blank">Authentication API</a> to <a href="https://istio.io/docs/concepts/security/#origin-authentication"target="_blank">configure JWT policies</a> for your services.</p>
+<p>You can use Istio&rsquo;s <a href="https://istio.io/docs/reference/config/istio.authentication.v1alpha1/#Jwt"target="_blank">Authentication API</a> to <a href="https://istio.io/docs/concepts/security/#origin-authentication"target="_blank">configure JWT policies</a> for your services.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/jwt.png"><img class="img" src="/images/jwt.png"
         alt="jwt"/></a></p>
 <p>In this example, we require a JWT for all routes in the <code>frontend</code> service except for the home page (<code>/</code>) and the pod health check (<code>/_healthz</code>).</p>
-<p>In the Istio policy, we specify the path to a test public key (<code>jwksUri</code>), which will be mounted into the frontend's sidecar proxy. All unauthenticated requests will receive a <code>401 - Unauthorized</code> status from Envoy.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span><span class="s2">&#34;Policy&#34;</span><span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span><span class="s2">&#34;frontend-jwt&#34;</span><span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>targets<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>frontend<span class="w">
-</span><span class="w">  </span>origins<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>jwt<span class="p">:</span><span class="w">
-</span><span class="w">      </span>issuer<span class="p">:</span><span class="w"> </span><span class="s2">&#34;testing@secure.istio.io&#34;</span><span class="w">
-</span><span class="w">      </span>jwksUri<span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://raw.githubusercontent.com/istio/istio/release-1.2/security/tools/jwt/samples/jwks.json&#34;</span><span class="w">
-</span><span class="w">      </span>trigger_rules<span class="p">:</span><span class="w">
-</span><span class="w">      </span>-<span class="w"> </span>excluded_paths<span class="p">:</span><span class="w">
-</span><span class="w">        </span>-<span class="w"> </span>exact<span class="p">:</span><span class="w"> </span>/_healthz<span class="w">
-</span><span class="w">        </span>-<span class="w"> </span>exact<span class="p">:</span><span class="w"> </span>/<span class="w">
-</span><span class="w">  </span>principalBinding<span class="p">:</span><span class="w"> </span>USE_ORIGIN<span class="w">
+<p>In the Istio policy, we specify the path to a test public key (<code>jwksUri</code>), which will be mounted into the frontend&rsquo;s sidecar proxy. All unauthenticated requests will receive a <code>401 - Unauthorized</code> status from Envoy.</p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Policy&#34;</span><span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;frontend-jwt&#34;</span><span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">targets</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>frontend<span class="w">
+</span><span class="w">  </span><span class="k">origins</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">jwt</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;testing@secure.istio.io&#34;</span><span class="w">
+</span><span class="w">      </span><span class="k">jwksUri</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://raw.githubusercontent.com/istio/istio/release-1.2/security/tools/jwt/samples/jwks.json&#34;</span><span class="w">
+</span><span class="w">      </span><span class="k">trigger_rules</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">excluded_paths</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">exact</span><span class="p">:</span><span class="w"> </span>/_healthz<span class="w">
+</span><span class="w">        </span>- <span class="k">exact</span><span class="p">:</span><span class="w"> </span>/<span class="w">
+</span><span class="w">  </span><span class="k">principalBinding</span><span class="p">:</span><span class="w"> </span>USE_ORIGIN<span class="w">
 </span></code></pre></div><p>To learn more and try interactive examples, see the <a href="https://istio.io/docs/tasks/security/authn-policy/#end-user-authentication"target="_blank">Istio docs</a> and the <a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/master/security-intro#add-end-user-jwt-authentication"target="_blank">istio-samples repo</a>.</p>
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
 
