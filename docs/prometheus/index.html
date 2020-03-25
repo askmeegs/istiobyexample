@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Bring Your Own Prometheus&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Bring Your Own Prometheus&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Bring Your Own Prometheus</h1>
@@ -54,13 +54,13 @@ prometheus   LoadBalancer   10.0.3.155   &lt;IP&gt;             9090:32352/TCP  
 </span><span class="se"></span>--set grafana.enabled<span class="o">=</span><span class="nb">true</span> <span class="se">\
 </span><span class="se"></span>--set grafana.datasources.datasources.datasources.url<span class="o">=</span><span class="s2">&#34;http://prometheus.monitoring.svc.cluster.local:9090&#34;</span>  &gt; istio.yaml
 </code></pre></div><p>Once Istio and Prometheus are both installed, and we deploy some Istio-injected workloads to our cluster, we can see that Prometheus is successfully scraping our Istio targets:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/prometheus.png"><img class="img" src="/images/prometheus.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/prometheus.png"><img class="img" src="../images/prometheus.png"
         alt/></a></p>
 <p>Grafana can fetch service-level metrics:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/prom-grafana.png"><img class="img" src="/images/prom-grafana.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/prom-grafana.png"><img class="img" src="../images/prom-grafana.png"
         alt/></a></p>
 <p>And Kiali can display the service graph:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/prom-kiali.png"><img class="img" src="/images/prom-kiali.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/prom-kiali.png"><img class="img" src="../images/prom-kiali.png"
         alt/></a></p>
 </article>
 </div><section id="footer" class="footer">

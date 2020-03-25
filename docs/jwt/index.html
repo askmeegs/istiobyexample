@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="/istiobyexample/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="/istiobyexample/"><img class="site-logo" src="/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">JWT</h1>
@@ -13,7 +13,7 @@
 <div class="flex-body">
 <article class="markdown-body"><p>A <a href="https://jwt.io/introduction/"target="_blank">JSON Web Token</a> (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A <a href="https://auth0.com/docs/jwks"target="_blank">JSON Web Key Set</a> (JWKS) contains the cryptographic keys used to verify incoming JWTs.</p>
 <p>You can use Istio&rsquo;s <a href="https://istio.io/docs/reference/config/istio.authentication.v1alpha1/#Jwt"target="_blank">Authentication API</a> to <a href="https://istio.io/docs/concepts/security/#origin-authentication"target="_blank">configure JWT policies</a> for your services.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="/images/jwt.png"><img class="img" src="/images/jwt.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/jwt.png"><img class="img" src="../images/jwt.png"
         alt="jwt"/></a></p>
 <p>In this example, we require a JWT for all routes in the <code>frontend</code> service except for the home page (<code>/</code>) and the pod health check (<code>/_healthz</code>).</p>
 <p>In the Istio policy, we specify the path to a test public key (<code>jwksUri</code>), which will be mounted into the frontend&rsquo;s sidecar proxy. All unauthenticated requests will receive a <code>401 - Unauthorized</code> status from Envoy.</p>
