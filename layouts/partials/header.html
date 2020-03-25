@@ -1,0 +1,11 @@
+<section id="header" class="header max-body-width">
+    <p><a class="home" href="{{- `/` -}}">
+            {{- with .Site.Params.logo -}}
+            <img class="site-logo" src="{{- . -}}" alt />
+            <span class="site-name">Istio By Example</span>
+            {{- else -}}
+            <span class="site-name">{{- .Site.Title -}}</span>
+            {{- end -}}
+
+        </a></p>
+</section>
