@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{- partial "head.html" . -}}
+    {{- partial "opengraph.html" . -}}
+    {{- partial "twitter_cards.html" . -}}
+</head>
+<body>
+    <div class="base-body max-width">
+        {{- partial "header.html" . -}}
+        <div id="content" class="flex-body max-body-width">
+            {{- block "main" . -}}{{- end -}}
+            {{- partial "footer.html" . -}}
+
+        </div>
+    </div>
+</body>
+
+</html>
