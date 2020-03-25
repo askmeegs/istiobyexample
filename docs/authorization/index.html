@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Authorization&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Authorization" />
+<meta name="supported-color-schemes" content="light only"><title>Authorization&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Authorization" />
 <meta property="og:description" content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
 While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/authorization/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/authorization/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Authorization"/>
 <meta name="twitter:description" content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
 While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Authorization</h1>
@@ -27,7 +27,7 @@ While all requests in an Istio mesh are allowed by default, Istio provides an Au
 <div class="flex-body">
 <article class="markdown-body"><p>Authentication means verifying the identity of a client. <strong>Authorization</strong>, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;</p>
 <p>While all requests in an Istio mesh are allowed by default, <a href="https://istio.io/docs/concepts/security/#authorization"target="_blank">Istio provides</a> an <a href="https://istio.io/docs/reference/config/security/authorization-policy/"target="_blank"><code>AuthorizationPolicy</code> resource</a> that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies. From there, authorization policy checks are performed by the sidecar proxies. Let&rsquo;s see how it works.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/rbac.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/rbac.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/rbac.png"><img class="img" src="../images/rbac.png"
         alt="shoes rbac"/></a></p>
 <p>Here, the <em>ShoeStore</em> application is deployed to the <code>default</code> Kubernetes namespace. There are three HTTP workloads, each defined with their own Kubernetes Deployment, Service, and ServiceAccount.</p>
 <ol>

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Multiple Traffic Rules&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Multiple Traffic Rules" />
+<meta name="supported-color-schemes" content="light only"><title>Multiple Traffic Rules&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Multiple Traffic Rules" />
 <meta property="og:description" content="Istio supports lots of traffic management use cases, from redirects and traffic splitting to mirroring and retry logic. If you&rsquo;ve created an Istio VirtualService to define one of these policies for a service, it&rsquo;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
 Let&rsquo;s say that we&rsquo;re on the frontend engineering team for a newspaper&rsquo;s website." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/multiple-traffic-rules/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/multiple-traffic-rules/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Multiple Traffic Rules"/>
 <meta name="twitter:description" content="Istio supports lots of traffic management use cases, from redirects and traffic splitting to mirroring and retry logic. If you&rsquo;ve created an Istio VirtualService to define one of these policies for a service, it&rsquo;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
 Let&rsquo;s say that we&rsquo;re on the frontend engineering team for a newspaper&rsquo;s website."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Multiple Traffic Rules</h1>
@@ -28,10 +28,10 @@ Let&rsquo;s say that we&rsquo;re on the frontend engineering team for a newspape
 <article class="markdown-body"><p>Istio supports lots of <a href="https://istio.io/docs/concepts/traffic-management/"target="_blank">traffic management</a> use cases, from <a href="https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRewrite"target="_blank">redirects</a> and <a href="https://istio.io/docs/tasks/traffic-management/traffic-shifting/"target="_blank">traffic splitting</a> to <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank">mirroring</a> and <a href="https://istio.io/docs/concepts/traffic-management/#retries"target="_blank">retry logic</a>. If you&rsquo;ve created an Istio <a href="https://istio.io/docs/reference/config/networking/virtual-service/"target="_blank">VirtualService</a> to define one of these policies for a service, it&rsquo;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.</p>
 <p>Let&rsquo;s say that we&rsquo;re on the <strong>frontend</strong> engineering team for a newspaper&rsquo;s website. The user-facing frontend service relies on a backend called <strong>articles</strong>, which serves article content and metadata as JSON. But the articles team is refactoring the service in a new language, and they&rsquo;re frequently rolling out new changes. This has resulted in unexpected errors in the frontend, which relied on the behavior of the legacy articles service. To complicate things, the newspaper&rsquo;s blog, previously served by a separate <strong>blog</strong> service, was just incorporated into the articles service. Now, all blog posts are articles, served with the <code>/beta/blog</code> path.</p>
 <p>In order to lock in the behavior of articles on behalf of the frontend, we&rsquo;ll create an Istio traffic policy for articles. The frontend&rsquo;s traffic requirements for articles include: returning a <code>no-cache</code> header for any <code>/breaking-news</code> article, rewriting <code>/blog</code> to <code>/beta/blog</code>, and enforcing a 2-second timeout on every request.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-functionality.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-functionality.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/multiple-functionality.png"><img class="img" src="../images/multiple-functionality.png"
         alt/></a></p>
-<p>To get this aggregate functionality, we&rsquo;ll create one VirtualService for articles, with three <code>http</code> rules: <a href="https://istiobyexample-ja.github.io/istiobyexample/response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-vs.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-vs.png"
+<p>To get this aggregate functionality, we&rsquo;ll create one VirtualService for articles, with three <code>http</code> rules: <a href="../response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="../images/multiple-vs.png"><img class="img" src="../images/multiple-vs.png"
         alt/></a></p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
@@ -81,7 +81,7 @@ Let&rsquo;s say that we&rsquo;re on the frontend engineering team for a newspape
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl  http://articles:80/
 
 upstream request timeout
-</code></pre></div><p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-fault.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/multiple-fault.png"
+</code></pre></div><p><a target="_blank" rel="noopener noreferrer" href="../images/multiple-fault.png"><img class="img" src="../images/multiple-fault.png"
         alt/></a></p>
 <p><strong>Note</strong>: When you add multiple rules to one VirtualService, <a href="https://istio.io/docs/concepts/traffic-management/#routing-rule-precedence"target="_blank">the rules are evaluated <strong>in order</strong></a>, from top to bottom. So if we add a <a href="https://istio.io/docs/tasks/traffic-management/fault-injection/#injecting-an-http-abort-fault"target="_blank">fault injection</a> rule to the articles VirtualService to return HTTP status code <code>404: Not Found</code> on all requests, that rule will override the other three, taking down the entire articles service:</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -v http://articles:80

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Fault Injection&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Fault Injection" />
+<meta name="supported-color-schemes" content="light only"><title>Fault Injection&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Fault Injection" />
 <meta property="og:description" content="Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&rsquo;s important to test your services&rsquo; behavior when upstream dependencies fail.
 Chaos testing is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/fault-injection/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/fault-injection/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Fault Injection"/>
 <meta name="twitter:description" content="Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it&rsquo;s important to test your services&rsquo; behavior when upstream dependencies fail.
 Chaos testing is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Fault Injection</h1>
@@ -29,10 +29,10 @@ Chaos testing is the process of deliberately breaking your services in order to 
 <p><strong><a href="https://en.wikipedia.org/wiki/Chaos_engineering"target="_blank">Chaos testing</a></strong> is the process of deliberately breaking your services in order to expose weaknesses and improve fault tolerance. Chaos testing can reveal client-side bugs, or identify user-facing failure situations where you might want to display a cached result, instead of returning an error.</p>
 <p>In a Kubernetes environment, you can approach chaos testing at different layers - for instance, by <a href="https://github.com/asobti/kube-monkey#kube-monkey--"target="_blank">deleting pods at random</a>, or shutting off entire nodes.</p>
 <p>But failures also happen at the application layer. Infinite loops, broken client libraries - application code can fail in an infinite number of ways! This is where Istio <strong><a href="https://istio.io/docs/concepts/traffic-management/#fault-injection"target="_blank">fault injection</a></strong> comes in. You can use Istio VirtualServices to do chaos testing at the application layer, by injecting timeouts or HTTP errors into your services, without actually updating your app code. Let&rsquo;s see how.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/fault-injection.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/fault-injection.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/fault-injection.png"><img class="img" src="../images/fault-injection.png"
         alt/></a></p>
 <p>In this example, a wind energy company runs two Kubernetes clusters: one in the cloud, and one in an offshore wind farm. These two clusters are connected together using <a href="https://istio.io/docs/setup/install/multicluster/shared-gateways/"target="_blank">multicluster Istio, with a single control plane</a> running in the cloud cluster (<em>note</em> - this example would also work in a single-cluster setup). There are three services: <code>ingest</code> processes sensor data from the turbines, and writes to an on-prem timeseries database. <code>insights</code> polls the database to detect anomalies in the power supply, sending a message to <code>alerts</code>, running in the cloud, when there is a potential threat to the power grid.</p>
-<p>When the insights service is unable to call home to <code>alerts</code>, we want to ensure that the anomaly does not get lost - ideally, insights will cache the alert, or we use Istio <a href="https://istiobyexample-ja.github.io/istiobyexample/retry">retry logic</a> to send the request again. To test what happens in this failure scenario, we will use Istio to inject a fault into the <code>alerts</code> service: first, we&rsquo;ll add a 5-second delay, followed by a <code>500 - Internal Server Error</code>:</p>
+<p>When the insights service is unable to call home to <code>alerts</code>, we want to ensure that the anomaly does not get lost - ideally, insights will cache the alert, or we use Istio <a href="../retry">retry logic</a> to send the request again. To test what happens in this failure scenario, we will use Istio to inject a fault into the <code>alerts</code> service: first, we&rsquo;ll add a 5-second delay, followed by a <code>500 - Internal Server Error</code>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
 </span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
 </span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">

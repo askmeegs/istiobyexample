@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Secure Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Secure Ingress" />
+<meta name="supported-color-schemes" content="light only"><title>Secure Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Secure Ingress" />
 <meta property="og:description" content="If you&rsquo;re running workloads in a Kubernetes cluster, it&rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
 Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/secure-ingress/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/secure-ingress/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Secure Ingress"/>
 <meta name="twitter:description" content="If you&rsquo;re running workloads in a Kubernetes cluster, it&rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
 Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Secure Ingress</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>If you&rsquo;re running workloads in a Kubernetes cluster, it&rsquo;s likely that some need to be exposed outside of the cluster. The <a href="https://istiobyexample-ja.github.io/istiobyexample/ingress">Istio Ingress Gateway</a> is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?</p>
+<article class="markdown-body"><p>If you&rsquo;re running workloads in a Kubernetes cluster, it&rsquo;s likely that some need to be exposed outside of the cluster. The <a href="../ingress">Istio Ingress Gateway</a> is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?</p>
 <p>Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services. When you set up secure ingress with Istio, the Ingress Gateway handles all TLS operations (handshake, certs/keys exchange), allowing you to decouple TLS from your application code. Further, using the Ingress Gateway for TLS traffic allows you to centralize and automate the management of certs and keys across your organization.</p>
 <p>Istio supports securing the Ingress Gateway through two methods. The first is through <a href="https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-mount/"target="_blank">file mount</a>, where you generate certs and keys for the IngressGateway, then mount them manually into the IngressGateway as a Kubernetes Secret. The second way is through the <a href="https://istio.io/docs/tasks/traffic-management/ingress/secure-ingress-sds/"target="_blank">Secrets Discovery Service</a> (SDS), an agent that runs in the IngressGateway pod, alongside the Istio proxy. The SDS agent  monitors the <code>istio-system</code> namespace for new secrets, and mounts them into the Gateway&rsquo;s proxy on your behalf. Like the file mount method, SDS supports both server-side and mutual TLS.</p>
 <p>Let&rsquo;s see how to use the SDS method to configure the Ingress Gateway with mutual HTTPS authentication.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/secure-ingress-arch.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/secure-ingress-arch.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/secure-ingress-arch.png"><img class="img" src="../images/secure-ingress-arch.png"
         alt/></a></p>
 <p>Here, a construction materials company called FooCorp runs one production Kubernetes cluster. One team, <code>ux</code>, runs a customer-facing web <code>frontend</code>. The other, <code>corp-services</code>, runs an internal-facing <code>inventory</code> for supply chain tracking. Both services have their own <code>foocorp</code> subdomain, and the security team has mandated that every service has its own certs and keys. Let&rsquo;s walk through the configuration of secure ingress on this cluster.</p>
 <p>First, we&rsquo;ll install Istio, enabling the [global SDS ingress](<a href="https://istio.io/docs/reference/config/installation-options/#gateways-options">https://istio.io/docs/reference/config/installation-options/#gateways-options</a> option) option. When we enable this, the Istio <code>ingress-gateway</code> pod will have two containers, <code>istio-proxy</code> (Envoy) and <code>ingress-sds</code>, which is the Secrets Discovery agent:</p>
@@ -134,7 +134,7 @@ https://inventory.foocorp.com:$SECURE_INGRESS_PORT/
 
 🛠 FooCorp - Inventory [INTERNAL]
 </code></pre><p>What&rsquo;s actually happening here? Let&rsquo;s look at the inventory service, and walk through exactly how the Ingress Gateway authenticates the client.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/secure-ingress-auth-steps.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/secure-ingress-auth-steps.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/secure-ingress-auth-steps.png"><img class="img" src="../images/secure-ingress-auth-steps.png"
         alt/></a></p>
 <ol>
 <li>Client requests the host <code>https://inventory.foocorp.com:443</code></li>

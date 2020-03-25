@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Virtual Machines" />
+<meta name="supported-color-schemes" content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Virtual Machines" />
 <meta property="og:description" content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
 But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/virtual-machines/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/virtual-machines/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Virtual Machines"/>
 <meta name="twitter:description" content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
 But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Virtual Machines</h1>
@@ -27,11 +27,11 @@ But what about stateful services, or legacy applications are running in virtual 
 <div class="flex-body">
 <article class="markdown-body"><p>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.</p>
 <p>But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let&rsquo;s see how.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/vm-call-flow.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/vm-call-flow.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-call-flow.png"><img class="img" src="../images/vm-call-flow.png"
         alt/></a></p>
 <p>In this example, we are running a web application for a local library. This web app has multiple backends, all running in a Kubernetes cluster. One of our Kubernetes workloads, <code>inventory</code>, talks to a PostgreSQL database, and writes a record for each new book added to the library. This database is running in a virtual machine in another cloud region.</p>
-<p>In order to get the full Istio functionality for PostgreSQL, our VM-based database, we need to install the Istio sidecar proxy on the VM, and configure it to talk to the Istio control plane running in the cluster. (Note that this is different from adding external <a href="https://istiobyexample-ja.github.io/istiobyexample/external-services">ServiceEntries</a>.) We can add our Postgres database to the mesh with three steps. You can follow along with the commands in the <a href="https://github.com/askmeegs/postgres-library/tree/0241acce9d7e2cede0de8ac9baa1338624f716eb#-postgres-library"target="_blank">demo on GitHub</a>.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/vm-architecture.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/vm-architecture.png"
+<p>In order to get the full Istio functionality for PostgreSQL, our VM-based database, we need to install the Istio sidecar proxy on the VM, and configure it to talk to the Istio control plane running in the cluster. (Note that this is different from adding external <a href="../external-services">ServiceEntries</a>.) We can add our Postgres database to the mesh with three steps. You can follow along with the commands in the <a href="https://github.com/askmeegs/postgres-library/tree/0241acce9d7e2cede0de8ac9baa1338624f716eb#-postgres-library"target="_blank">demo on GitHub</a>.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-architecture.png"><img class="img" src="../images/vm-architecture.png"
         alt/></a></p>
 <ol>
 <li>
@@ -56,7 +56,7 @@ postgres-library-6bb956f86b-dt94x server ✅ inserted To the Lighthouse
 127.0.0.1:54104 10.128.0.14:5432 10.24.2.23:40190
 outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -
 </code></pre><p>We can also see TCP metrics flowing in the Kiali service graph:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/vm-kiali.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/vm-kiali.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-kiali.png"><img class="img" src="../images/vm-kiali.png"
         alt/></a></p>
 <p>From here, we can use any Istio traffic or security policies to our multi-environment service mesh. For instance, we can encrypt all traffic between the cluster and the VM, by adding a mesh-wide mutual TLS policy:</p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">

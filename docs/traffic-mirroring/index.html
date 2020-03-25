@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
+<link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Traffic Mirroring&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Traffic Mirroring" />
+<meta name="supported-color-schemes" content="light only"><title>Traffic Mirroring&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Traffic Mirroring" />
 <meta property="og:description" content="Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.
 Using Istio, you can use traffic mirroring to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a canary deployment pipeline, allowing you to analyze a service&rsquo;s behavior before sending live traffic to it." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/traffic-mirroring/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:url" content="/istiobyexample/traffic-mirroring/" />
+<meta property="og:image" content="/images/istio-framed.png"/>
 <meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta name="twitter:image" content="/istiobyexample/images/istio-framed.png"/>
 <meta name="twitter:title" content="Traffic Mirroring"/>
 <meta name="twitter:description" content="Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.
 Using Istio, you can use traffic mirroring to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a canary deployment pipeline, allowing you to analyze a service&rsquo;s behavior before sending live traffic to it."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
+    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Traffic Mirroring</h1>
@@ -28,7 +28,7 @@ Using Istio, you can use traffic mirroring to duplicate traffic to another servi
 <article class="markdown-body"><p>Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.</p>
 <p>Using Istio, you can use <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank"><strong>traffic mirroring</strong></a> to duplicate traffic to another service. You can incorporate a traffic mirroring rule as part of a <a href="https://istiobyexample.dev/canary"target="_blank">canary deployment</a> pipeline, allowing you to analyze a service&rsquo;s behavior before sending live traffic to it.</p>
 <p>In this example, we have deployed a video processing pipeline to Kubernetes. The <code>render</code> service has a dependency on the <code>encode-prod</code> service, and we want to roll out a new version of <code>encode</code>, <code>encode-test</code>.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/traffic-mirror.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/traffic-mirror.png"
+<p><a target="_blank" rel="noopener noreferrer" href="../images/traffic-mirror.png"><img class="img" src="../images/traffic-mirror.png"
         alt="traffic mirroring"/></a></p>
 <p>We can use an Istio <code>VirtualService</code> to mirror all <code>encode-prod</code> traffic to <code>encode-test</code>. The client side Envoy proxy for <code>render</code> will then send requests to both <code>encode-prod</code> (request path) and <code>encode-test</code> (mirrored path). <code>prod</code> and <code>test</code> are two subsets of the <code>encode</code> Kubernetes service, specified in an Istio <code>DestinationRule</code>.</p>
 <p><strong>Note</strong>: <code>render</code> <a href="https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-routeaction-requestmirrorpolicy"target="_blank">will not wait</a> to receive responses from <code>encode-test</code> — mirrored requests are &ldquo;fire and forget.&rdquo;</p>
