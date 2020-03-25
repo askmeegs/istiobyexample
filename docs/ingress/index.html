@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
+<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Ingress" />
+<meta name="supported-color-schemes" content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Ingress" />
 <meta property="og:description" content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
 A Gateway is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default IngressGateway with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.
 Istio Gateways have two key advantages over traditional Kubernetes Ingress." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexample/ingress/" />
-<meta property="og:image" content="/istiobyexample/images/istio-logo.png"/>
+<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/ingress/" />
+<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexample/images/istio-logo.png"/>
+<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
 <meta name="twitter:title" content="Ingress"/>
 <meta name="twitter:description" content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
 A Gateway is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default IngressGateway with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.
@@ -20,7 +21,7 @@ Istio Gateways have two key advantages over traditional Kubernetes Ingress."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
+    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Ingress</h1>
@@ -31,7 +32,7 @@ Istio Gateways have two key advantages over traditional Kubernetes Ingress."/>
 <p>Istio Gateways have two key advantages over traditional Kubernetes Ingress. Because a Gateway is another Envoy proxy, you can use Istio to configure Gateway traffic in the same way you would configure east-west traffic between services (traffic splitting, redirects, retry logic).</p>
 <p>Gateways also forward metrics (request rate, error rate) just like <a href="https://istio.io/docs/concepts/what-is-istio/#envoy"target="_blank">sidecar</a> proxies, allowing you to view Ingress traffic in <a href="https://istio.io/docs/tasks/telemetry/kiali/#generating-a-service-graph"target="_blank">a service graph</a>, and set fine-grained <a href="https://landing.google.com/sre/sre-book/chapters/service-level-objectives/"target="_blank">SLOs</a> on frontend services directly serving clients.</p>
 <p>Let&rsquo;s see Gateways in action.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/ingress.png"><img class="img" src="../images/ingress.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/ingress.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/ingress.png"
         alt="ingress"/></a></p>
 <p>Here, the <code>hello</code> application runs in a container, inside a Pod. The Pod has an injected Istio sidecar proxy container. A Kubernetes Service called <code>hello</code> fronts this Pod. We want to direct inbound traffic from <code>hello.com</code> to the <code>hello</code> Service.</p>
 <p>First we need a <code>Gateway</code> resource, which opens port <code>80</code> in the default Istio <code>IngressGateway</code>, for all hosts resolving from the <code>hello.com</code> domain.</p>

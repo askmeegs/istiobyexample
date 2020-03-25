@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
+<link rel="shortcut icon" href="https://istiobyexample-ja.github.io/istiobyexample/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Retry Logic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Retry Logic" />
+<meta name="supported-color-schemes" content="light only"><title>Retry Logic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="https://istiobyexample-ja.github.io/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Retry Logic" />
 <meta property="og:description" content="Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.
 Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is built into source code. But with Istio, you can define retry policies with a traffic rule, offloading this logic to your services&rsquo; sidecar proxies. This can help you standardize around the same policies across many services, protocols, and programming languages." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/istiobyexample/retry/" />
-<meta property="og:image" content="/istiobyexample/images/istio-logo.png"/>
+<meta property="og:url" content="/istiobyexamplehttps://istiobyexample-ja.github.io/istiobyexample/retry/" />
+<meta property="og:image" content="https://istiobyexample-ja.github.io/images/istio-framed.png"/>
+<meta property="og:image:type" content="image/png" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/istiobyexample/images/istio-logo.png"/>
+<meta name="twitter:image" content="/istiobyexamplehttps://istiobyexample-ja.github.io/images/istio-framed.png"/>
 <meta name="twitter:title" content="Retry Logic"/>
 <meta name="twitter:description" content="Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.
 Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is built into source code. But with Istio, you can define retry policies with a traffic rule, offloading this logic to your services&rsquo; sidecar proxies. This can help you standardize around the same policies across many services, protocols, and programming languages."/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
+    <p><a class="home" href="https://istiobyexample-ja.github.io/istiobyexample/"><img class="site-logo" src="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
     <h1 class="article-title">Retry Logic</h1>
@@ -26,7 +27,7 @@ Adding retry policies for requests helps build resiliency in a services architec
 <div class="flex-body">
 <article class="markdown-body"><p>Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.</p>
 <p>Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is <a href="https://upgear.io/blog/simple-golang-retry-function/"target="_blank">built into source code</a>. But with Istio, you can define retry policies <a href="https://istio.io/docs/concepts/traffic-management/#set-number-and-timeouts-for-retries"target="_blank">with a traffic rule</a>, offloading this logic to your services&rsquo; <a href="https://istio.io/docs/concepts/what-is-istio/#architecture"target="_blank">sidecar proxies</a>. This can help you standardize around the same policies across many services, protocols, and programming languages.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/retry.png"><img class="img" src="../images/retry.png"
+<p><a target="_blank" rel="noopener noreferrer" href="https://istiobyexample-ja.github.io/istiobyexample/images/retry.png"><img class="img" src="https://istiobyexample-ja.github.io/istiobyexample/images/retry.png"
         alt="Diagram"/></a></p>
 <p>In this example, all inbound requests to the <code>helloworld</code> service try 5 times, and an attempt is marked as failed if it takes longer than 2 seconds to complete.</p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
