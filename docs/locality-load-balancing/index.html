@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Locality Load Balancing&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Locality Load Balancing&nbsp;&ndash;&nbsp;Istio By Example-JA</title><link rel="stylesheet" href="../css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><meta property="og:title" content="Locality Load Balancing" />
+<meta property="og:description" content="If you&rsquo;re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.
+Istio can help you automatically handle regional traffic using a feature called locality load balancing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/locality-load-balancing/" />
+<meta property="og:image" content="/images/istio-logo.png"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/images/istio-logo.png"/>
+
+<meta name="twitter:title" content="Locality Load Balancing"/>
+<meta name="twitter:description" content="If you&rsquo;re running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.
+Istio can help you automatically handle regional traffic using a feature called locality load balancing."/>
+</head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
