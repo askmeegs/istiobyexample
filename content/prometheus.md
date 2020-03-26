@@ -1,6 +1,5 @@
 ---
 title: Bring Your Own Prometheus
-lastmod: "2019-12-31"
 publishDate: "2019-12-31"
 categories: ["Observability"]
 ---

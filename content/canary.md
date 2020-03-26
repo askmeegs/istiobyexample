@@ -1,6 +1,5 @@
 ---
 title: "カナリアデプロイメント"
-lastmod: "2020-03-26"
 publishDate: "2019-12-31"
 categories: ["Traffic Management"]
 ---

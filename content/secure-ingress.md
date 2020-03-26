@@ -1,6 +1,5 @@
 ---
 title: Secure Ingress
-lastmod: "2019-12-31"
 publishDate: "2019-12-31"
 categories: ["Security"]
 ---
