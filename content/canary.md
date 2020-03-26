@@ -1,12 +1,14 @@
-+++
-title = "Canary Deployments"
-+++
+---
+title: "カナリアデプロイメント"
+lastmod: "2020-03-26"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
+---
 
 
-A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based [traffic splitting](https://istio.io/docs/concepts/traffic-management/#routing-versions) to direct a small amount of traffic to the new version. Then you can run a [canary analysis](https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze) on v2 (like check latency and error rate), and finally direct more traffic at the new version until it's serving all traffic.
+カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定の[トラフィック分岐](https://istio.io/docs/concepts/traffic-management/#routing-versions)により、少量のトラフィックのみを新しいバージョンに誘導できます。その後、新しいバージョンに対し，[カナリア分析](https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze)（レイテンシやエラー率のチェックなど）を実行しつつ、最終的に新しいバージョンが全てのトラフィックを受け付けるようになるまで、段階的にトラフィックを新しいバージョンに誘導することが可能です。
 
 ![Diagram](/images/canary_diagram.png)
-
 
 ```YAML
 apiVersion: networking.istio.io/v1alpha3
