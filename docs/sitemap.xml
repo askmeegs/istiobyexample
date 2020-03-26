@@ -4,7 +4,6 @@
     <loc>/</loc><lastmod>2015-05-01T22:12:03+00:00</lastmod></url><url>
     <loc>/authorization/</loc></url><url>
     <loc>/prometheus/</loc></url><url>
-    <loc>/canary/</loc></url><url>
     <loc>/categories/</loc></url><url>
     <loc>/external-services/</loc></url><url>
     <loc>/fault-injection/</loc></url><url>
@@ -22,4 +21,5 @@
     <loc>/secure-ingress/</loc></url><url>
     <loc>/tags/</loc></url><url>
     <loc>/traffic-mirroring/</loc></url><url>
-    <loc>/virtual-machines/</loc></url></urlset>
+    <loc>/virtual-machines/</loc></url><url>
+    <loc>/canary/</loc></url></urlset>

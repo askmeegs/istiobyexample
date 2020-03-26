@@ -4,29 +4,25 @@
 <link rel="shortcut icon" href="../images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Canary Deployments&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.6fdf878065965f4da9d3699dd7b9d2459f2d8797eff454b23da8f3cd48721ea78357010966d334411a554e85e2e881ed.css" integrity="sha384-b9&#43;HgGWWX02p02md17nSRZ8th5fv9FSyPajzzUhyHqeDVwEJZtM0QRpVToXi6IHt"><meta property="og:title" content="Canary Deployments" />
-<meta property="og:description" content="A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic splitting to direct a small amount of traffic to the new version. Then you can run a canary analysis on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&rsquo;s serving all traffic.
-
-apiVersion:networking.istio.io/v1alpha3kind:VirtualServicemetadata:name:helloworldspec:hosts:- helloworldhttp:- route:- destination:host:helloworldsubset:v1weight:90- destination:host:helloworldsubset:v2weight:10apiVersion:networking.istio.io/v1alpha3kind:DestinationRulemetadata:name:helloworldspec:host:helloworldsubsets:- name:v1labels:version:v1- name:v2labels:version:v2" />
+<meta name="supported-color-schemes" content="light only"><title>カナリアデプロイメント&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.97825e77f989d457fa83a8524e96cff0874b1c579a52143002d795e06c7f755f657f8522f861266f6b8d4c32dc387543.css" integrity="sha384-l4Jed/mJ1Ff6g6hSTpbP8IdLHFeaUhQwAteV4Gx/dV9lf4Ui&#43;GEmb2uNTDLcOHVD"><meta property="og:title" content="カナリアデプロイメント" />
+<meta property="og:description" content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/canary/" />
 <meta property="og:image" content="/images/istio-framed.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="Canary Deployments"/>
-<meta name="twitter:description" content="A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic splitting to direct a small amount of traffic to the new version. Then you can run a canary analysis on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&rsquo;s serving all traffic.
-
-apiVersion:networking.istio.io/v1alpha3kind:VirtualServicemetadata:name:helloworldspec:hosts:- helloworldhttp:- route:- destination:host:helloworldsubset:v1weight:90- destination:host:helloworldsubset:v2weight:10apiVersion:networking.istio.io/v1alpha3kind:DestinationRulemetadata:name:helloworldspec:host:helloworldsubsets:- name:v1labels:version:v1- name:v2labels:version:v2"/>
+<meta name="twitter:title" content="カナリアデプロイメント"/>
+<meta name="twitter:description" content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ"/>
 </head>
 <body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
 </section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">Canary Deployments</h1>
+    <h1 class="article-title">カナリアデプロイメント</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based <a href="https://istio.io/docs/concepts/traffic-management/#routing-versions"target="_blank">traffic splitting</a> to direct a small amount of traffic to the new version. Then you can run a <a href="https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze"target="_blank">canary analysis</a> on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&rsquo;s serving all traffic.</p>
+<article class="markdown-body"><p>カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定の<a href="https://istio.io/docs/concepts/traffic-management/#routing-versions"target="_blank">トラフィック分岐</a>により、少量のトラフィックのみを新しいバージョンに誘導できます。その後、新しいバージョンに対し，<a href="https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze"target="_blank">カナリア分析</a>（レイテンシやエラー率のチェックなど）を実行しつつ、最終的に新しいバージョンが全てのトラフィックを受け付けるようになるまで、段階的にトラフィックを新しいバージョンに誘導することが可能です。</p>
 <p><a target="_blank" rel="noopener noreferrer" href="../images/canary_diagram.png"><img class="img" src="../images/canary_diagram.png"
         alt="Diagram"/></a></p>
 <div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
