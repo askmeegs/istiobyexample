@@ -1,4 +1,4 @@
-baseURL = "https://istiobyexample-ja.github.io/istiobyexample/"
+baseURL = "/"
 title = "Istio By Example"
 theme = "hugo-notepadium"
 copyright = ""
