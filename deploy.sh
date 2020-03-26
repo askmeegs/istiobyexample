@@ -6,7 +6,10 @@ set -e
 printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # Build the project.
-hugo -t hugo-notepadium # if using a theme, replace with `hugo -t <YOURTHEME>`
+#   -t: set theme
+#   --minift: compaction
+#   --enableGitInfo: use commit timestamp as lastmod
+hugo -t hugo-notepadium --minify --enableGitInfo
 
 # Go To Public folder
 cd docs
