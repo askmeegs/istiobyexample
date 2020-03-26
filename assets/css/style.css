@@ -61,11 +61,10 @@ body {
 }
 
 .wrapper-box {
-  padding: 10px;
-  border-top: 1px solid gray;
-  border-left: 1px solid gray;
-  border-bottom: 1px solid gray;
-  border-right: 1px solid gray;
+  padding: 8px;
+  border: 1px solid #bbb;
+  max-width: 392px;
+  background-color: #fff;
 }
 
 .category-header {
@@ -308,7 +307,7 @@ strong {
 }
 
 .max-body-width {
-  max-width: 1200px;
+  max-width: 1192px;
 }
 
 .base-body {
