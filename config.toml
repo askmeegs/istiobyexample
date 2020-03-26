@@ -36,3 +36,6 @@ webFonts = true  # builtin: 'Source Code Pro'
 [params.nav]
 showCategories = false       # /categories/
 showTags = false             # /tags/
+
+[params.css]
+css = ["css/style.css", "css/dark-style.css"]  # *.css/scss/sass
