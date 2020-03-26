@@ -1,8 +1,8 @@
-baseURL = "/"
-title = "Istio By Example-JA"
+baseURL = "https://istiobyexample-ja.github.io/istiobyexample/"
+title = "Istio By Example"
 theme = "hugo-notepadium"
 copyright = ""
-relativeURLs = true # use relative path at images in markdown forcefully
+relativeURLs = true # use relative path at images in markdown
 
 publishDir = "docs"
 
@@ -24,7 +24,8 @@ unsafe = true  # enable raw HTML in Markdown
 logo = "/images/istio-logo.png"  # if you have a logo png
 slogan = ""
 license = ""  # CC License
-images = ["/images/istio-logo.png"]
+images = ["images/istio-framed.jpg"]
+description = "The examples highlighting various Istio features."
 
 [params.syntax]
 use = "chroma"  # builtin: "prismjs", "hljs". "none" means Chroma
