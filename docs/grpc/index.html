@@ -1,88 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>gRPC&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css" integrity="sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM"><meta property="og:title" content="gRPC" />
-<meta property="og:description" content="gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on Service Definitions. You specify service definitions in a format called protocol buffers (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.
+<!doctype html><html><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel=stylesheet><link rel="shortcut icon" href=../images/spider-web.png><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light only"><meta name=supported-color-schemes content="light only"><title>gRPC&nbsp;&ndash;&nbsp;Istio By Example</title><link rel=stylesheet href=../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css integrity=sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM><meta property="og:title" content="gRPC"><meta property="og:description" content="gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on Service Definitions. You specify service definitions in a format called protocol buffers (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.
 With gRPC, you can generate boilerplate code from .proto files into multiple programming languages, making gRPC an ideal choice for polyglot microservices.
-While gRPC supports some networking use cases like TLS and client-side load balancing, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting RPC-level authorization." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/grpc/" />
-<meta property="og:image" content="/images/istio-framed.jpg"/>
-<meta property="article:published_time" content="2019-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-12-31T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="gRPC"/>
-<meta name="twitter:description" content="gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on Service Definitions. You specify service definitions in a format called protocol buffers (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.
+While gRPC supports some networking use cases like TLS and client-side load balancing, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting RPC-level authorization."><meta property="og:type" content="article"><meta property="og:url" content="/grpc/"><meta property="og:image" content="/images/istio-framed.jpg"><meta property="article:published_time" content="2019-12-31T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-26T10:28:33+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/images/istio-framed.jpg"><meta name=twitter:title content="gRPC"><meta name=twitter:description content="gRPC is a communication protocol for services, built on HTTP/2. Unlike REST over HTTP/1, which is based on resources, gRPC is based on Service Definitions. You specify service definitions in a format called protocol buffers (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.
 With gRPC, you can generate boilerplate code from .proto files into multiple programming languages, making gRPC an ideal choice for polyglot microservices.
-While gRPC supports some networking use cases like TLS and client-side load balancing, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting RPC-level authorization."/>
-</head>
-<body>
-    <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
-            <span class="site-name">Istio By Example</span></a></p>
-</section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">gRPC</h1>
-</section>
-<div class="flex-body">
-<article class="markdown-body"><p><a href="https://grpc.io/"target="_blank">gRPC</a> is a communication protocol for services, built on <a href="https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/"target="_blank">HTTP/2</a>. Unlike REST over HTTP/1, which is based on <a href="https://en.wikipedia.org/wiki/Representational_state_transfer"target="_blank">resources</a>, gRPC is based on <a href="https://grpc.io/docs/guides/concepts/"target="_blank">Service Definitions</a>. You specify service definitions in a format called <a href="https://developers.google.com/protocol-buffers/"target="_blank">protocol buffers</a> (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.</p>
-<p>With gRPC, you can generate boilerplate code from <code>.proto</code> files into <a href="https://grpc.io/docs/quickstart/"target="_blank">multiple programming languages</a>, making gRPC an ideal choice for polyglot microservices.</p>
-<p>While gRPC supports some networking use cases like <a href="https://grpc.io/docs/guides/auth/"target="_blank">TLS</a> and <a href="https://grpc.io/blog/loadbalancing/"target="_blank">client-side load balancing</a>, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting <a href="https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization"target="_blank">RPC-level authorization</a>. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.</p>
-<p><a href="https://istio.io/about/feature-stages/#traffic-management"target="_blank">Istio</a> and its data plane proxy, <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc"target="_blank">Envoy</a>, both  support gRPC. Let&rsquo;s see how to manage gRPC traffic with Istio.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/grpc.png"><img class="img" src="../images/grpc.png"
-        alt="grpc"/></a></p>
-<p>Here, we&rsquo;re running two gRPC Services, <code>client</code> and <code>server</code>. <code>client</code> makes an RPC call to the <code>server</code>'s <code>/SayHello</code> function every 2 seconds.</p>
-<p>Adding Istio to gRPC Kubernetes services has one pre-requisite: <a href="https://istio.io/docs/setup/kubernetes/additional-setup/requirements/"target="_blank">labeling</a> your Kubernetes Service ports. The server&rsquo;s port is labeled as follows:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>server<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>server<span class="w">
-</span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>ClusterIP<span class="w">
-</span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>grpc<span class="w"> </span><span class="c"># important!</span><span class="w">
-</span><span class="w">    </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
-</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
-</span></code></pre></div><p>Once we deploy the app, we can see this traffic between client and server in a <a href="https://www.kiali.io/"target="_blank">service graph</a>:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/grpc-kiali.png"><img class="img" src="../images/grpc-kiali.png"
-        alt="kiali"/></a></p>
-<p>We can also view the server&rsquo;s gRPC traffic metrics in Grafana:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/grpc-server-healthy.png"><img class="img" src="../images/grpc-server-healthy.png"
-        alt/></a></p>
-<p>Then, we can apply an Istio traffic rule to inject a 10-second delay <a href="https://istio.io/docs/tasks/traffic-management/fault-injection/"target="_blank">fault</a> into <code>server</code>. You might apply this rule in a chaos testing scenario, to test the resiliency of this application.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>server-fault<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- server<span class="w">
-</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">fault</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">delay</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">percentage</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">value</span><span class="p">:</span><span class="w"> </span><span class="m">100.0</span><span class="w">
-</span><span class="w">        </span><span class="k">fixedDelay</span><span class="p">:</span><span class="w"> </span>10s<span class="w">
-</span><span class="w">    </span><span class="k">route</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>server<span class="w">
-</span><span class="w">        </span><span class="k">subset</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span></code></pre></div><p>This causes the client RPC to time out (<code>Outgoing Request Duration</code>):</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/grpc-grafana-client-fault-inject.png"><img class="img" src="../images/grpc-grafana-client-fault-inject.png"
-        alt/></a></p>
-<p>To learn more about gRPC and Istio:</p>
-<ul>
-<li><a href="https://istio.io/docs/concepts/traffic-management/#traffic-routing-and-configuration"target="_blank">Istio docs - Traffic Management</a></li>
-<li><a href="https://cloud.google.com/solutions/using-istio-for-internal-load-balancing-of-grpc-services"target="_blank">Blog post - gRPC + Istio + Cloud Internal Load Balancer</a></li>
-</ul>
-</article>
-</div><section id="footer" class="footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section></div>
-    </div>
-</body>
-</html>
+While gRPC supports some networking use cases like TLS and client-side load balancing, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting RPC-level authorization."></head><body><div class="base-body max-width"><section id=header class="header max-body-width"><p><a class=home href=../><img class=site-logo src=../images/istio-logo.png alt>
+<span class=site-name>Istio By Example</span></a></p></section><div id=content class="flex-body max-body-width"><section class=article-header><h1 class=article-title>gRPC</h1></section><div class=flex-body><article class=markdown-body><p><a href=https://grpc.io/ target=_blank>gRPC</a> is a communication protocol for services, built on <a href=https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/ target=_blank>HTTP/2</a>. Unlike REST over HTTP/1, which is based on <a href=https://en.wikipedia.org/wiki/Representational_state_transfer target=_blank>resources</a>, gRPC is based on <a href=https://grpc.io/docs/guides/concepts/ target=_blank>Service Definitions</a>. You specify service definitions in a format called <a href=https://developers.google.com/protocol-buffers/ target=_blank>protocol buffers</a> (&ldquo;proto&rdquo;), which can be serialized into an small binary format for transmission.</p><p>With gRPC, you can generate boilerplate code from <code>.proto</code> files into <a href=https://grpc.io/docs/quickstart/ target=_blank>multiple programming languages</a>, making gRPC an ideal choice for polyglot microservices.</p><p>While gRPC supports some networking use cases like <a href=https://grpc.io/docs/guides/auth/ target=_blank>TLS</a> and <a href=https://grpc.io/blog/loadbalancing/ target=_blank>client-side load balancing</a>, adding Istio to a gRPC architecture can be useful for collecting telemetry, adding traffic rules, and setting <a href=https://istio.io/blog/2018/istio-authorization/#rpc-level-authorization target=_blank>RPC-level authorization</a>. Istio can also provide a useful management layer if your traffic is a mix of HTTP, TCP, gRPC, and database protocols, because you can use the same Istio APIs for all traffic types.</p><p><a href=https://istio.io/about/feature-stages/#traffic-management target=_blank>Istio</a> and its data plane proxy, <a href=https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc#arch-overview-grpc target=_blank>Envoy</a>, both support gRPC. Let&rsquo;s see how to manage gRPC traffic with Istio.</p><p><a target=_blank rel="noopener noreferrer" href=../images/grpc.png><img class=img src=../images/grpc.png alt=grpc></a></p><p>Here, we&rsquo;re running two gRPC Services, <code>client</code> and <code>server</code>. <code>client</code> makes an RPC call to the <code>server</code>'s <code>/SayHello</code> function every 2 seconds.</p><p>Adding Istio to gRPC Kubernetes services has one pre-requisite: <a href=https://istio.io/docs/setup/kubernetes/additional-setup/requirements/ target=_blank>labeling</a> your Kubernetes Service ports. The server&rsquo;s port is labeled as follows:</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Service<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>server<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>app</span><span class=p>:</span><span class=w> </span>server<span class=w>
+</span><span class=w>  </span><span class=k>type</span><span class=p>:</span><span class=w> </span>ClusterIP<span class=w>
+</span><span class=w>  </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>grpc<span class=w> </span><span class=c># important!</span><span class=w>
+</span><span class=w>    </span><span class=k>protocol</span><span class=p>:</span><span class=w> </span>TCP<span class=w>
+</span><span class=w>    </span><span class=k>port</span><span class=p>:</span><span class=w> </span><span class=m>8080</span><span class=w>
+</span></code></pre></div><p>Once we deploy the app, we can see this traffic between client and server in a <a href=https://www.kiali.io/ target=_blank>service graph</a>:</p><p><a target=_blank rel="noopener noreferrer" href=../images/grpc-kiali.png><img class=img src=../images/grpc-kiali.png alt=kiali></a></p><p>We can also view the server&rsquo;s gRPC traffic metrics in Grafana:</p><p><a target=_blank rel="noopener noreferrer" href=../images/grpc-server-healthy.png><img class=img src=../images/grpc-server-healthy.png alt></a></p><p>Then, we can apply an Istio traffic rule to inject a 10-second delay <a href=https://istio.io/docs/tasks/traffic-management/fault-injection/ target=_blank>fault</a> into <code>server</code>. You might apply this rule in a chaos testing scenario, to test the resiliency of this application.</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.istio.io/v1alpha3<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>VirtualService<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>server-fault<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- server<span class=w>
+</span><span class=w>  </span><span class=k>http</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>fault</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>delay</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>percentage</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>value</span><span class=p>:</span><span class=w> </span><span class=m>100.0</span><span class=w>
+</span><span class=w>        </span><span class=k>fixedDelay</span><span class=p>:</span><span class=w> </span>10s<span class=w>
+</span><span class=w>    </span><span class=k>route</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>destination</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>host</span><span class=p>:</span><span class=w> </span>server<span class=w>
+</span><span class=w>        </span><span class=k>subset</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span></code></pre></div><p>This causes the client RPC to time out (<code>Outgoing Request Duration</code>):</p><p><a target=_blank rel="noopener noreferrer" href=../images/grpc-grafana-client-fault-inject.png><img class=img src=../images/grpc-grafana-client-fault-inject.png alt></a></p><p>To learn more about gRPC and Istio:</p><ul><li><a href=https://istio.io/docs/concepts/traffic-management/#traffic-routing-and-configuration target=_blank>Istio docs - Traffic Management</a></li><li><a href=https://cloud.google.com/solutions/using-istio-for-internal-load-balancing-of-grpc-services target=_blank>Blog post - gRPC + Istio + Cloud Internal Load Balancer</a></li></ul></article></div><section id=footer class=footer><p>Made with ❤️ by <a href=https://twitter.com/askmeegs>Megan O'Keefe</a> | <a href=https://github.com/askmeegs/istiobyexample>Source</a> | <a href=https://github.com/cntrump/hugo-notepadium>Theme</a></p></section></div></div></body></html>

@@ -1,65 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>カナリアデプロイメント&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css" integrity="sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM"><meta property="og:title" content="カナリアデプロイメント" />
-<meta property="og:description" content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/canary/" />
-<meta property="og:image" content="/images/istio-framed.jpg"/>
-<meta property="article:published_time" content="2019-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-03-26T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="カナリアデプロイメント"/>
-<meta name="twitter:description" content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ"/>
-</head>
-<body>
-    <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
-            <span class="site-name">Istio By Example</span></a></p>
-</section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">カナリアデプロイメント</h1>
-</section>
-<div class="flex-body">
-<article class="markdown-body"><p>カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定の<a href="https://istio.io/docs/concepts/traffic-management/#routing-versions"target="_blank">トラフィック分岐</a>により、少量のトラフィックのみを新しいバージョンに誘導できます。その後、新しいバージョンに対し，<a href="https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze"target="_blank">カナリア分析</a>（レイテンシやエラー率のチェックなど）を実行しつつ、最終的に新しいバージョンが全てのトラフィックを受け付けるようになるまで、段階的にトラフィックを新しいバージョンに誘導することが可能です。</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/canary_diagram.png"><img class="img" src="../images/canary_diagram.png"
-        alt="Diagram"/></a></p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>helloworld<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- helloworld<span class="w">
-</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">route</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>helloworld<span class="w">
-</span><span class="w">        </span><span class="k">subset</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w">      </span><span class="k">weight</span><span class="p">:</span><span class="w"> </span><span class="m">90</span><span class="w">
-</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>helloworld<span class="w">
-</span><span class="w">        </span><span class="k">subset</span><span class="p">:</span><span class="w"> </span>v2<span class="w">
-</span><span class="w">      </span><span class="k">weight</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>helloworld<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>helloworld<span class="w">
-</span><span class="w">  </span><span class="k">subsets</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>v2<span class="w">
-</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>v2<span class="w">
-</span></code></pre></div></article>
-</div><section id="footer" class="footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section></div>
-    </div>
-</body>
-</html>
+<!doctype html><html><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel=stylesheet><link rel="shortcut icon" href=../images/spider-web.png><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light only"><meta name=supported-color-schemes content="light only"><title>カナリアデプロイメント&nbsp;&ndash;&nbsp;Istio By Example</title><link rel=stylesheet href=../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css integrity=sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM><meta property="og:title" content="カナリアデプロイメント"><meta property="og:description" content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ"><meta property="og:type" content="article"><meta property="og:url" content="/canary/"><meta property="og:image" content="/images/istio-framed.jpg"><meta property="article:published_time" content="2019-12-31T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-26T10:28:33+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/images/istio-framed.jpg"><meta name=twitter:title content="カナリアデプロイメント"><meta name=twitter:description content="カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定のトラフィック分岐によ"></head><body><div class="base-body max-width"><section id=header class="header max-body-width"><p><a class=home href=../><img class=site-logo src=../images/istio-logo.png alt>
+<span class=site-name>Istio By Example</span></a></p></section><div id=content class="flex-body max-body-width"><section class=article-header><h1 class=article-title>カナリアデプロイメント</h1></section><div class=flex-body><article class=markdown-body><p>カナリアデプロイメントは、新しいバージョンのサービスを安全に展開するための手法です。Istioを使うと、パーセント指定の<a href=https://istio.io/docs/concepts/traffic-management/#routing-versions target=_blank>トラフィック分岐</a>により、少量のトラフィックのみを新しいバージョンに誘導できます。その後、新しいバージョンに対し，<a href=https://cloud.google.com/blog/products/devops-sre/canary-analysis-lessons-learned-and-best-practices-from-google-and-waze target=_blank>カナリア分析</a>（レイテンシやエラー率のチェックなど）を実行しつつ、最終的に新しいバージョンが全てのトラフィックを受け付けるようになるまで、段階的にトラフィックを新しいバージョンに誘導することが可能です。</p><p><a target=_blank rel="noopener noreferrer" href=../images/canary_diagram.png><img class=img src=../images/canary_diagram.png alt=Diagram></a></p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.istio.io/v1alpha3<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>VirtualService<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>helloworld<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- helloworld<span class=w>
+</span><span class=w>  </span><span class=k>http</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>route</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>destination</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>host</span><span class=p>:</span><span class=w> </span>helloworld<span class=w>
+</span><span class=w>        </span><span class=k>subset</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w>      </span><span class=k>weight</span><span class=p>:</span><span class=w> </span><span class=m>90</span><span class=w>
+</span><span class=w>    </span>- <span class=k>destination</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>host</span><span class=p>:</span><span class=w> </span>helloworld<span class=w>
+</span><span class=w>        </span><span class=k>subset</span><span class=p>:</span><span class=w> </span>v2<span class=w>
+</span><span class=w>      </span><span class=k>weight</span><span class=p>:</span><span class=w> </span><span class=m>10</span><span class=w>
+</span></code></pre></div><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.istio.io/v1alpha3<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>DestinationRule<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>helloworld<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>host</span><span class=p>:</span><span class=w> </span>helloworld<span class=w>
+</span><span class=w>  </span><span class=k>subsets</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w>    </span><span class=k>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>version</span><span class=p>:</span><span class=w> </span>v1<span class=w>
+</span><span class=w>  </span>- <span class=k>name</span><span class=p>:</span><span class=w> </span>v2<span class=w>
+</span><span class=w>    </span><span class=k>labels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>version</span><span class=p>:</span><span class=w> </span>v2<span class=w>
+</span></code></pre></div></article></div><section id=footer class=footer><p>Made with ❤️ by <a href=https://twitter.com/askmeegs>Megan O'Keefe</a> | <a href=https://github.com/askmeegs/istiobyexample>Source</a> | <a href=https://github.com/cntrump/hugo-notepadium>Theme</a></p></section></div></div></body></html>

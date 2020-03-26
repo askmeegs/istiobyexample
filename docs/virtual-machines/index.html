@@ -1,92 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css" integrity="sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM"><meta property="og:title" content="Virtual Machines" />
-<meta property="og:description" content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
-But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/virtual-machines/" />
-<meta property="og:image" content="/images/istio-framed.jpg"/>
-<meta property="article:published_time" content="2019-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-12-31T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="Virtual Machines"/>
-<meta name="twitter:description" content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
-But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh."/>
-</head>
-<body>
-    <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
-            <span class="site-name">Istio By Example</span></a></p>
-</section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">Virtual Machines</h1>
-</section>
-<div class="flex-body">
-<article class="markdown-body"><p>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.</p>
-<p>But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let&rsquo;s see how.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-call-flow.png"><img class="img" src="../images/vm-call-flow.png"
-        alt/></a></p>
-<p>In this example, we are running a web application for a local library. This web app has multiple backends, all running in a Kubernetes cluster. One of our Kubernetes workloads, <code>inventory</code>, talks to a PostgreSQL database, and writes a record for each new book added to the library. This database is running in a virtual machine in another cloud region.</p>
-<p>In order to get the full Istio functionality for PostgreSQL, our VM-based database, we need to install the Istio sidecar proxy on the VM, and configure it to talk to the Istio control plane running in the cluster. (Note that this is different from adding external <a href="../external-services">ServiceEntries</a>.) We can add our Postgres database to the mesh with three steps. You can follow along with the commands in the <a href="https://github.com/askmeegs/postgres-library/tree/0241acce9d7e2cede0de8ac9baa1338624f716eb#-postgres-library"target="_blank">demo on GitHub</a>.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-architecture.png"><img class="img" src="../images/vm-architecture.png"
-        alt/></a></p>
-<ol>
-<li>
-<p><strong><a href="https://github.com/askmeegs/postgres-library#5-allow-pod-ip-traffic-to-the-vm"target="_blank">Create a firewall rule</a> for pod-to-VM traffic</strong>. This allows traffic from the Kubernetes pod CIDR range directly into our VM-based workload.</p>
-</li>
-<li>
-<p><strong><a href="https://github.com/askmeegs/postgres-library#6-prepare-a-clusterenv-file-to-send-to-the-vm"target="_blank">Install Istio</a> on the VM</strong>. Copy the service account keys, and the ports the VM service exposes (in this case, PostgreSQL client port <code>5432</code>). Update the <code>/etc/hosts</code> on the VM to route <code>istio.pilot</code> and <code>istio.citadel</code> traffic through the Istio IngressGateway running on the cluster. Then, install the Istio sidecar proxy and node agent on the VM. The node agent is responsible for generating client certificates to mount into the sidecar proxy, for mutual TLS authentication. Start the proxy and node agent using <code>systemctl</code>.</p>
-</li>
-<li>
-<p><strong><a href="https://github.com/askmeegs/postgres-library#8-register-the-vm-with-istio-running-on-the-gke-cluster"target="_blank">Register the VM</a> workload with Kubernetes</strong>. We need two Kubernetes resources to add our Postgres database to the mesh. The first is a <code>ServiceEntry</code>. This will route the Kubernetes DNS name to the virtual machine IP address. Finally, we need a Kubernetes <code>Service</code> to create that DNS entry. This is what will allow our client pod to <a href="https://github.com/askmeegs/postgres-library/blob/master/main.go#L39"target="_blank">start a database connection</a> at <code>postgres-1-vm.default.svc.cluster.local</code>. We can use the <code>istioctl register</code> command to do this.</p>
-</li>
-</ol>
-<p>We can now verify that the Kubernetes-based client can successfully write to the database, by viewing the pod logs:</p>
-<pre><code>postgres-library-6bb956f86b-dt94x server ✅ inserted Fun Home
+<!doctype html><html><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel=stylesheet><link rel="shortcut icon" href=../images/spider-web.png><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light only"><meta name=supported-color-schemes content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel=stylesheet href=../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css integrity=sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM><meta property="og:title" content="Virtual Machines"><meta property="og:description" content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
+But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh."><meta property="og:type" content="article"><meta property="og:url" content="/virtual-machines/"><meta property="og:image" content="/images/istio-framed.jpg"><meta property="article:published_time" content="2019-12-31T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-26T10:28:33+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/images/istio-framed.jpg"><meta name=twitter:title content="Virtual Machines"><meta name=twitter:description content="Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.
+But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh."></head><body><div class="base-body max-width"><section id=header class="header max-body-width"><p><a class=home href=../><img class=site-logo src=../images/istio-logo.png alt>
+<span class=site-name>Istio By Example</span></a></p></section><div id=content class="flex-body max-body-width"><section class=article-header><h1 class=article-title>Virtual Machines</h1></section><div class=flex-body><article class=markdown-body><p>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.</p><p>But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let&rsquo;s see how.</p><p><a target=_blank rel="noopener noreferrer" href=../images/vm-call-flow.png><img class=img src=../images/vm-call-flow.png alt></a></p><p>In this example, we are running a web application for a local library. This web app has multiple backends, all running in a Kubernetes cluster. One of our Kubernetes workloads, <code>inventory</code>, talks to a PostgreSQL database, and writes a record for each new book added to the library. This database is running in a virtual machine in another cloud region.</p><p>In order to get the full Istio functionality for PostgreSQL, our VM-based database, we need to install the Istio sidecar proxy on the VM, and configure it to talk to the Istio control plane running in the cluster. (Note that this is different from adding external <a href=../external-services>ServiceEntries</a>.) We can add our Postgres database to the mesh with three steps. You can follow along with the commands in the <a href=https://github.com/askmeegs/postgres-library/tree/0241acce9d7e2cede0de8ac9baa1338624f716eb#-postgres-library target=_blank>demo on GitHub</a>.</p><p><a target=_blank rel="noopener noreferrer" href=../images/vm-architecture.png><img class=img src=../images/vm-architecture.png alt></a></p><ol><li><p><strong><a href=https://github.com/askmeegs/postgres-library#5-allow-pod-ip-traffic-to-the-vm target=_blank>Create a firewall rule</a> for pod-to-VM traffic</strong>. This allows traffic from the Kubernetes pod CIDR range directly into our VM-based workload.</p></li><li><p><strong><a href=https://github.com/askmeegs/postgres-library#6-prepare-a-clusterenv-file-to-send-to-the-vm target=_blank>Install Istio</a> on the VM</strong>. Copy the service account keys, and the ports the VM service exposes (in this case, PostgreSQL client port <code>5432</code>). Update the <code>/etc/hosts</code> on the VM to route <code>istio.pilot</code> and <code>istio.citadel</code> traffic through the Istio IngressGateway running on the cluster. Then, install the Istio sidecar proxy and node agent on the VM. The node agent is responsible for generating client certificates to mount into the sidecar proxy, for mutual TLS authentication. Start the proxy and node agent using <code>systemctl</code>.</p></li><li><p><strong><a href=https://github.com/askmeegs/postgres-library#8-register-the-vm-with-istio-running-on-the-gke-cluster target=_blank>Register the VM</a> workload with Kubernetes</strong>. We need two Kubernetes resources to add our Postgres database to the mesh. The first is a <code>ServiceEntry</code>. This will route the Kubernetes DNS name to the virtual machine IP address. Finally, we need a Kubernetes <code>Service</code> to create that DNS entry. This is what will allow our client pod to <a href=https://github.com/askmeegs/postgres-library/blob/master/main.go#L39 target=_blank>start a database connection</a> at <code>postgres-1-vm.default.svc.cluster.local</code>. We can use the <code>istioctl register</code> command to do this.</p></li></ol><p>We can now verify that the Kubernetes-based client can successfully write to the database, by viewing the pod logs:</p><pre><code>postgres-library-6bb956f86b-dt94x server ✅ inserted Fun Home
 postgres-library-6bb956f86b-dt94x server ✅ inserted Infinite Jest
 postgres-library-6bb956f86b-dt94x server ✅ inserted To the Lighthouse
-</code></pre><p>And we can verify that the sidecar proxy running on the VM is intercepting inbound traffic on port <code>5432</code>, by viewing the Envoy access logs on the VM.</p>
-<pre><code>$ tail /var/log/istio/istio.log
+</code></pre><p>And we can verify that the sidecar proxy running on the VM is intercepting inbound traffic on port <code>5432</code>, by viewing the Envoy access logs on the VM.</p><pre><code>$ tail /var/log/istio/istio.log
 
 [2019-11-14T19:09:00.174Z] &quot;- - -&quot; 0 - &quot;-&quot; &quot;-&quot; 268 441 194 - &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot;
 &quot;127.0.0.1:5432&quot; inbound|5432|tcp|postgresql-1-vm.default.svc.cluster.local
 127.0.0.1:54104 10.128.0.14:5432 10.24.2.23:40190
 outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -
-</code></pre><p>We can also see TCP metrics flowing in the Kiali service graph:</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/vm-kiali.png"><img class="img" src="../images/vm-kiali.png"
-        alt/></a></p>
-<p>From here, we can use any Istio traffic or security policies to our multi-environment service mesh. For instance, we can encrypt all traffic between the cluster and the VM, by adding a mesh-wide mutual TLS policy:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;MeshPolicy&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">peers</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">mtls</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w"></span>---<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;networking.istio.io/v1alpha3&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;DestinationRule&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;istio-system&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">host</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;*.local&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">trafficPolicy</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">tls</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>ISTIO_MUTUAL<span class="w">
-</span></code></pre></div><p>To learn more:</p>
-<ul>
-<li><a href="https://github.com/askmeegs/postgres-library"target="_blank">Run this example in your environment</a></li>
-<li><a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/master/mesh-expansion-gce"target="_blank">Try another example</a></li>
-<li><a href="https://istio.io/docs/examples/virtual-machines/single-network/"target="_blank">See the Istio documentation</a></li>
-</ul>
-</article>
-</div><section id="footer" class="footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section></div>
-    </div>
-</body>
-</html>
+</code></pre><p>We can also see TCP metrics flowing in the Kiali service graph:</p><p><a target=_blank rel="noopener noreferrer" href=../images/vm-kiali.png><img class=img src=../images/vm-kiali.png alt></a></p><p>From here, we can use any Istio traffic or security policies to our multi-environment service mesh. For instance, we can encrypt all traffic between the cluster and the VM, by adding a mesh-wide mutual TLS policy:</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;authentication.istio.io/v1alpha1&#34;</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;MeshPolicy&#34;</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;default&#34;</span><span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>peers</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>mtls</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span><span class=w></span>---<span class=w>
+</span><span class=w></span><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;networking.istio.io/v1alpha3&#34;</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;DestinationRule&#34;</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;default&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;istio-system&#34;</span><span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>host</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;*.local&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>trafficPolicy</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>tls</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>mode</span><span class=p>:</span><span class=w> </span>ISTIO_MUTUAL<span class=w>
+</span></code></pre></div><p>To learn more:</p><ul><li><a href=https://github.com/askmeegs/postgres-library target=_blank>Run this example in your environment</a></li><li><a href=https://github.com/GoogleCloudPlatform/istio-samples/tree/master/mesh-expansion-gce target=_blank>Try another example</a></li><li><a href=https://istio.io/docs/examples/virtual-machines/single-network/ target=_blank>See the Istio documentation</a></li></ul></article></div><section id=footer class=footer><p>Made with ❤️ by <a href=https://twitter.com/askmeegs>Megan O'Keefe</a> | <a href=https://github.com/askmeegs/istiobyexample>Source</a> | <a href=https://github.com/cntrump/hugo-notepadium>Theme</a></p></section></div></div></body></html>

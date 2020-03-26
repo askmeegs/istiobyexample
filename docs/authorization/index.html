@@ -1,104 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Authorization&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css" integrity="sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM"><meta property="og:title" content="Authorization" />
-<meta property="og:description" content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
-While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/authorization/" />
-<meta property="og:image" content="/images/istio-framed.jpg"/>
-<meta property="article:published_time" content="2019-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-12-31T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="Authorization"/>
-<meta name="twitter:description" content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
-While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies."/>
-</head>
-<body>
-    <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
-            <span class="site-name">Istio By Example</span></a></p>
-</section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">Authorization</h1>
-</section>
-<div class="flex-body">
-<article class="markdown-body"><p>Authentication means verifying the identity of a client. <strong>Authorization</strong>, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;</p>
-<p>While all requests in an Istio mesh are allowed by default, <a href="https://istio.io/docs/concepts/security/#authorization"target="_blank">Istio provides</a> an <a href="https://istio.io/docs/reference/config/security/authorization-policy/"target="_blank"><code>AuthorizationPolicy</code> resource</a> that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies. From there, authorization policy checks are performed by the sidecar proxies. Let&rsquo;s see how it works.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/rbac.png"><img class="img" src="../images/rbac.png"
-        alt="shoes rbac"/></a></p>
-<p>Here, the <em>ShoeStore</em> application is deployed to the <code>default</code> Kubernetes namespace. There are three HTTP workloads, each defined with their own Kubernetes Deployment, Service, and ServiceAccount.</p>
-<ol>
-<li><strong>shoes</strong>: exposes an API for all the shoes in the store</li>
-<li><strong>users</strong>: stores purchase history</li>
-<li><strong>inventory</strong>: loads new shoe models into shoes.</li>
-</ol>
-<p>We want to authorize the inventory service to be able to <code>POST</code> data to the shoes services, and then lock down all access to the users service. To do this, we will create two <code>AuthorizationPolicies</code>: one for <code>shoes</code>, and one for <code>users</code>.</p>
-<p>Before deploying any policies, we can access both shoes and users from inside the inventory service&rsquo;s application container.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -X GET shoes
+<!doctype html><html><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel=stylesheet><link rel="shortcut icon" href=../images/spider-web.png><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light only"><meta name=supported-color-schemes content="light only"><title>Authorization&nbsp;&ndash;&nbsp;Istio By Example</title><link rel=stylesheet href=../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css integrity=sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM><meta property="og:title" content="Authorization"><meta property="og:description" content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
+While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies."><meta property="og:type" content="article"><meta property="og:url" content="/authorization/"><meta property="og:image" content="/images/istio-framed.jpg"><meta property="article:published_time" content="2019-12-31T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-26T10:28:33+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/images/istio-framed.jpg"><meta name=twitter:title content="Authorization"><meta name=twitter:description content="Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
+While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies."></head><body><div class="base-body max-width"><section id=header class="header max-body-width"><p><a class=home href=../><img class=site-logo src=../images/istio-logo.png alt>
+<span class=site-name>Istio By Example</span></a></p></section><div id=content class="flex-body max-body-width"><section class=article-header><h1 class=article-title>Authorization</h1></section><div class=flex-body><article class=markdown-body><p>Authentication means verifying the identity of a client. <strong>Authorization</strong>, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;</p><p>While all requests in an Istio mesh are allowed by default, <a href=https://istio.io/docs/concepts/security/#authorization target=_blank>Istio provides</a> an <a href=https://istio.io/docs/reference/config/security/authorization-policy/ target=_blank><code>AuthorizationPolicy</code> resource</a> that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies. From there, authorization policy checks are performed by the sidecar proxies. Let&rsquo;s see how it works.</p><p><a target=_blank rel="noopener noreferrer" href=../images/rbac.png><img class=img src=../images/rbac.png alt="shoes rbac"></a></p><p>Here, the <em>ShoeStore</em> application is deployed to the <code>default</code> Kubernetes namespace. There are three HTTP workloads, each defined with their own Kubernetes Deployment, Service, and ServiceAccount.</p><ol><li><strong>shoes</strong>: exposes an API for all the shoes in the store</li><li><strong>users</strong>: stores purchase history</li><li><strong>inventory</strong>: loads new shoe models into shoes.</li></ol><p>We want to authorize the inventory service to be able to <code>POST</code> data to the shoes services, and then lock down all access to the users service. To do this, we will create two <code>AuthorizationPolicies</code>: one for <code>shoes</code>, and one for <code>users</code>.</p><p>Before deploying any policies, we can access both shoes and users from inside the inventory service&rsquo;s application container.</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>$ curl -X GET shoes
 🥾 Shoes service
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -x GET users
+</code></pre></div><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>$ curl -x GET users
 👥 Users service
-</code></pre></div><p>First, let&rsquo;s create an AuthorizationPolicy for <code>shoes</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;security.istio.io/v1beta1&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;AuthorizationPolicy&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;shoes-writer&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>shoes<span class="w">
-</span><span class="w">  </span><span class="k">rules</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">from</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">source</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">principals</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;cluster.local/ns/default/sa/inventory-sa&#34;</span><span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">to</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">operation</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">methods</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;POST&#34;</span><span class="p">]</span><span class="w">
-</span></code></pre></div><p>In this policy:</p>
-<ul>
-<li>The <code>selector</code> on <code>shoes</code> means we&rsquo;re enforcing any Deployment labeled with <code>app:shoes</code>.</li>
-<li>The <code>source</code> workload we&rsquo;re allowing has the <code>inventory-sa</code> identity. In a Kubernetes environment, this means that only pods with the <code>inventory-sa</code> <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"target="_blank">Service Account</a> can access shoes. (<strong>Note</strong>: You must <a href="https://istio.io/docs/tasks/security/authentication/authn-policy/#globally-enabling-istio-mutual-tls"target="_blank">enable Istio mutual TLS authentication</a> to use service account-based authorization policies. Mutual TLS is what allows the workload&rsquo;s <a href="https://istio.io/docs/concepts/security/#istio-security-vs-spiffe"target="_blank">service account</a> certificates to be passed in the request.)</li>
-<li>The only whitelisted HTTP operation is <code>POST</code>, meaning that other HTTP operations, like <code>GET</code>, will be denied.</li>
-</ul>
-<p>Once we apply the <code>shoes-writer</code> policy, we can successfully <code>POST</code> from inventory:</p>
-<pre><code>$ curl -X POST shoes
+</code></pre></div><p>First, let&rsquo;s create an AuthorizationPolicy for <code>shoes</code>:</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;security.istio.io/v1beta1&#34;</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;AuthorizationPolicy&#34;</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;shoes-writer&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>default<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>matchLabels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>app</span><span class=p>:</span><span class=w> </span>shoes<span class=w>
+</span><span class=w>  </span><span class=k>rules</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>from</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>source</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>principals</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;cluster.local/ns/default/sa/inventory-sa&#34;</span><span class=p>]</span><span class=w>
+</span><span class=w>    </span><span class=k>to</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>operation</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>methods</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;POST&#34;</span><span class=p>]</span><span class=w>
+</span></code></pre></div><p>In this policy:</p><ul><li>The <code>selector</code> on <code>shoes</code> means we&rsquo;re enforcing any Deployment labeled with <code>app:shoes</code>.</li><li>The <code>source</code> workload we&rsquo;re allowing has the <code>inventory-sa</code> identity. In a Kubernetes environment, this means that only pods with the <code>inventory-sa</code> <a href=https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ target=_blank>Service Account</a> can access shoes. (<strong>Note</strong>: You must <a href=https://istio.io/docs/tasks/security/authentication/authn-policy/#globally-enabling-istio-mutual-tls target=_blank>enable Istio mutual TLS authentication</a> to use service account-based authorization policies. Mutual TLS is what allows the workload&rsquo;s <a href=https://istio.io/docs/concepts/security/#istio-security-vs-spiffe target=_blank>service account</a> certificates to be passed in the request.)</li><li>The only whitelisted HTTP operation is <code>POST</code>, meaning that other HTTP operations, like <code>GET</code>, will be denied.</li></ul><p>Once we apply the <code>shoes-writer</code> policy, we can successfully <code>POST</code> from inventory:</p><pre><code>$ curl -X POST shoes
 🥾 Shoes service
-</code></pre><p>But <code>GET</code> requests from <code>inventory</code> are denied:</p>
-<pre><code>$ curl -X GET shoes
+</code></pre><p>But <code>GET</code> requests from <code>inventory</code> are denied:</p><pre><code>$ curl -X GET shoes
 RBAC: access denied
-</code></pre><p>And if we try to <code>POST</code> from a workload other than <code>inventory</code>, for instance, from <code>users</code>, the request will be denied:</p>
-<pre><code>$ curl -X POST shoes
+</code></pre><p>And if we try to <code>POST</code> from a workload other than <code>inventory</code>, for instance, from <code>users</code>, the request will be denied:</p><pre><code>$ curl -X POST shoes
 RBAC: access denied
-</code></pre><p>Next, let&rsquo;s create a &ldquo;deny-all&rdquo; policy for the users service:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;security.istio.io/v1beta1&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;AuthorizationPolicy&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;users-deny-all&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>users<span class="w">
-</span></code></pre></div><p>Note that there are no <code>rules</code> for this service, just a <code>matchLabels</code> for our users Deployment. Also note that <a href="https://istio.io/docs/concepts/security/#allow-all-and-deny-all"target="_blank">the difference</a> between a deny-all and an allow-all AuthorizationPolicy is subtle: in an allow-all policy, you would specify <code>rules: {}</code>.</p>
-<p>Once we apply this resource, we are no longer able to access users from any of our services:</p>
-<pre><code>$ curl users
+</code></pre><p>Next, let&rsquo;s create a &ldquo;deny-all&rdquo; policy for the users service:</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;security.istio.io/v1beta1&#34;</span><span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;AuthorizationPolicy&#34;</span><span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;users-deny-all&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>namespace</span><span class=p>:</span><span class=w> </span>default<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>matchLabels</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>app</span><span class=p>:</span><span class=w> </span>users<span class=w>
+</span></code></pre></div><p>Note that there are no <code>rules</code> for this service, just a <code>matchLabels</code> for our users Deployment. Also note that <a href=https://istio.io/docs/concepts/security/#allow-all-and-deny-all target=_blank>the difference</a> between a deny-all and an allow-all AuthorizationPolicy is subtle: in an allow-all policy, you would specify <code>rules: {}</code>.</p><p>Once we apply this resource, we are no longer able to access users from any of our services:</p><pre><code>$ curl users
 RBAC: access denied
-</code></pre><p>To learn more:</p>
-<ul>
-<li><a href="https://github.com/askmeegs/istiobyexample/tree/master/yaml/authorization"target="_blank">Manifests for this example</a></li>
-<li><a href="https://istio.io/blog/2019/v1beta1-authorization-policy/"target="_blank">Istio blog - Introducing the Istio v1beta1 Authorization Policy</a></li>
-<li><a href="https://istio.io/docs/concepts/security/#authorization"target="_blank">Istio docs - Authorization concepts</a></li>
-<li><a href="https://istio.io/docs/tasks/security/authorization/authz-http/"target="_blank">Istio docs - Authorization task</a></li>
-<li><a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/6fa69cf46424c055535ddbdc22f715e866c4d179/security-intro#demo-introduction-to-istio-security"target="_blank">Istio Samples - Introduction to Istio Security</a></li>
-</ul>
-</article>
-</div><section id="footer" class="footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section></div>
-    </div>
-</body>
-</html>
+</code></pre><p>To learn more:</p><ul><li><a href=https://github.com/askmeegs/istiobyexample/tree/master/yaml/authorization target=_blank>Manifests for this example</a></li><li><a href=https://istio.io/blog/2019/v1beta1-authorization-policy/ target=_blank>Istio blog - Introducing the Istio v1beta1 Authorization Policy</a></li><li><a href=https://istio.io/docs/concepts/security/#authorization target=_blank>Istio docs - Authorization concepts</a></li><li><a href=https://istio.io/docs/tasks/security/authorization/authz-http/ target=_blank>Istio docs - Authorization task</a></li><li><a href=https://github.com/GoogleCloudPlatform/istio-samples/tree/6fa69cf46424c055535ddbdc22f715e866c4d179/security-intro#demo-introduction-to-istio-security target=_blank>Istio Samples - Introduction to Istio Security</a></li></ul></article></div><section id=footer class=footer><p>Made with ❤️ by <a href=https://twitter.com/askmeegs>Megan O'Keefe</a> | <a href=https://github.com/askmeegs/istiobyexample>Source</a> | <a href=https://github.com/cntrump/hugo-notepadium>Theme</a></p></section></div></div></body></html>

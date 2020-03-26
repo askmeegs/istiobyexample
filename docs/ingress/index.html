@@ -1,76 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
-<link rel="shortcut icon" href="../images/spider-web.png">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css" integrity="sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM"><meta property="og:title" content="Ingress" />
-<meta property="og:description" content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
+<!doctype html><html><head><meta charset=utf-8><meta name=generator content="Hugo 0.68.3"><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel=stylesheet><link rel="shortcut icon" href=../images/spider-web.png><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light only"><meta name=supported-color-schemes content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel=stylesheet href=../css/core.min.8658dc7027af6e5fe692e6057555d5ea0eb2fd7f67725ebb620927e0f3595d6d2d4ac30f7684a694753590812388718c.css integrity=sha384-hljccCevbl/mkuYFdVXV6g6y/X9ncl67Ygkn4PNZXW0tSsMPdoSmlHU1kIEjiHGM><meta property="og:title" content="Ingress"><meta property="og:description" content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
 A Gateway is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default IngressGateway with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.
-Istio Gateways have two key advantages over traditional Kubernetes Ingress." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/ingress/" />
-<meta property="og:image" content="/images/istio-framed.jpg"/>
-<meta property="article:published_time" content="2019-12-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2019-12-31T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/images/istio-framed.jpg"/>
-<meta name="twitter:title" content="Ingress"/>
-<meta name="twitter:description" content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
+Istio Gateways have two key advantages over traditional Kubernetes Ingress."><meta property="og:type" content="article"><meta property="og:url" content="/ingress/"><meta property="og:image" content="/images/istio-framed.jpg"><meta property="article:published_time" content="2019-12-31T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-26T10:28:33+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/images/istio-framed.jpg"><meta name=twitter:title content="Ingress"><meta name=twitter:description content="Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes provides ways to handle ingress traffic. With Istio, you can instead manage ingress traffic with a Gateway.
 A Gateway is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default IngressGateway with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.
-Istio Gateways have two key advantages over traditional Kubernetes Ingress."/>
-</head>
-<body>
-    <div class="base-body max-width"><section id="header" class="header max-body-width">
-    <p><a class="home" href="../"><img class="site-logo" src="../images/istio-logo.png" alt />
-            <span class="site-name">Istio By Example</span></a></p>
-</section><div id="content" class="flex-body max-body-width"><section class="article-header">
-    <h1 class="article-title">Ingress</h1>
-</section>
-<div class="flex-body">
-<article class="markdown-body"><p>Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes <a href="https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer"target="_blank">provides</a> <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/"target="_blank">ways</a> to handle ingress traffic. With Istio, you can instead manage ingress traffic with a <strong>Gateway</strong>.</p>
-<p>A <a href="https://istio.io/docs/reference/config/networking/v1alpha3/gateway/"target="_blank">Gateway</a> is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default <code>IngressGateway</code> with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.</p>
-<p>Istio Gateways have two key advantages over traditional Kubernetes Ingress. Because a Gateway is another Envoy proxy, you can use Istio to configure Gateway traffic in the same way you would configure east-west traffic between services (traffic splitting, redirects, retry logic).</p>
-<p>Gateways also forward metrics (request rate, error rate) just like <a href="https://istio.io/docs/concepts/what-is-istio/#envoy"target="_blank">sidecar</a> proxies, allowing you to view Ingress traffic in <a href="https://istio.io/docs/tasks/telemetry/kiali/#generating-a-service-graph"target="_blank">a service graph</a>, and set fine-grained <a href="https://landing.google.com/sre/sre-book/chapters/service-level-objectives/"target="_blank">SLOs</a> on frontend services directly serving clients.</p>
-<p>Let&rsquo;s see Gateways in action.</p>
-<p><a target="_blank" rel="noopener noreferrer" href="../images/ingress.png"><img class="img" src="../images/ingress.png"
-        alt="ingress"/></a></p>
-<p>Here, the <code>hello</code> application runs in a container, inside a Pod. The Pod has an injected Istio sidecar proxy container. A Kubernetes Service called <code>hello</code> fronts this Pod. We want to direct inbound traffic from <code>hello.com</code> to the <code>hello</code> Service.</p>
-<p>First we need a <code>Gateway</code> resource, which opens port <code>80</code> in the default Istio <code>IngressGateway</code>, for all hosts resolving from the <code>hello.com</code> domain.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Gateway<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>hello-gateway<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">istio</span><span class="p">:</span><span class="w"> </span>ingressgateway<span class="w"> </span><span class="c"># use the default IngressGateway</span><span class="w">
-</span><span class="w">  </span><span class="k">servers</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">port</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
-</span><span class="w">    </span><span class="k">hosts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="s2">&#34;hello.com&#34;</span><span class="w">
-</span></code></pre></div><p>(<strong>Note</strong>: on your own, you&rsquo;ll still have to resolve the DNS for that host to the Istio <code>IngressGateway</code> external IP address.)</p>
-<p>Second, we need a <a href="https://istio.io/docs/tasks/traffic-management/ingress/ingress-control/"target="_blank"><code>VirtualService</code></a> to direct traffic from the <code>IngressGateway</code> to the <code>hello</code> backend Service, running in the <code>default</code> namespace on port <code>80</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>frontend-ingress<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">hosts</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="s2">&#34;hello.com&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">gateways</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- hello-gateway<span class="w">
-</span><span class="w">  </span><span class="k">http</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">route</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">destination</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>hello.default.svc.cluster.local<span class="w">
-</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span></code></pre></div></article>
-</div><section id="footer" class="footer">
-    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section></div>
-    </div>
-</body>
-</html>
+Istio Gateways have two key advantages over traditional Kubernetes Ingress."></head><body><div class="base-body max-width"><section id=header class="header max-body-width"><p><a class=home href=../><img class=site-logo src=../images/istio-logo.png alt>
+<span class=site-name>Istio By Example</span></a></p></section><div id=content class="flex-body max-body-width"><section class=article-header><h1 class=article-title>Ingress</h1></section><div class=flex-body><article class=markdown-body><p>Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes <a href=https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer target=_blank>provides</a> <a href=https://kubernetes.io/docs/concepts/services-networking/ingress/ target=_blank>ways</a> to handle ingress traffic. With Istio, you can instead manage ingress traffic with a <strong>Gateway</strong>.</p><p>A <a href=https://istio.io/docs/reference/config/networking/v1alpha3/gateway/ target=_blank>Gateway</a> is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default <code>IngressGateway</code> with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.</p><p>Istio Gateways have two key advantages over traditional Kubernetes Ingress. Because a Gateway is another Envoy proxy, you can use Istio to configure Gateway traffic in the same way you would configure east-west traffic between services (traffic splitting, redirects, retry logic).</p><p>Gateways also forward metrics (request rate, error rate) just like <a href=https://istio.io/docs/concepts/what-is-istio/#envoy target=_blank>sidecar</a> proxies, allowing you to view Ingress traffic in <a href=https://istio.io/docs/tasks/telemetry/kiali/#generating-a-service-graph target=_blank>a service graph</a>, and set fine-grained <a href=https://landing.google.com/sre/sre-book/chapters/service-level-objectives/ target=_blank>SLOs</a> on frontend services directly serving clients.</p><p>Let&rsquo;s see Gateways in action.</p><p><a target=_blank rel="noopener noreferrer" href=../images/ingress.png><img class=img src=../images/ingress.png alt=ingress></a></p><p>Here, the <code>hello</code> application runs in a container, inside a Pod. The Pod has an injected Istio sidecar proxy container. A Kubernetes Service called <code>hello</code> fronts this Pod. We want to direct inbound traffic from <code>hello.com</code> to the <code>hello</code> Service.</p><p>First we need a <code>Gateway</code> resource, which opens port <code>80</code> in the default Istio <code>IngressGateway</code>, for all hosts resolving from the <code>hello.com</code> domain.</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.istio.io/v1alpha3<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>Gateway<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>hello-gateway<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>selector</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>istio</span><span class=p>:</span><span class=w> </span>ingressgateway<span class=w> </span><span class=c># use the default IngressGateway</span><span class=w>
+</span><span class=w>  </span><span class=k>servers</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>port</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>number</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span><span class=w>      </span><span class=k>name</span><span class=p>:</span><span class=w> </span>http<span class=w>
+</span><span class=w>      </span><span class=k>protocol</span><span class=p>:</span><span class=w> </span>HTTP<span class=w>
+</span><span class=w>    </span><span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=s2>&#34;hello.com&#34;</span><span class=w>
+</span></code></pre></div><p>(<strong>Note</strong>: on your own, you&rsquo;ll still have to resolve the DNS for that host to the Istio <code>IngressGateway</code> external IP address.)</p><p>Second, we need a <a href=https://istio.io/docs/tasks/traffic-management/ingress/ingress-control/ target=_blank><code>VirtualService</code></a> to direct traffic from the <code>IngressGateway</code> to the <code>hello</code> backend Service, running in the <code>default</code> namespace on port <code>80</code>.</p><div class=highlight><pre class=chroma><code class=language-YAML data-lang=YAML><span class=k>apiVersion</span><span class=p>:</span><span class=w> </span>networking.istio.io/v1alpha3<span class=w>
+</span><span class=w></span><span class=k>kind</span><span class=p>:</span><span class=w> </span>VirtualService<span class=w>
+</span><span class=w></span><span class=k>metadata</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>name</span><span class=p>:</span><span class=w> </span>frontend-ingress<span class=w>
+</span><span class=w></span><span class=k>spec</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>hosts</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=s2>&#34;hello.com&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>gateways</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- hello-gateway<span class=w>
+</span><span class=w>  </span><span class=k>http</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span>- <span class=k>route</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span>- <span class=k>destination</span><span class=p>:</span><span class=w>
+</span><span class=w>        </span><span class=k>host</span><span class=p>:</span><span class=w> </span>hello.default.svc.cluster.local<span class=w>
+</span><span class=w>        </span><span class=k>port</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=k>number</span><span class=p>:</span><span class=w> </span><span class=m>80</span><span class=w>
+</span></code></pre></div></article></div><section id=footer class=footer><p>Made with ❤️ by <a href=https://twitter.com/askmeegs>Megan O'Keefe</a> | <a href=https://github.com/askmeegs/istiobyexample>Source</a> | <a href=https://github.com/cntrump/hugo-notepadium>Theme</a></p></section></div></div></body></html>
