@@ -1,5 +1,8 @@
 ---
 title: Authorization
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Security"]
 ---
 
 Authentication means verifying the identity of a client. **Authorization**, on the other hand, verifies the permissions of that client, or: "can this service do what they're asking to do?"
@@ -107,4 +110,3 @@ To learn more:
 - [Istio docs - Authorization concepts](https://istio.io/docs/concepts/security/#authorization)
 - [Istio docs - Authorization task](https://istio.io/docs/tasks/security/authorization/authz-http/)
 - [Istio Samples - Introduction to Istio Security](https://github.com/GoogleCloudPlatform/istio-samples/tree/6fa69cf46424c055535ddbdc22f715e866c4d179/security-intro#demo-introduction-to-istio-security)
-

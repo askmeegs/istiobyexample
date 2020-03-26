@@ -1,5 +1,8 @@
 ---
 title: External Services
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 A [service mesh](https://istio.io/docs/concepts/what-is-istio/#what-is-a-service-mesh) often spans one environment— for instance, one Kubernetes cluster. And together, all the connected services in that environment form the management domain of that mesh, from which you can view metrics and set policies.

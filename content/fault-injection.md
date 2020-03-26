@@ -1,6 +1,9 @@
-+++
-title = "Fault Injection"
-+++
+---
+title: "Fault Injection"
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
+---
 
 Adopting microservices often means more dependencies, and more services you might not control. It also means more requests on the network, increasing the possibility for errors. For these reasons, it's important to test your services' behavior when upstream dependencies fail.
 

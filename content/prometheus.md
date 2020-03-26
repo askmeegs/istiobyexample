@@ -1,5 +1,8 @@
 ---
 title: Bring Your Own Prometheus
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Observability"]
 ---
 
 [Prometheus](https://prometheus.io/docs/introduction/overview/) is an open-source monitoring tool. By default, Prometheus is installed alongside Istio, allowing you to use Grafana and Kiali to view metrics for both the Istio control plane and your Envoy-injected workloads.
@@ -77,7 +80,3 @@ Grafana can fetch service-level metrics:
 And Kiali can display the service graph:
 
 ![](/images/prom-kiali.png)
-
-
-
-

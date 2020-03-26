@@ -1,5 +1,8 @@
 ---
 title: Retry Logic
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.

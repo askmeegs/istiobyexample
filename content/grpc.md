@@ -1,6 +1,9 @@
-+++
-title = "gRPC"
-+++
+---
+title: "gRPC"
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
+---
 
 [gRPC](https://grpc.io/) is a communication protocol for services, built on [HTTP/2](https://www.cncf.io/blog/2018/08/31/grpc-on-http-2-engineering-a-robust-high-performance-protocol/). Unlike REST over HTTP/1, which is based on [resources](https://en.wikipedia.org/wiki/Representational_state_transfer), gRPC is based on [Service Definitions](https://grpc.io/docs/guides/concepts/). You specify service definitions in a format called [protocol buffers](https://developers.google.com/protocol-buffers/) ("proto"), which can be serialized into an small binary format for transmission.
 

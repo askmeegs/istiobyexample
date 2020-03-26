@@ -1,5 +1,8 @@
 ---
 title: Load Balancing
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Kubernetes supports load balancing for [inbound](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) traffic. But what about Kubernetes services inside the cluster?

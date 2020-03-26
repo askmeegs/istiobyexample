@@ -1,6 +1,8 @@
 ---
 title: Database Traffic
-date: "2015-05-01T22:12:03.284Z"
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 

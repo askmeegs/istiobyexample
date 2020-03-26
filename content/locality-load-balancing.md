@@ -1,5 +1,8 @@
 ---
 title: Locality Load Balancing
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 If you're running a high-scale, global application, you might be running services in multiple regions. If you have multiple replicas of the same service, you may want to direct client requests to the closest server, in order to minimize latency. You might also want a way to handle failover if one region goes down, and direct traffic to the closest available service.

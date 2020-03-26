@@ -1,5 +1,8 @@
 ---
 title: Traffic Mirroring
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Testing a service in production is important to help ensure reliability. Sending live production traffic to a new version of a service can help reveal bugs that went untested during continuous integration and functional tests.

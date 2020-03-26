@@ -1,5 +1,8 @@
 ---
 title: Ingress
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Ingress traffic refers to traffic entering the mesh from outside the cluster. Kubernetes [provides](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) [ways](https://kubernetes.io/docs/concepts/services-networking/ingress/) to handle ingress traffic. With Istio, you can instead manage ingress traffic with a **Gateway**.

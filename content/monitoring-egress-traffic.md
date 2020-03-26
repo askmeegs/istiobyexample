@@ -1,5 +1,8 @@
 ---
 title: Monitoring Egress Traffic
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 One way to think about a service mesh is as a *domain of control*. Within a Kubernetes namespace where Istio [sidecar injection](https://istio.io/docs/ops/deployment/architecture/#components) is enabled, you can [monitor](https://istio.io/docs/tasks/observability/) all traffic between Pods, and [enforce](https://istio.io/docs/tasks/security/authorization/authz-http/) security policies.

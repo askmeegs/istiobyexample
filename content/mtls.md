@@ -1,5 +1,8 @@
 ---
 title: Mutual TLS
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Security"]
 ---
 
 A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. [Mutual TLS](https://en.wikipedia.org/wiki/Mutual_authentication) (mTLS) authentication is a way to encrypt services traffic using [certificates](https://www.internetsociety.org/deploy360/tls/basics/).
@@ -52,6 +55,3 @@ Here, a `MeshPolicy` enforces TLS for all services *receiving* requests (server-
 - [Task - Authentication Policies](https://istio.io/docs/tasks/security/authn-policy/)
 - [Task - Mutual TLS Deep-Dive](https://istio.io/docs/tasks/security/mutual-tls/)
 - [FAQ - mTLS](https://istio.io/faq/security/#enabling-disabling-mtls)
-
-
-

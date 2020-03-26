@@ -1,5 +1,8 @@
 ---
 title: Secure Ingress
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Security"]
 ---
 
 If you're running workloads in a Kubernetes cluster, it's likely that some need to be exposed outside of the cluster. The [Istio Ingress Gateway](/ingress) is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?

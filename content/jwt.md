@@ -1,5 +1,8 @@
 ---
 title: JWT
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Security"]
 ---
 
 A [JSON Web Token](https://jwt.io/introduction/) (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A [JSON Web Key Set](https://auth0.com/docs/jwks) (JWKS) contains the cryptographic keys used to verify incoming JWTs.
@@ -32,6 +35,3 @@ spec:
 ```
 
 To learn more and try interactive examples, see the [Istio docs](https://istio.io/docs/tasks/security/authn-policy/#end-user-authentication) and the [istio-samples repo](https://github.com/GoogleCloudPlatform/istio-samples/tree/master/security-intro#add-end-user-jwt-authentication).
-
-
-

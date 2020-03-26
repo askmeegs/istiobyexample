@@ -1,5 +1,8 @@
 ---
 title: Path-Based Routing
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Istio and [Envoy](https://istio.io/docs/concepts/what-is-istio/#envoy) work at the Application traffic layer (L7), allowing you to direct and load-balance traffic based on attributes like HTTP headers. This example shows how to direct traffic [based on the request URI](https://istio.io/docs/concepts/traffic-management/#match-request-uri) path.

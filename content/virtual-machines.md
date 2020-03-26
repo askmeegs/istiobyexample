@@ -1,5 +1,8 @@
 ---
 title: Virtual Machines
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
 ---
 
 Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you're operating lots of containers.

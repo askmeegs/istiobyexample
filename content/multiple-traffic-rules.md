@@ -1,6 +1,9 @@
-+++
-title = "Multiple Traffic Rules"
-+++
+---
+title: "Multiple Traffic Rules"
+lastmod: "2019-12-31"
+publishDate: "2019-12-31"
+categories: ["Traffic Management"]
+---
 
 Istio supports lots of [traffic management](https://istio.io/docs/concepts/traffic-management/) use cases, from [redirects](https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRewrite) and [traffic splitting](https://istio.io/docs/tasks/traffic-management/traffic-shifting/) to [mirroring](https://istio.io/docs/tasks/traffic-management/mirroring/) and [retry logic](https://istio.io/docs/concepts/traffic-management/#retries). If you've created an Istio [VirtualService](https://istio.io/docs/reference/config/networking/virtual-service/) to define one of these policies for a service, it's easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.
 
