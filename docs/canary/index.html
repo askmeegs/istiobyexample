@@ -10,11 +10,11 @@
 apiVersion:networking.istio.io/v1alpha3kind:VirtualServicemetadata:name:helloworldspec:hosts:- helloworldhttp:- route:- destination:host:helloworldsubset:v1weight:90- destination:host:helloworldsubset:v2weight:10apiVersion:networking.istio.io/v1alpha3kind:DestinationRulemetadata:name:helloworldspec:host:helloworldsubsets:- name:v1labels:version:v1- name:v2labels:version:v2" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://istiobyexample-ja.github.io/istiobyexample/canary/" />
-<meta property="og:image" content="https://istiobyexample-ja.github.io/istiobyexample/images/istio-framed.jpg"/>
+<meta property="og:image" content="https://istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png"/>
 <meta property="og:image:width" content="1280" />
 <meta property="og:image:height" content="1280" />
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https:/istiobyexample-ja.github.io/istiobyexample/images/istio-framed.jpg"/>
+<meta name="twitter:image" content="https:/istiobyexample-ja.github.io/istiobyexample/images/istio-logo.png"/>
 <meta name="twitter:title" content="Canary Deployments"/>
 <meta name="twitter:description" content="A canary deployment is a strategy for safely rolling out a new version of a service. With Istio, you can use percentage-based traffic splitting to direct a small amount of traffic to the new version. Then you can run a canary analysis on v2 (like check latency and error rate), and finally direct more traffic at the new version until it&rsquo;s serving all traffic.
 
