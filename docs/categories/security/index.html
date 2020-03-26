@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../../images/spider-web.png">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only"><title>Security&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="../../css/core.min.97825e77f989d457fa83a8524e96cff0874b1c579a52143002d795e06c7f755f657f8522f861266f6b8d4c32dc387543.css" integrity="sha384-l4Jed/mJ1Ff6g6hSTpbP8IdLHFeaUhQwAteV4Gx/dV9lf4Ui&#43;GEmb2uNTDLcOHVD"><meta property="og:title" content="Security" />
+<meta property="og:description" content="The examples highlighting various Istio features." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/categories/security/" />
+<meta property="og:image" content="/images/istio-framed.jpg"/>
+<meta property="og:updated_time" content="2019-12-31T00:00:00+00:00" /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/images/istio-framed.jpg"/>
+<meta name="twitter:title" content="Security"/>
+<meta name="twitter:description" content="The examples highlighting various Istio features."/>
+</head>
+<body>
+    <div class="base-body max-width"><section id="header" class="header max-body-width">
+    <p><a class="home" href="../../"><img class="site-logo" src="../../images/istio-logo.png" alt />
+            <span class="site-name">Istio By Example</span></a></p>
+</section><div id="content" class="flex-body max-body-width"><h1>Security</h1><ul class="note-list"><li><a class="note" href="../../authorization/">
+            <p class="note-title">Authorization</p>
+            <p class="note-date">2019-12-31</p>
+            <p class="note-content">Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &ldquo;can this service do what they&rsquo;re asking to do?&rdquo;
+While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies.…</p></a><p class="note-labels"><a class="article-category" href="../../categories/security/"><span class="hashtag">#</span>Security</a></p></li><li><a class="note" href="../../jwt/">
+            <p class="note-title">JWT</p>
+            <p class="note-date">2019-12-31</p>
+            <p class="note-content">A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A JSON Web Key Set (JWKS) contains the cryptographic keys used to verify incoming JWTs.
+You can use Istio&rsquo;s Authentication API to configure JWT policies for your services.
+
+In this example, we require a JWT for all routes in the frontend service except for the home page (/) and the pod health check (/_healthz).…</p></a><p class="note-labels"><a class="article-category" href="../../categories/security/"><span class="hashtag">#</span>Security</a></p></li><li><a class="note" href="../../mtls/">
+            <p class="note-title">Mutual TLS</p>
+            <p class="note-date">2019-12-31</p>
+            <p class="note-content">A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual TLS (mTLS) authentication is a way to encrypt services traffic using certificates.
+With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, client and server, are shown establishing a secure connection with the mTLS policy in place.…</p></a><p class="note-labels"><a class="article-category" href="../../categories/security/"><span class="hashtag">#</span>Security</a></p></li><li><a class="note" href="../../secure-ingress/">
+            <p class="note-title">Secure Ingress</p>
+            <p class="note-date">2019-12-31</p>
+            <p class="note-content">If you&rsquo;re running workloads in a Kubernetes cluster, it&rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
+Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services.…</p></a><p class="note-labels"><a class="article-category" href="../../categories/security/"><span class="hashtag">#</span>Security</a></p></li></ul><section id="footer" class="footer">
+    <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
+</section></div>
+    </div>
+</body>
+</html>

@@ -1,36 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Istio By Example</title>
-    <link>/</link>
-    <description>Recent content on Istio By Example</description>
+    <title>Traffic Management on Istio By Example</title>
+    <link>/categories/traffic-management/</link>
+    <description>Recent content in Traffic Management on Istio By Example</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <lastBuildDate>Tue, 31 Dec 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/traffic-management/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Authorization</title>
-      <link>/authorization/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/authorization/</guid>
-      <description>Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &amp;ldquo;can this service do what they&amp;rsquo;re asking to do?&amp;rdquo;
-While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies.</description>
-    </item>
-    
-    <item>
-      <title>Bring Your Own Prometheus</title>
-      <link>/prometheus/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/prometheus/</guid>
-      <description>Prometheus is an open-source monitoring tool. By default, Prometheus is installed alongside Istio, allowing you to use Grafana and Kiali to view metrics for both the Istio control plane and your Envoy-injected workloads.
-But what if you&amp;rsquo;re already running Prometheus on your cluster, or you want to add extra customization to Istio&amp;rsquo;s Prometheus installation (for instance, add Slack notifications for Istio )?
-Not to worry. You can bring your own Prometheus to Istio, with three quick steps.</description>
-    </item>
     
     <item>
       <title>Database Traffic</title>
@@ -88,18 +67,6 @@ Istio Gateways have two key advantages over traditional Kubernetes Ingress.</des
     </item>
     
     <item>
-      <title>JWT</title>
-      <link>/jwt/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/jwt/</guid>
-      <description>A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A JSON Web Key Set (JWKS) contains the cryptographic keys used to verify incoming JWTs.
-You can use Istio&amp;rsquo;s Authentication API to configure JWT policies for your services.
-
-In this example, we require a JWT for all routes in the frontend service except for the home page (/) and the pod health check (/_healthz).</description>
-    </item>
-    
-    <item>
       <title>Load Balancing</title>
       <link>/load-balancing/</link>
       <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
@@ -153,16 +120,6 @@ Let&amp;rsquo;s say that we&amp;rsquo;re on the frontend engineering team for a 
     </item>
     
     <item>
-      <title>Mutual TLS</title>
-      <link>/mtls/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/mtls/</guid>
-      <description>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual TLS (mTLS) authentication is a way to encrypt services traffic using certificates.
-With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, client and server, are shown establishing a secure connection with the mTLS policy in place.</description>
-    </item>
-    
-    <item>
       <title>Path-Based Routing</title>
       <link>/path-based-routing/</link>
       <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
@@ -181,16 +138,6 @@ Using an Istio match rule, we redirect any request with the /login prefix to the
       <guid>/retry/</guid>
       <description>Microservices architectures are distributed. This means more requests on the network, increasing the chance of transient failures like network congestion.
 Adding retry policies for requests helps build resiliency in a services architecture. Often, this retry logic is built into source code. But with Istio, you can define retry policies with a traffic rule, offloading this logic to your services&amp;rsquo; sidecar proxies. This can help you standardize around the same policies across many services, protocols, and programming languages.</description>
-    </item>
-    
-    <item>
-      <title>Secure Ingress</title>
-      <link>/secure-ingress/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/secure-ingress/</guid>
-      <description>If you&amp;rsquo;re running workloads in a Kubernetes cluster, it&amp;rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
-Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services.</description>
     </item>
     
     <item>

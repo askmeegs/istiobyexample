@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Istio By Example</title>
+    <link>/categories/security/</link>
+    <description>Recent content in Security on Istio By Example</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Tue, 31 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Authorization</title>
+      <link>/authorization/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authorization/</guid>
+      <description>Authentication means verifying the identity of a client. Authorization, on the other hand, verifies the permissions of that client, or: &amp;ldquo;can this service do what they&amp;rsquo;re asking to do?&amp;rdquo;
+While all requests in an Istio mesh are allowed by default, Istio provides an AuthorizationPolicy resource that allows you to define granular policies for your workloads. Istio translates your AuthorizationPolicies into Envoy-readable config, then mounts that config into the Istio sidecar proxies.</description>
+    </item>
+    
+    <item>
+      <title>JWT</title>
+      <link>/jwt/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/jwt/</guid>
+      <description>A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A JSON Web Key Set (JWKS) contains the cryptographic keys used to verify incoming JWTs.
+You can use Istio&amp;rsquo;s Authentication API to configure JWT policies for your services.
+
+In this example, we require a JWT for all routes in the frontend service except for the home page (/) and the pod health check (/_healthz).</description>
+    </item>
+    
+    <item>
+      <title>Mutual TLS</title>
+      <link>/mtls/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/mtls/</guid>
+      <description>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual TLS (mTLS) authentication is a way to encrypt services traffic using certificates.
+With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, client and server, are shown establishing a secure connection with the mTLS policy in place.</description>
+    </item>
+    
+    <item>
+      <title>Secure Ingress</title>
+      <link>/secure-ingress/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/secure-ingress/</guid>
+      <description>If you&amp;rsquo;re running workloads in a Kubernetes cluster, it&amp;rsquo;s likely that some need to be exposed outside of the cluster. The Istio Ingress Gateway is a customizable proxy that can route inbound traffic for one or many backend hosts. But what about securing ingress traffic with HTTPS?
+Istio supports TLS ingress by mounting certs and keys into the Ingress Gateway, allowing you to securely route inbound traffic to your in-cluster Services.</description>
+    </item>
+    
+  </channel>
+</rss>
