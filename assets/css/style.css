@@ -7,7 +7,6 @@
   --addl-height: 100px;
 }
 
-
 *,
 :after,
 :before {
@@ -17,7 +16,7 @@
 }
 
 html {
-  font-family: 'Noto Sans', Arial, sans-serif;
+  font-family: 'Noto Sans', Arial, sans-serif,'ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   display: inline-block;
   font-size:calc(12px + 0.3vw);
   font-weight: 400;
@@ -69,8 +68,6 @@ body {
   border-right: 1px solid gray;
 }
 
-
-
 .category-header {
   font-size:calc(20px + 0.6vw);
   padding-top: 1vw;
@@ -87,11 +84,10 @@ body {
 
 .example-title {
   color: black;
-  font-family: 'Chivo';
+  font-family: 'Chivo','ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   font-weight: 200;
   font-size:calc(14px + 0.5vw);
 }
-
 
 h1,
 h2,
@@ -99,7 +95,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Chivo', sans-serif;
+  font-family: 'Chivo', sans-serif,'ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   font-weight: 300;
   line-height: 1.3;
   margin-block-start: 0;
@@ -194,13 +190,13 @@ pre,
 tt,
 kbd,
 samp {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Code', monospace,'ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   font-size: 3rem;
   font-weight: 500;
 }
 
 pre {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Code', monospace,'ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   font-size: 3rem;
   display: block;
   overflow: auto;
@@ -222,7 +218,7 @@ code,
 kbd,
 tt,
 samp {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Code', monospace,'ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   font-size: 2rem;
   display: inline;
   font-size: 15px;
@@ -347,7 +343,7 @@ strong {
 
 .site-name {
   color: black;
-  font-family: 'Chivo';
+  font-family: 'Chivo','ヒラギノ角ゴPro W3','Hiragino Kaku Gothic Pro', 'メイリオ',Meiryo,'ＭＳ Ｐゴシック',Verdana,Arial,sans-serif;
   display: inline-block;
   font-size:calc(24px + 1.2vw);
   font-weight: 300;
@@ -484,7 +480,6 @@ strong {
   margin: 0;
 }
 
-
 .article-date {
   font-size: 14px;
   color: #8e8e93;
@@ -505,7 +500,6 @@ strong {
 .article-tag {
   background-color: rgba(0, 122, 255, .05);
 }
-
 
 .article-header {
   padding-top: 0.5vw;
@@ -617,7 +611,6 @@ strong {
   background-color: rgba(0, 122, 255, .5);
 }
 
-
 .markdown-body {
   text-align: left;
   display: block;
@@ -687,11 +680,11 @@ strong {
 
 .markdown-body blockquote::before,
 .markdown-body q::before {
-  content: "❝";
+  content: "â";
 }
 
 .markdown-body q::after {
-  content: "❞";
+  content: "â";
 }
 
 .markdown-body blockquote::before {
