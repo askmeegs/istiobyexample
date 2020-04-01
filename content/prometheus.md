@@ -1,18 +1,18 @@
 ---
-title: Bring Your Own Prometheus
+title: 持ち込みPrometheus
 publishDate: "2019-12-31"
 categories: ["Observability"]
 ---
 
-[Prometheus](https://prometheus.io/docs/introduction/overview/) is an open-source monitoring tool. By default, Prometheus is installed alongside Istio, allowing you to use Grafana and Kiali to view metrics for both the Istio control plane and your Envoy-injected workloads.
+[Prometheus](https://prometheus.io/docs/introduction/overview/)は、オープンソースの監視ツールです。デフォルトでは、PrometheusはIstioと一緒にインストールされるため、GrafanaとKialiを使用して、IstioコントロールプレーンとEnvoyを利用したワークロードの両方のメトリクスを表示できます。
 
-But what if you're already running Prometheus on your cluster, or you want to add extra customization to Istio's Prometheus installation (for instance, add [Slack notifications](https://prometheus.io/docs/alerting/notification_examples/#customizing-slack-notifications) for Istio )?
+しかし、すでにクラスタでPrometheusを実行している場合、またはIstioのPrometheusインストールに追加のカスタマイズを行う場合（たとえば、Istioの[Slack通知](https://prometheus.io/docs/alerting/notification_examples/#customizing-slack-notifications)を追加する場合）はどうなりますか？
 
-Not to worry. You can bring your own Prometheus to Istio, with three quick steps.
+心配要りません。 3つの簡単な手順で、ご自身で管理しているPrometheusをIstioに持ち込むことができます。
 
-First, **update your Prometheus configuration.** Prometheus relies on a [scrape config model](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config), where `targets` represent `/metrics` endpoints, ingested by the Prometheus server.
+まず、Prometheus構成を更新します。 Prometheusは、targets が /memetrics エンドポイントを表し、Prometheusサーバーによって取り込まれた[スクレイプ構成モデル](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config)に依存しています。
 
-We'll add `targets` for [each of the Istio components](https://istio.io/docs/tasks/telemetry/metrics/querying-metrics/), which are scraped [through the Kubernetes API server](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config). For instance, here is the configuration for Istio's [Pilot](https://istio.io/docs/concepts/traffic-management/#pilot) component:
+[各Istioコンポーネント](https://istio.io/docs/tasks/observability/metrics/querying-metrics/)の targets を追加します。これらは、[Kubernetes APIサーバーを介して](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config)取得されます。たとえば、Istioの[Pilot](https://istio.io/docs/concepts/traffic-management/#pilot)コンポーネントの構成は次のとおりです。
 
 ```YAML
     - job_name: 'pilot'
@@ -28,9 +28,9 @@ We'll add `targets` for [each of the Istio components](https://istio.io/docs/tas
         regex: istio-pilot;http-monitoring
 ```
 
-See [configmap.yaml](https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/configmap.yaml) for a full example.
+完全な例として、[configmap.yaml](https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/configmap.yaml)をご覧ください。
 
-Second, **update your Prometheus deployment** to mount Istio's certificates into Prometheus. This allows Prometheus to scrape Istio workloads when mutual TLS is enabled. To do this, mount in the `istio.default` secret into your Prometheus deployment YAML:
+次に、PrometheusのDeploymentを更新して、Istioの証明書をPrometheusにマウントします。これにより、相互TLSが有効になっている場合、PrometheusはIstioワークロードをスクレイピングできます。これを行うには、 istio.default シークレットをPrometheusのDeployment.yamlに設定します。
 
 ```YAML
     volumes:
@@ -44,9 +44,9 @@ Second, **update your Prometheus deployment** to mount Istio's certificates into
             secretName: istio.default
 ```
 
-See [deployment.yaml](https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/deployment.yaml) for the full example.
+完全な例として、[deployment.yaml](https://github.com/askmeegs/istiobyexample/blob/888a7b5c573c9ba6bf2c0e046e44bf4f8d8d2506/content/blog/prometheus/deployment.yaml)をご覧ください。
 
-Once we deploy Prometheus with this new configuration, we have a Deployment and a Service running in a separate `monitoring` namespace:
+この新しい構成でPrometheusをデプロイすると、DeploymentとServiceが別のモニタリング名前空間で実行されます。
 
 ```bash
 $ kubectl get service -n monitoring
@@ -55,7 +55,7 @@ NAME         TYPE           CLUSTER-IP   EXTERNAL-IP      PORT(S)          AGE
 prometheus   LoadBalancer   10.0.3.155   <IP>             9090:32352/TCP   21m
 ```
 
-Lastly, **update Istio's configuration** to use a custom Prometheus address. Here's a [`helm template`](https://istio.io/docs/setup/kubernetes/install/helm/) example using the [Istio installation options](https://istio.io/docs/reference/config/installation-options/#grafana-options):
+最後に、カスタムのPrometheusアドレスを使用するようにIstioの構成を更新します。 [Istioインストールオプション](https://istio.io/docs/reference/config/installation-options/#grafana-options)を使用した Helm template の例を次に示します。
 
 ```bash
 helm template install/kubernetes/helm/istio --name istio --namespace istio-system \
@@ -68,14 +68,14 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
 --set grafana.datasources.datasources.datasources.url="http://prometheus.monitoring.svc.cluster.local:9090"  > istio.yaml
 ```
 
-Once Istio and Prometheus are both installed, and we deploy some Istio-injected workloads to our cluster, we can see that Prometheus is successfully scraping our Istio targets:
+IstioとPrometheusの両方がインストールされ、Istioを利用したワークロードをクラスターにデプロイすると、PrometheusがIstioターゲットを正常にスクレイピングしていることがわかります。
 
 ![](/images/prometheus.png)
 
-Grafana can fetch service-level metrics:
+Grafanaはサービスレベルの指標を取得できます。
 
 ![](/images/prom-grafana.png)
 
-And Kiali can display the service graph:
+そして、Kialiはサービスグラフを表示できます。
 
 ![](/images/prom-kiali.png)
