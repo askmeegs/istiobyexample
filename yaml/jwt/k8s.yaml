@@ -1,0 +1,38 @@
+# [START istio_frontend_frontend_deployment_frontend]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: gcr.io/google-samples/istio/helloserver:v0.0.1
+        imagePullPolicy: Always
+        name: main
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+# [END istio_frontend_frontend_deployment_frontend]
+---
+# [START istio_frontend_frontend_service_frontend]
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: frontend
+  type: LoadBalancer
+# [END istio_frontend_frontend_service_frontend]
+---

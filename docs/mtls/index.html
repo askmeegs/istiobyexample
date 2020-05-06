@@ -12,28 +12,30 @@
 </section>
 <div class="flex-body">
 <article class="markdown-body"><p>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. <a href="https://en.wikipedia.org/wiki/Mutual_authentication"target="_blank">Mutual TLS</a> (mTLS) authentication is a way to encrypt services traffic using <a href="https://www.internetsociety.org/deploy360/tls/basics/"target="_blank">certificates</a>.</p>
-<p>With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, <code>client</code> and <code>server</code>, are shown establishing a secure connection with the mTLS policy in place.</p>
+<p>With Istio, you can <a href="https://istio.io/docs/concepts/security/#authentication-policies"target="_blank">enforce mutual TLS automatically</a>, outside of your application code, with a single YAML file. This works because the Istio control plane mounts client certificates into the sidecar proxies for you, so that pods can authenticate with each other.</p>
+<p>Let's enable mutual TLS for the entire service mesh, including the two services (<code>client</code> and <code>server</code>) pictured below.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/mtls.png"><img class="img" src="/images/mtls.png"
         alt="Diagram"/></a></p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>authentication.istio.io/v1alpha1<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>MeshPolicy<span class="w">
+<p>Starting in Istio 1.5, Istio uses <a href="https://istio.io/pt-br/docs/tasks/security/authentication/auto-mtls/"target="_blank">automatic mutual TLS</a>. This means that while services accept both plain-text and TLS traffic, by default, services will <em>send</em> TLS requests within the cluster. This means that the client-to-server above will already be encrypted with the default Istio install. (But HTTP will still work.)</p>
+<p>We can test this by sending a plain HTTP request from the <code>client</code> pod's Istio proxy container to the <code>server</code>. The request succeeds:</p>
+<pre><code>$ curl http://server:80
+
+Hello World! /$
+</code></pre><p>To enforce mTLS such that <em>only</em> TLS traffic is accepted by all services in all Istio-injected namespacess, we'll apply the following <a href="https://istio.io/docs/reference/config/security/peer_authentication/"target="_blank">Istio <code>PeerAuthentication</code> resource</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span><span class="s2">&#34;security.istio.io/v1beta1&#34;</span><span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span><span class="s2">&#34;PeerAuthentication&#34;</span><span class="w">
 </span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>default<span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
+</span><span class="w">  </span>namespace<span class="p">:</span><span class="w"> </span><span class="s2">&#34;istio-system&#34;</span><span class="w">
 </span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>peers<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>mtls<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>STRICT<span class="w">
-</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>DestinationRule<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">  </span>namespace<span class="p">:</span><span class="w"> </span>istio-system<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span><span class="s2">&#34;*.local&#34;</span><span class="w">
-</span><span class="w">  </span>trafficPolicy<span class="p">:</span><span class="w">
-</span><span class="w">    </span>tls<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>ISTIO_MUTUAL<span class="w">
-</span></code></pre></div><p>Here, a <code>MeshPolicy</code> enforces TLS for all services <em>receiving</em> requests (server-side), and a <code>DestinationRule</code> enforces TLS for all services <em>sending</em> requests (client-side), resulting in mutual (&ldquo;both&rdquo;) TLS.</p>
+</span><span class="w">  </span>mtls<span class="p">:</span><span class="w">
+</span><span class="w">    </span>mode<span class="p">:</span><span class="w"> </span>STRICT<span class="w">
+</span></code></pre></div><p>Now let's try to send another request between <code>client</code> and <code>server</code>:</p>
+<pre><code>$ curl http://server:80
+curl: (56) Recv failure: Connection reset by peer
+</code></pre><p>If we view the Kiali service graph for this mesh, we can see a lock icon indicating that traffic is encrypted between <code>client</code> and <code>server</code>:</p>
+<p><a target="_blank" rel="noopener noreferrer" href="/images/mtls-kiali.png"><img class="img" src="/images/mtls-kiali.png"
+        alt/></a></p>
 <p><strong>Authentication Flow:</strong></p>
 <ol>
 <li><code>client</code> application container sends a plain-text HTTP request to <code>server</code>.</li>
@@ -44,9 +46,10 @@
 </ol>
 <p><strong>Learn more</strong>:</p>
 <ul>
+<li><a href="https://github.com/askmeegs/istiobyexample/tree/master/yaml/mtls"target="_blank">YAML resources used for this example (Github)</a></li>
 <li><a href="https://istio.io/docs/concepts/security/#authentication"target="_blank">Istio Docs - Authentication</a></li>
 <li><a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/77fb1dfb690d28517e410df2911e255d54e3450e/security-intro#authentication"target="_blank">Samples: Authentication</a></li>
-<li><a href="https://istio.io/docs/tasks/security/authn-policy/"target="_blank">Task - Authentication Policies</a></li>
+<li><a href="https://istio.io/docs/tasks/security/authentication/authn-policy/"target="_blank">Task - Authentication Policies</a></li>
 <li><a href="https://istio.io/docs/tasks/security/mutual-tls/"target="_blank">Task - Mutual TLS Deep-Dive</a></li>
 <li><a href="https://istio.io/faq/security/#enabling-disabling-mtls"target="_blank">FAQ - mTLS</a></li>
 </ul>

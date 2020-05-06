@@ -103,9 +103,9 @@ Istio Gateways have two key advantages over traditional Kubernetes Ingress.</des
       
       <guid>/jwt/</guid>
       <description>A JSON Web Token (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A JSON Web Key Set (JWKS) contains the cryptographic keys used to verify incoming JWTs.
-You can use Istio&#39;s Authentication API to configure JWT policies for your services.
+You can use Istio&#39;s RequestAuthentication resource to configure JWT policies for your services.
 
-In this example, we require a JWT for all routes in the frontend service except for the home page (/) and the pod health check (/_healthz).</description>
+By default, we can reach the frontend service through a curl request to the Istio IngressGateway&#39;s public IP:</description>
     </item>
     
     <item>
@@ -168,7 +168,7 @@ Let&#39;s say that we&#39;re on the frontend engineering team for a newspaper&#3
       
       <guid>/mtls/</guid>
       <description>A microservices architecture means more requests on the network, and more opportunities for malicious parties to intercept traffic. Mutual TLS (mTLS) authentication is a way to encrypt services traffic using certificates.
-With Istio, you can automate the enforcement of mTLS across all services. Below, we enable mTLS for the entire mesh. Two pods in the cluster, client and server, are shown establishing a secure connection with the mTLS policy in place.</description>
+With Istio, you can enforce mutual TLS automatically, outside of your application code, with a single YAML file. This works because the Istio control plane mounts client certificates into the sidecar proxies for you, so that pods can authenticate with each other.</description>
     </item>
     
     <item>

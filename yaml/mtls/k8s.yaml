@@ -1,0 +1,103 @@
+# [START istio_server_server_deployment_server]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - image: gcr.io/google-samples/istio/helloserver:v0.0.1
+        imagePullPolicy: Always
+        name: main
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+# [END istio_server_server_deployment_server]
+---
+# [START istio_server_server_service_server]
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: server
+  type: LoadBalancer
+# [END istio_server_server_service_server]
+---
+
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# [START istio_server_loadgen_deployment_client]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - env:
+        - name: SERVER_ADDR
+          value: http://server:80/
+        - name: REQUESTS_PER_SECOND
+          value: '10'
+        image: gcr.io/google-samples/istio/loadgen:v0.0.1
+        imagePullPolicy: Always
+        name: main
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+# [END istio_server_loadgen_deployment_client]
+---
+# [START istio_server_loadgen_service_loadgensvc]
+apiVersion: v1
+kind: Service
+metadata:
+  name: client
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: client
+  type: ClusterIP
+# [END istio_server_loadgen_service_loadgensvc]
+---
