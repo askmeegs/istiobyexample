@@ -20,3 +20,7 @@
 {{- block "title" . -}}{{- end -}}
 
 {{- partial "style.html" . -}}
+
+{{ if .Site.Params.GoogleAnalyticsID }}
+{{ partial "analytics-gtag.html" . }}
+{{ end }}

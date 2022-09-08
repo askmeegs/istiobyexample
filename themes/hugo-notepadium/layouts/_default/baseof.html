@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
 {{- partial "head.html" . -}}
-<head>
-    {{ if .Site.Params.GoogleAnalyticsID }}
-    {{ partial "analytics-gtag.html" . }}
-    {{ end }}
-    ...
-</head>
 <body>
     <div class="base-body max-width">
         {{- partial "header.html" . -}}
