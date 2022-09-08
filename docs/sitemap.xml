@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
     <loc>/databases/</loc><lastmod>2015-05-01T22:12:03+00:00</lastmod></url><url>
-    <loc>/</loc><lastmod>2015-05-01T22:12:03+00:00</lastmod></url><url>
     <loc>/authorization/</loc></url><url>
     <loc>/prometheus/</loc></url><url>
     <loc>/canary/</loc></url><url>
@@ -10,6 +9,7 @@
     <loc>/fault-injection/</loc></url><url>
     <loc>/grpc/</loc></url><url>
     <loc>/ingress/</loc></url><url>
+    <loc>/</loc></url><url>
     <loc>/jwt/</loc></url><url>
     <loc>/load-balancing/</loc></url><url>
     <loc>/locality-load-balancing/</loc></url><url>

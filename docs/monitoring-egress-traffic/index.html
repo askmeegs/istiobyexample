@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Monitoring Egress Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Monitoring Egress Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -14,49 +16,49 @@
 <article class="markdown-body"><p>One way to think about a service mesh is as a <em>domain of control</em>. Within a Kubernetes namespace where Istio <a href="https://istio.io/docs/ops/deployment/architecture/#components"target="_blank">sidecar injection</a> is enabled, you can <a href="https://istio.io/docs/tasks/observability/"target="_blank">monitor</a> all traffic between Pods, and <a href="https://istio.io/docs/tasks/security/authorization/authz-http/"target="_blank">enforce</a> security policies.</p>
 <p>But what about upstream services that live outside the mesh? How do you determine at runtime which services call external APIs? How do you know which database instance your service is writing to? Or how do you ensure that a service inside the mesh is only sending traffic within its own geographic region? <a href="https://istio.io/blog/2019/monitoring-external-service-traffic/"target="_blank">Istio egress monitoring</a> can help with this.</p>
 <p><em>Egress</em> means <em>exit</em>. In this case, egress traffic means requests that must exit the Istio mesh.
-There was a time when <a href="https://archive.istio.io/v1.0/docs/tasks/traffic-management/egress/"target="_blank">Istio blocked</a> all egress traffic by default. You had to manually create a <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-control/#access-an-external-http-service"target="_blank"><code>ServiceEntry</code></a> to whitelist every external host your services needed to access. A ServiceEntry adds an external host to Istio's service registry. This changed in Istio 1.3, when the <code>REGISTRY_ONLY</code> egress policy became <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-control/#envoy-passthrough-to-external-services"target="_blank"><code>ALLOW_ANY</code></a>  by default. Now, in-mesh services can access external services freely, without the need for a <code>ServiceEntry</code>.</p>
-<p>No matter which Istio egress option you choose for your mesh, Istio can monitor all egress traffic. And you can monitor this egress traffic through your workloads&rsquo; sidecar proxies, without needing a <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-gateway/#use-case"target="_blank">dedicated egress gateway</a> proxy. Let's see how it works.</p>
+There was a time when <a href="https://archive.istio.io/v1.0/docs/tasks/traffic-management/egress/"target="_blank">Istio blocked</a> all egress traffic by default. You had to manually create a <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-control/#access-an-external-http-service"target="_blank"><code>ServiceEntry</code></a> to whitelist every external host your services needed to access. A ServiceEntry adds an external host to Istio&rsquo;s service registry. This changed in Istio 1.3, when the <code>REGISTRY_ONLY</code> egress policy became <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-control/#envoy-passthrough-to-external-services"target="_blank"><code>ALLOW_ANY</code></a>  by default. Now, in-mesh services can access external services freely, without the need for a <code>ServiceEntry</code>.</p>
+<p>No matter which Istio egress option you choose for your mesh, Istio can monitor all egress traffic. And you can monitor this egress traffic through your workloads&rsquo; sidecar proxies, without needing a <a href="https://istio.io/docs/tasks/traffic-management/egress/egress-gateway/#use-case"target="_blank">dedicated egress gateway</a> proxy. Let&rsquo;s see how it works.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-diagram.png"><img class="img" src="/images/ptbh-diagram.png"
         alt/></a></p>
-<p>In this example, we've built a website that lets users share recipes. To optimize costs, the web frontend runs outside of Kubernetes as a serverless function. When a user adds a recipe, the frontend creates an ID for that recipe by calling the ID Generator service (<code>idgen</code>) inside a Kubernetes cluster. <code>idgen</code> is exposed through the default Istio IngressGateway, and gets <a href="http://httpbin.org/uuid"target="_blank">random IDs</a> from an external API called <code>httpbin</code>.</p>
+<p>In this example, we&rsquo;ve built a website that lets users share recipes. To optimize costs, the web frontend runs outside of Kubernetes as a serverless function. When a user adds a recipe, the frontend creates an ID for that recipe by calling the ID Generator service (<code>idgen</code>) inside a Kubernetes cluster. <code>idgen</code> is exposed through the default Istio IngressGateway, and gets <a href="http://httpbin.org/uuid"target="_blank">random IDs</a> from an external API called <code>httpbin</code>.</p>
 <h2 id="option-1---passthrough">Option 1 - Passthrough</h2>
-<p>To start, let's use an Istio installation with the default <code>ALLOW_ANY</code> option for egress. This means that <code>idgen</code>'s requests to <code>httpbin</code> are allowed with no additional configuration. When <code>ALLOW_ANY</code> is enabled, Istio uses an Envoy cluster called <code>PassthroughCluster</code>, enforced by <code>idgen</code>'s sidecar proxy, to monitor the egress traffic.</p>
+<p>To start, let&rsquo;s use an Istio installation with the default <code>ALLOW_ANY</code> option for egress. This means that <code>idgen</code>&rsquo;s requests to <code>httpbin</code> are allowed with no additional configuration. When <code>ALLOW_ANY</code> is enabled, Istio uses an Envoy cluster called <code>PassthroughCluster</code>, enforced by <code>idgen</code>&rsquo;s sidecar proxy, to monitor the egress traffic.</p>
 <p>An Envoy <a href="https://jvns.ca/blog/2018/10/27/envoy-basics/"target="_blank">cluster</a> is a backend (or &ldquo;upstream&rdquo;) set of endpoints, representing an external service. The Istio sidecar Envoy proxy applies filters to intercepted requests from an application container. Based on these filters, Envoy sends traffic to a specific route. And a route specifies a cluster to send traffic to.</p>
-<p>The Istio <code>Passthrough</code> cluster is set up so that the backend is the <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/service_discovery#original-destination"target="_blank">original request destination</a>. So when <code>ALLOW_ANY</code> is enabled for egress traffic, Envoy will simply &ldquo;pass through&rdquo; <code>idgen</code>'s request to <code>httpbin</code>.</p>
-<p>With this configuration, if we send recipe ID requests through the IngressGateway, <code>idgen</code> can successfully call <code>httpbin</code>. This traffic appears as <code>PassthroughCluster</code> traffic in the Kiali service graph - we'll need to add a <code>ServiceEntry</code> in order for httpbin to get its own service-level telemetry. (We'll do this in a moment.)</p>
+<p>The Istio <code>Passthrough</code> cluster is set up so that the backend is the <a href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/service_discovery#original-destination"target="_blank">original request destination</a>. So when <code>ALLOW_ANY</code> is enabled for egress traffic, Envoy will simply &ldquo;pass through&rdquo; <code>idgen</code>&rsquo;s request to <code>httpbin</code>.</p>
+<p>With this configuration, if we send recipe ID requests through the IngressGateway, <code>idgen</code> can successfully call <code>httpbin</code>. This traffic appears as <code>PassthroughCluster</code> traffic in the Kiali service graph - we&rsquo;ll need to add a <code>ServiceEntry</code> in order for httpbin to get its own service-level telemetry. (We&rsquo;ll do this in a moment.)</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-kiali-passthrough.png"><img class="img" src="/images/ptbh-kiali-passthrough.png"
         alt/></a></p>
 <p>But if we drill down in Prometheus, and find the <code>istio_total_requests</code> metric, we can see that <code>PassthroughCluster</code> traffic is going to a <code>destinationservice</code> called <code>httpbin.org</code>.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-prom-passthrough.png"><img class="img" src="/images/ptbh-prom-passthrough.png"
         alt/></a></p>
-<h2 id="option-2---registry-only-no-serviceentry">Option 2 - <code>REGISTRY_ONLY</code>, no ServiceEntry</h2>
-<p>Now let's say that before we add a <code>ServiceEntry</code> for httpbin, we want to lock down all egress traffic. We can do this by updating the <a href="https://istio.io/docs/reference/config/installation-options/"target="_blank">global installation option</a> for outbound traffic to be <code>REGISTRY_ONLY</code>, and re-applying the Istio install manifests.</p>
+<h2 id="option-2---registry_only-no-serviceentry">Option 2 - <code>REGISTRY_ONLY</code>, no ServiceEntry</h2>
+<p>Now let&rsquo;s say that before we add a <code>ServiceEntry</code> for httpbin, we want to lock down all egress traffic. We can do this by updating the <a href="https://istio.io/docs/reference/config/installation-options/"target="_blank">global installation option</a> for outbound traffic to be <code>REGISTRY_ONLY</code>, and re-applying the Istio install manifests.</p>
 <p>Now, a new cluster <a href="https://istio.io/blog/2019/monitoring-external-service-traffic/#what-are-blackhole-and-passthrough-clusters"target="_blank">called <code>BlackHole</code></a> comes into play. The Black Hole cluster is a backend without any IP endpoints. Requests routed to the <code>BlackHoleCluster</code> are dropped by Envoy, and return a <code>502: Bad Gateway</code> error. In action, the collection of sidecar proxies dropping egress requests is how the <code>REGISTRY_ONLY</code> policy is enforced.</p>
-<p>Once we re-install Istio with the <code>REGISTRY_ONLY</code> option enabled, and redeploy our <code>idgen</code> pod, we can see that the <code>BlackHoleCluster</code> intercepts the requests. A red graph edge means that HTTP requests do not complete - traffic can't get to the desired <code>httpbin.org</code> endpoint.</p>
+<p>Once we re-install Istio with the <code>REGISTRY_ONLY</code> option enabled, and redeploy our <code>idgen</code> pod, we can see that the <code>BlackHoleCluster</code> intercepts the requests. A red graph edge means that HTTP requests do not complete - traffic can&rsquo;t get to the desired <code>httpbin.org</code> endpoint.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-kiali-blackhole.png"><img class="img" src="/images/ptbh-kiali-blackhole.png"
         alt/></a></p>
 <p>In Prometheus, we can see that the <code>istio_total_requests</code> metric is accounting for <code>BlackHoleCluster</code> traffic. In practice, you might set an alert on this metric to detect attempted <a href="https://en.wikipedia.org/wiki/Data_exfiltration"target="_blank">data exfiltration</a> by a service in your cluster. In this mode, Prometheus can tell you both the source and (attempted) destination workload for the blocked request.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-prom-blackhole.png"><img class="img" src="/images/ptbh-prom-blackhole.png"
         alt/></a></p>
-<h2 id="option-3---registry-only-with-serviceentry">Option 3 - <code>REGISTRY_ONLY</code> with ServiceEntry</h2>
-<p>Now let's say that we've gotten approval for <code>idgen</code> to call an external API. We've authorized the creation of a <code>ServiceEntry</code> to add <code>httpbin</code> to the Istio Registry:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>ServiceEntry<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>httpbin-ext<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>httpbin.org<span class="w">
-</span><span class="w">  </span>ports<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>number<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span><span class="w">    </span>name<span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">    </span>protocol<span class="p">:</span><span class="w"> </span>HTTP<span class="w">
-</span><span class="w">  </span>resolution<span class="p">:</span><span class="w"> </span>DNS<span class="w">
-</span><span class="w">  </span>location<span class="p">:</span><span class="w"> </span>MESH_EXTERNAL<span class="w">
-</span></code></pre></div><p>Now, we can see that requests successfully exit the mesh, and are not dropped by the <code>BlackHoleCluster</code>:</p>
+<h2 id="option-3---registry_only-with-serviceentry">Option 3 - <code>REGISTRY_ONLY</code> with ServiceEntry</h2>
+<p>Now let&rsquo;s say that we&rsquo;ve gotten approval for <code>idgen</code> to call an external API. We&rsquo;ve authorized the creation of a <code>ServiceEntry</code> to add <code>httpbin</code> to the Istio Registry:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ServiceEntry</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">httpbin-ext</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">httpbin.org</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">HTTP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l">DNS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l">MESH_EXTERNAL</span><span class="w">
+</span></span></span></code></pre></div><p>Now, we can see that requests successfully exit the mesh, and are not dropped by the <code>BlackHoleCluster</code>:</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ptbh-kiali-serviceentry.png"><img class="img" src="/images/ptbh-kiali-serviceentry.png"
         alt/></a></p>
-<p>And note that with a ServiceEntry, Istio treats httpbin as another distinct mesh service, even though it's external to the Kubernetes cluster and not part of the control domain. Now, we can get telemetry specifically for <code>httpbin</code>, and if we add another external service, it would appear as its own distinct node in the service graph.</p>
+<p>And note that with a ServiceEntry, Istio treats httpbin as another distinct mesh service, even though it&rsquo;s external to the Kubernetes cluster and not part of the control domain. Now, we can get telemetry specifically for <code>httpbin</code>, and if we add another external service, it would appear as its own distinct node in the service graph.</p>
 <p>To learn more about monitoring egress traffic:</p>
 <ul>
 <li><a href="https://istio.io/blog/2019/monitoring-external-service-traffic/"target="_blank">Istio Blog: Monitoring Blocked and Passthrough External Service Traffic, by Neeraj Poddar</a></li>
@@ -66,19 +68,7 @@ There was a time when <a href="https://archive.istio.io/v1.0/docs/tasks/traffic-
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>

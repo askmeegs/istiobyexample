@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>JWT&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -12,71 +14,59 @@
 </section>
 <div class="flex-body">
 <article class="markdown-body"><p>A <a href="https://jwt.io/introduction/"target="_blank">JSON Web Token</a> (JWT) is a type of authentication token used to identify a user to a server application. JWTs contain information about the client caller, and can be used as part of a client session architecture. A <a href="https://auth0.com/docs/jwks"target="_blank">JSON Web Key Set</a> (JWKS) contains the cryptographic keys used to verify incoming JWTs.</p>
-<p>You can use Istio's <a href="https://istio.io/docs/reference/config/security/request_authentication/"target="_blank">RequestAuthentication</a> resource to <a href="https://istio.io/docs/concepts/security/#authentication-architecturen"target="_blank">configure JWT policies</a> for your services.</p>
+<p>You can use Istio&rsquo;s <a href="https://istio.io/docs/reference/config/security/request_authentication/"target="_blank">RequestAuthentication</a> resource to <a href="https://istio.io/docs/concepts/security/#authentication-architecturen"target="_blank">configure JWT policies</a> for your services.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/jwt.png"><img class="img" src="/images/jwt.png"
         alt="jwt"/></a></p>
-<p>By default, we can reach the frontend service through a <code>curl</code> request to the Istio IngressGateway's public IP:</p>
-<pre><code>$ curl ${INGRESS_IP}
+<p>By default, we can reach the frontend service through a <code>curl</code> request to the Istio IngressGateway&rsquo;s public IP:</p>
+<pre tabindex="0"><code>$ curl ${INGRESS_IP}
 
 Hello World! /
-</code></pre><p>Now, let's require a JWT for all requests to the <code>frontend</code> service.
-To do this, we'll need two Istio resources. The first is the <code>RequestAuthentication</code> policy that validates incoming tokens:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>security.istio.io/v1beta1<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>RequestAuthentication<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w"> </span>name<span class="p">:</span><span class="w"> </span>frontend<span class="w">
-</span><span class="w"> </span>namespace<span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>selector<span class="p">:</span><span class="w">
-</span><span class="w">    </span>matchLabels<span class="p">:</span><span class="w">
-</span><span class="w">      </span>app<span class="p">:</span><span class="w"> </span>frontend<span class="w">
-</span><span class="w">  </span>jwtRules<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>issuer<span class="p">:</span><span class="w"> </span><span class="s2">&#34;testing@secure.istio.io&#34;</span><span class="w">
-</span><span class="w">    </span>jwksUri<span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://raw.githubusercontent.com/istio/istio/release-1.5/security/tools/jwt/samples/jwks.json&#34;</span><span class="w">
-</span></code></pre></div><p>The second resource is an <code>AuthorizationPolicy</code>, which ensures that all requests have a JWT - and rejects requests that do not, returning a <code>403</code> error.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>security.istio.io/v1beta1<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>AuthorizationPolicy<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>require-jwt<span class="w">
-</span><span class="w">  </span>namespace<span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>selector<span class="p">:</span><span class="w">
-</span><span class="w">    </span>matchLabels<span class="p">:</span><span class="w">
-</span><span class="w">      </span>app<span class="p">:</span><span class="w"> </span>frontend<span class="w">
-</span><span class="w">  </span>action<span class="p">:</span><span class="w"> </span>ALLOW<span class="w">
-</span><span class="w">  </span>rules<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>from<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>source<span class="p">:</span><span class="w">
-</span><span class="w">       </span>requestPrincipals<span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;testing@secure.istio.io/testing@secure.istio.io&#34;</span><span class="p">]</span><span class="w">
-</span></code></pre></div><p>Once we apply these resources, we can curl the Istio ingress gateway without a JWT, and see that the <code>AuthorizationPolicy</code> is rejecting our request because we did not supply a token:</p>
-<pre><code>$ curl ${INGRESS_IP}
+</code></pre><p>Now, let&rsquo;s require a JWT for all requests to the <code>frontend</code> service.
+To do this, we&rsquo;ll need two Istio resources. The first is the <code>RequestAuthentication</code> policy that validates incoming tokens:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">security.istio.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">RequestAuthentication</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">frontend</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">frontend</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">jwtRules</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">issuer</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;testing@secure.istio.io&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">jwksUri</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://raw.githubusercontent.com/istio/istio/release-1.5/security/tools/jwt/samples/jwks.json&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>The second resource is an <code>AuthorizationPolicy</code>, which ensures that all requests have a JWT - and rejects requests that do not, returning a <code>403</code> error.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">security.istio.io/v1beta1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">AuthorizationPolicy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">require-jwt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">frontend</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">ALLOW</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">from</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">source</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="nt">requestPrincipals</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;testing@secure.istio.io/testing@secure.istio.io&#34;</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div><p>Once we apply these resources, we can curl the Istio ingress gateway without a JWT, and see that the <code>AuthorizationPolicy</code> is rejecting our request because we did not supply a token:</p>
+<pre tabindex="0"><code>$ curl ${INGRESS_IP}
 
 RBAC: access denied
 </code></pre><p>Then, we can curl again, this time with an invalid JWT. We receive an authentication error:</p>
-<pre><code>$ curl --header &quot;Authorization: Bearer ${INVALID_JWT}&quot; ${INGRESS_IP}
+<pre tabindex="0"><code>$ curl --header &#34;Authorization: Bearer ${INVALID_JWT}&#34; ${INGRESS_IP}
 
 Jwt issuer is not configured
 </code></pre><p>Finally, if we curl with a valid JWT, we can successfully reach the frontend via the IngressGateway:</p>
-<pre><code>$ curl --header &quot;Authorization: Bearer ${VALID_JWT}&quot; ${INGRESS_IP}
+<pre tabindex="0"><code>$ curl --header &#34;Authorization: Bearer ${VALID_JWT}&#34; ${INGRESS_IP}
 
 Hello World! /
 </code></pre><p>To learn more and try interactive examples, see the <a href="https://istio.io/docs/tasks/security/authorization/authz-jwt/"target="_blank">Istio docs</a> and the <a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/master/security-intro"target="_blank">istio-samples repo</a>.</p>
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>

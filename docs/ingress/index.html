@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Ingress&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -15,58 +17,46 @@
 <p>A <a href="https://istio.io/docs/reference/config/networking/v1alpha3/gateway/"target="_blank">Gateway</a> is a standalone set of Envoy proxies that load-balance inbound traffic. Istio deploys a default <code>IngressGateway</code> with a public IP address, which you can configure to expose applications inside your service mesh to the Internet.</p>
 <p>Istio Gateways have two key advantages over traditional Kubernetes Ingress. Because a Gateway is another Envoy proxy, you can use Istio to configure Gateway traffic in the same way you would configure east-west traffic between services (traffic splitting, redirects, retry logic).</p>
 <p>Gateways also forward metrics (request rate, error rate) just like <a href="https://istio.io/docs/concepts/what-is-istio/#envoy"target="_blank">sidecar</a> proxies, allowing you to view Ingress traffic in <a href="https://istio.io/docs/tasks/telemetry/kiali/#generating-a-service-graph"target="_blank">a service graph</a>, and set fine-grained <a href="https://landing.google.com/sre/sre-book/chapters/service-level-objectives/"target="_blank">SLOs</a> on frontend services directly serving clients.</p>
-<p>Let's see Gateways in action.</p>
+<p>Let&rsquo;s see Gateways in action.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/ingress.png"><img class="img" src="/images/ingress.png"
         alt="ingress"/></a></p>
 <p>Here, the <code>hello</code> application runs in a container, inside a Pod. The Pod has an injected Istio sidecar proxy container. A Kubernetes Service called <code>hello</code> fronts this Pod. We want to direct inbound traffic from <code>hello.com</code> to the <code>hello</code> Service.</p>
 <p>First we need a <code>Gateway</code> resource, which opens port <code>80</code> in the default Istio <code>IngressGateway</code>, for all hosts resolving from the <code>hello.com</code> domain.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Gateway<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>hello-gateway<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>selector<span class="p">:</span><span class="w">
-</span><span class="w">    </span>istio<span class="p">:</span><span class="w"> </span>ingressgateway<span class="w"> </span><span class="c"># use the default IngressGateway</span><span class="w">
-</span><span class="w">  </span>servers<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>port<span class="p">:</span><span class="w">
-</span><span class="w">      </span>number<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span><span class="w">      </span>name<span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">      </span>protocol<span class="p">:</span><span class="w"> </span>HTTP<span class="w">
-</span><span class="w">    </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span><span class="s2">&#34;hello.com&#34;</span><span class="w">
-</span></code></pre></div><p>(<strong>Note</strong>: on your own, you'll still have to resolve the DNS for that host to the Istio <code>IngressGateway</code> external IP address.)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">hello-gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio</span><span class="p">:</span><span class="w"> </span><span class="l">ingressgateway</span><span class="w"> </span><span class="c"># use the default IngressGateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">servers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">port</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">HTTP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="s2">&#34;hello.com&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>(<strong>Note</strong>: on your own, you&rsquo;ll still have to resolve the DNS for that host to the Istio <code>IngressGateway</code> external IP address.)</p>
 <p>Second, we need a <a href="https://istio.io/docs/tasks/traffic-management/ingress/ingress-control/"target="_blank"><code>VirtualService</code></a> to direct traffic from the <code>IngressGateway</code> to the <code>hello</code> backend Service, running in the <code>default</code> namespace on port <code>80</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>frontend-ingress<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span><span class="s2">&#34;hello.com&#34;</span><span class="w">
-</span><span class="w">  </span>gateways<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>hello-gateway<span class="w">
-</span><span class="w">  </span>http<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>hello.default.svc.cluster.local<span class="w">
-</span><span class="w">        </span>port<span class="p">:</span><span class="w">
-</span><span class="w">          </span>number<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span></code></pre></div></article>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">frontend-ingress</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;hello.com&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">gateways</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">hello-gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">route</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">hello.default.svc.cluster.local</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span></code></pre></div></article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>

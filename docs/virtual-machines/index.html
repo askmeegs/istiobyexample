@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Virtual Machines&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -11,8 +13,8 @@
     <h1 class="article-title">Virtual Machines</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you're operating lots of containers.</p>
-<p>But what about stateful services, or legacy applications are running in virtual machines? Or what if you're migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let's see how.</p>
+<article class="markdown-body"><p>Running containerized services in Kubernetes can add lots of benefits, including autoscaling, dependency isolation, and resource optimization. Adding Istio to your Kubernetes environment can radically simplify metrics aggregation and policy management, even if you&rsquo;re operating lots of containers.</p>
+<p>But what about stateful services, or legacy applications are running in virtual machines? Or what if you&rsquo;re migrating from VMs to containers? Have no fear: you can integrate virtual machines into your Istio service mesh. Let&rsquo;s see how.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/vm-call-flow.png"><img class="img" src="/images/vm-call-flow.png"
         alt/></a></p>
 <p>In this example, we are running a web application for a local library. This web app has multiple backends, all running in a Kubernetes cluster. One of our Kubernetes workloads, <code>inventory</code>, talks to a PostgreSQL database, and writes a record for each new book added to the library. This database is running in a virtual machine in another cloud region.</p>
@@ -31,39 +33,39 @@
 </li>
 </ol>
 <p>We can now verify that the Kubernetes-based client can successfully write to the database, by viewing the pod logs:</p>
-<pre><code>postgres-library-6bb956f86b-dt94x server ✅ inserted Fun Home
+<pre tabindex="0"><code>postgres-library-6bb956f86b-dt94x server ✅ inserted Fun Home
 postgres-library-6bb956f86b-dt94x server ✅ inserted Infinite Jest
 postgres-library-6bb956f86b-dt94x server ✅ inserted To the Lighthouse
 </code></pre><p>And we can verify that the sidecar proxy running on the VM is intercepting inbound traffic on port <code>5432</code>, by viewing the Envoy access logs on the VM.</p>
-<pre><code>$ tail /var/log/istio/istio.log
+<pre tabindex="0"><code>$ tail /var/log/istio/istio.log
 
-[2019-11-14T19:09:00.174Z] &quot;- - -&quot; 0 - &quot;-&quot; &quot;-&quot; 268 441 194 - &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot;
-&quot;127.0.0.1:5432&quot; inbound|5432|tcp|postgresql-1-vm.default.svc.cluster.local
+[2019-11-14T19:09:00.174Z] &#34;- - -&#34; 0 - &#34;-&#34; &#34;-&#34; 268 441 194 - &#34;-&#34; &#34;-&#34; &#34;-&#34; &#34;-&#34;
+&#34;127.0.0.1:5432&#34; inbound|5432|tcp|postgresql-1-vm.default.svc.cluster.local
 127.0.0.1:54104 10.128.0.14:5432 10.24.2.23:40190
 outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -
 </code></pre><p>We can also see TCP metrics flowing in the Kiali service graph:</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/vm-kiali.png"><img class="img" src="/images/vm-kiali.png"
         alt/></a></p>
 <p>From here, we can use any Istio traffic or security policies to our multi-environment service mesh. For instance, we can encrypt all traffic between the cluster and the VM, by adding a mesh-wide mutual TLS policy:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span><span class="s2">&#34;MeshPolicy&#34;</span><span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>peers<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>mtls<span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w"></span>---<span class="w">
-</span><span class="w"></span>apiVersion<span class="p">:</span><span class="w"> </span><span class="s2">&#34;networking.istio.io/v1alpha3&#34;</span><span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span><span class="s2">&#34;DestinationRule&#34;</span><span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
-</span><span class="w">  </span>namespace<span class="p">:</span><span class="w"> </span><span class="s2">&#34;istio-system&#34;</span><span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>host<span class="p">:</span><span class="w"> </span><span class="s2">&#34;*.local&#34;</span><span class="w">
-</span><span class="w">  </span>trafficPolicy<span class="p">:</span><span class="w">
-</span><span class="w">    </span>tls<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>ISTIO_MUTUAL<span class="w">
-</span></code></pre></div><p>To learn more:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;authentication.istio.io/v1alpha1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;MeshPolicy&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">peers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">mtls</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;networking.istio.io/v1alpha3&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;DestinationRule&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;default&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;istio-system&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;*.local&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">trafficPolicy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">tls</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">ISTIO_MUTUAL</span><span class="w">
+</span></span></span></code></pre></div><p>To learn more:</p>
 <ul>
 <li><a href="https://github.com/askmeegs/postgres-library"target="_blank">Run this example in your environment</a></li>
 <li><a href="https://github.com/GoogleCloudPlatform/istio-samples/tree/master/mesh-expansion-gce"target="_blank">Try another example</a></li>
@@ -72,19 +74,7 @@ outbound_.5432_._.postgresql-1-vm.default.svc.cluster.local -
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Multiple Traffic Rules&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Multiple Traffic Rules&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -11,87 +13,75 @@
     <h1 class="article-title">Multiple Traffic Rules</h1>
 </section>
 <div class="flex-body">
-<article class="markdown-body"><p>Istio supports lots of <a href="https://istio.io/docs/concepts/traffic-management/"target="_blank">traffic management</a> use cases, from <a href="https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRewrite"target="_blank">redirects</a> and <a href="https://istio.io/docs/tasks/traffic-management/traffic-shifting/"target="_blank">traffic splitting</a> to <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank">mirroring</a> and <a href="https://istio.io/docs/concepts/traffic-management/#retries"target="_blank">retry logic</a>. If you've created an Istio <a href="https://istio.io/docs/reference/config/networking/virtual-service/"target="_blank">VirtualService</a> to define one of these policies for a service, it's easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.</p>
-<p>Let's say that we're on the <strong>frontend</strong> engineering team for a newspaper's website. The user-facing frontend service relies on a backend called <strong>articles</strong>, which serves article content and metadata as JSON. But the articles team is refactoring the service in a new language, and they're frequently rolling out new changes. This has resulted in unexpected errors in the frontend, which relied on the behavior of the legacy articles service. To complicate things, the newspaper's blog, previously served by a separate <strong>blog</strong> service, was just incorporated into the articles service. Now, all blog posts are articles, served with the <code>/beta/blog</code> path.</p>
-<p>In order to lock in the behavior of articles on behalf of the frontend, we'll create an Istio traffic policy for articles. The frontend's traffic requirements for articles include: returning a <code>no-cache</code> header for any <code>/breaking-news</code> article, rewriting <code>/blog</code> to <code>/beta/blog</code>, and enforcing a 2-second timeout on every request.</p>
+<article class="markdown-body"><p>Istio supports lots of <a href="https://istio.io/docs/concepts/traffic-management/"target="_blank">traffic management</a> use cases, from <a href="https://istio.io/docs/reference/config/networking/virtual-service/#HTTPRewrite"target="_blank">redirects</a> and <a href="https://istio.io/docs/tasks/traffic-management/traffic-shifting/"target="_blank">traffic splitting</a> to <a href="https://istio.io/docs/tasks/traffic-management/mirroring/"target="_blank">mirroring</a> and <a href="https://istio.io/docs/concepts/traffic-management/#retries"target="_blank">retry logic</a>. If you&rsquo;ve created an Istio <a href="https://istio.io/docs/reference/config/networking/virtual-service/"target="_blank">VirtualService</a> to define one of these policies for a service, it&rsquo;s easy to add more traffic management rules to the same resource. This example demonstrates how to apply multiple traffic rules to one Kubernetes-based service.</p>
+<p>Let&rsquo;s say that we&rsquo;re on the <strong>frontend</strong> engineering team for a newspaper&rsquo;s website. The user-facing frontend service relies on a backend called <strong>articles</strong>, which serves article content and metadata as JSON. But the articles team is refactoring the service in a new language, and they&rsquo;re frequently rolling out new changes. This has resulted in unexpected errors in the frontend, which relied on the behavior of the legacy articles service. To complicate things, the newspaper&rsquo;s blog, previously served by a separate <strong>blog</strong> service, was just incorporated into the articles service. Now, all blog posts are articles, served with the <code>/beta/blog</code> path.</p>
+<p>In order to lock in the behavior of articles on behalf of the frontend, we&rsquo;ll create an Istio traffic policy for articles. The frontend&rsquo;s traffic requirements for articles include: returning a <code>no-cache</code> header for any <code>/breaking-news</code> article, rewriting <code>/blog</code> to <code>/beta/blog</code>, and enforcing a 2-second timeout on every request.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-functionality.png"><img class="img" src="/images/multiple-functionality.png"
         alt/></a></p>
-<p>To get this aggregate functionality, we'll create one VirtualService for articles, with three <code>http</code> rules: <a href="/response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
+<p>To get this aggregate functionality, we&rsquo;ll create one VirtualService for articles, with three <code>http</code> rules: <a href="/response-headers">header modification</a> for <code>/breaking-news</code>, URL rewrite for <code>/blog</code>, and a default fallthrough to the articles service. All three rules have a 2-second timeout.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-vs.png"><img class="img" src="/images/multiple-vs.png"
         alt/></a></p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>articles-vs<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>articles<span class="w">
-</span><span class="w">  </span>http<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>match<span class="p">:</span><span class="w"> </span><span class="c"># RULE 1 - BREAKING NEWS</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>uri<span class="p">:</span><span class="w">
-</span><span class="w">        </span>prefix<span class="p">:</span><span class="w"> </span><span class="s2">&#34;/article/breaking-news&#34;</span><span class="w">
-</span><span class="w">    </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>articles<span class="w">
-</span><span class="w">      </span>headers<span class="p">:</span><span class="w">
-</span><span class="w">        </span>response<span class="p">:</span><span class="w">
-</span><span class="w">          </span>add<span class="p">:</span><span class="w">
-</span><span class="w">            </span>no-cache<span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
-</span><span class="w">      </span>timeout<span class="p">:</span><span class="w"> </span>2s<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>match<span class="p">:</span><span class="w"> </span><span class="c"># RULE 2 - BLOG URI REWRITE</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>uri<span class="p">:</span><span class="w">
-</span><span class="w">        </span>prefix<span class="p">:</span><span class="w"> </span>/blog<span class="w">
-</span><span class="w">    </span>rewrite<span class="p">:</span><span class="w">
-</span><span class="w">      </span>uri<span class="p">:</span><span class="w"> </span>/beta/blog<span class="w">
-</span><span class="w">    </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>articles<span class="w">
-</span><span class="w">      </span>timeout<span class="p">:</span><span class="w"> </span>2s<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w"> </span><span class="c"># RULE 3 / DEFAULT - TIMEOUT</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>articles<span class="w">
-</span><span class="w">    </span>timeout<span class="p">:</span><span class="w"> </span>2s<span class="w">
-</span><span class="w">    </span>weight<span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
-</span></code></pre></div><p>After applying this VirtualService to the cluster, we can exec into the frontend pod and access the articles service, to verify that the rules are taking effect. For instance, if we request a <code>/breaking-news</code> article, we'll see the <code>no-cache:true</code> header added to the response:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl -v http://articles:80/article/breaking-news/2020/astrophysics-discovery
-
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; date: Wed, <span class="m">15</span> Jan <span class="m">2020</span> 22:10:52 GMT
-...
-&lt; no-cache: <span class="nb">true</span>
-</code></pre></div><p>If we request a path starting with <code>/blog</code>, that gets rewritten to <code>/beta/blog</code>, and articles knows to serve the <code>/beta/blog</code> path:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl http://articles:80/blog/2020/new-engineering-blog
-
-<span class="o">{</span><span class="s2">&#34;id&#34;</span>:91385,<span class="s2">&#34;title&#34;</span>:<span class="s2">&#34;Welcome to the new News Blog!&#34;</span> ...
-</code></pre></div><p>And finally, if we write in a 10-second sleep into the article service's application code, we can see our 2-second timeout in action:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ curl  http://articles:80/
-
-upstream request timeout
-</code></pre></div><p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-fault.png"><img class="img" src="/images/multiple-fault.png"
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">articles-vs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">articles</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="c"># RULE 1 - BREAKING NEWS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uri</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/article/breaking-news&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">articles</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">headers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">response</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">add</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">no-cache</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l">2s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">match</span><span class="p">:</span><span class="w"> </span><span class="c"># RULE 2 - BLOG URI REWRITE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uri</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l">/blog</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">rewrite</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l">/beta/blog</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">articles</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l">2s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">route</span><span class="p">:</span><span class="w"> </span><span class="c"># RULE 3 / DEFAULT - TIMEOUT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">articles</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l">2s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="w">
+</span></span></span></code></pre></div><p>After applying this VirtualService to the cluster, we can exec into the frontend pod and access the articles service, to verify that the rules are taking effect. For instance, if we request a <code>/breaking-news</code> article, we&rsquo;ll see the <code>no-cache:true</code> header added to the response:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ curl -v http://articles:80/article/breaking-news/2020/astrophysics-discovery
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">200</span> OK
+</span></span><span class="line"><span class="cl">&lt; date: Wed, <span class="m">15</span> Jan <span class="m">2020</span> 22:10:52 GMT
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">&lt; no-cache: <span class="nb">true</span>
+</span></span></code></pre></div><p>If we request a path starting with <code>/blog</code>, that gets rewritten to <code>/beta/blog</code>, and articles knows to serve the <code>/beta/blog</code> path:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ curl http://articles:80/blog/2020/new-engineering-blog
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{</span><span class="s2">&#34;id&#34;</span>:91385,<span class="s2">&#34;title&#34;</span>:<span class="s2">&#34;Welcome to the new News Blog!&#34;</span> ...
+</span></span></code></pre></div><p>And finally, if we write in a 10-second sleep into the article service&rsquo;s application code, we can see our 2-second timeout in action:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ curl  http://articles:80/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">upstream request timeout
+</span></span></code></pre></div><p><a target="_blank" rel="noopener noreferrer" href="/images/multiple-fault.png"><img class="img" src="/images/multiple-fault.png"
         alt/></a></p>
 <p><strong>Note</strong>: When you add multiple rules to one VirtualService, <a href="https://istio.io/docs/concepts/traffic-management/#routing-rule-precedence"target="_blank">the rules are evaluated <strong>in order</strong></a>, from top to bottom. So if we add a <a href="https://istio.io/docs/tasks/traffic-management/fault-injection/#injecting-an-http-abort-fault"target="_blank">fault injection</a> rule to the articles VirtualService to return HTTP status code <code>404: Not Found</code> on all requests, that rule will override the other three, taking down the entire articles service:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -v http://articles:80
-...
-* Connected to articles <span class="o">(</span>10.0.21.31<span class="o">)</span> port <span class="m">80</span>
-
-&lt; HTTP/1.1 <span class="m">404</span> Not Found
-</code></pre></div><p>Because of this rule precedence for VirtualServices, it's important to validate and test complex Istio traffic policies. It's also a good idea to add a &ldquo;fallthrough&rdquo; or default rule, as we did above, to ensure that all requests for a specific host get routed.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -v http://articles:80
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">* Connected to articles <span class="o">(</span>10.0.21.31<span class="o">)</span> port <span class="m">80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt; HTTP/1.1 <span class="m">404</span> Not Found
+</span></span></code></pre></div><p>Because of this rule precedence for VirtualServices, it&rsquo;s important to validate and test complex Istio traffic policies. It&rsquo;s also a good idea to add a &ldquo;fallthrough&rdquo; or default rule, as we did above, to ensure that all requests for a specific host get routed.</p>
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>

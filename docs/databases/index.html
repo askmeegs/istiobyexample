@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.0" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
+<html>
+<head><meta charset="utf-8"><meta name="generator" content="Hugo 0.102.3" /><link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light only"><title>Database Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.5b1354256619a0627d4615002413039a7ac100c07d758b39ba5801b2c8ee1a26ce30da633f02c8de2ee256e8cc539473.css" integrity="sha384-WxNUJWYZoGJ9RhUAJBMDmnrBAMB9dYs5ulgBssjuGibOMNpjPwLI3i7iVujMU5Rz"><body>
+<meta name="supported-color-schemes" content="light only"><title>Database Traffic&nbsp;&ndash;&nbsp;Istio By Example</title><link rel="stylesheet" href="/css/core.min.fd4b59419f27d40d470c3b962575cb298e3e4205058dce4c27b62b09f2fae768274c3a927d8158b90ab3b6b9b2a4f9eb.css" integrity="sha384-/UtZQZ8n1A1HDDuWJXXLKY4&#43;QgUFjc5MJ7YrCfL652gnTDqSfYFYuQqztrmypPnr"></head>
+<body>
     <div class="base-body max-width"><section id="header" class="header max-body-width">
     <p><a class="home" href="/"><img class="site-logo" src="/images/istio-logo.png" alt />
             <span class="site-name">Istio By Example</span></a></p>
@@ -12,69 +14,57 @@
 </section>
 <div class="flex-body">
 <article class="markdown-body"><p>Applications often span multiple environments, and databases are a great example. You might choose to run your database <a href="https://cloud.google.com/blog/products/databases/to-run-or-not-to-run-a-database-on-kubernetes-what-to-consider"target="_blank">outside of Kubernetes</a> for legacy or storage reasons, or you might use a managed database service.</p>
-<p>But fear not! You can still add external databases to your Istio service mesh. Let's see how.</p>
+<p>But fear not! You can still add external databases to your Istio service mesh. Let&rsquo;s see how.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/databases-diagram.png"><img class="img" src="/images/databases-diagram.png"
         alt="diagram"/></a></p>
 <p>Here, we have a <code>plants</code> service running inside a Kubernetes cluster, with Istio enabled. <code>plants</code> writes inventory to a <a href="https://firebase.google.com/docs/firestore"target="_blank">Firestore</a> NoSQL database running in Google Cloud, using the Golang client library for Firestore. Its logs look like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">writing a new plant to Firestore...
-✅success
-</code></pre></div><p>Let's say we want to monitor outgoing traffic to Firestore. To do this, we'll add an Istio <a href="https://istio.io/docs/reference/config/networking/v1alpha3/service-entry/"target="_blank">ServiceEntry</a> corresponding to the hostname of the <a href="https://cloud.google.com/firestore/docs/reference/rpc/"target="_blank">Firestore API</a>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>ServiceEntry<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>firestore<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span><span class="s2">&#34;firestore.googleapis.com&#34;</span><span class="w">
-</span><span class="w">  </span>ports<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">    </span>number<span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
-</span><span class="w">    </span>protocol<span class="p">:</span><span class="w"> </span>HTTPS<span class="w">
-</span><span class="w">  </span>location<span class="p">:</span><span class="w"> </span>MESH_EXTERNAL<span class="w">
-</span><span class="w">  </span>resolution<span class="p">:</span><span class="w"> </span>DNS<span class="w">
-</span></code></pre></div><p>From here, we can see Firestore appear in Istio's <a href="https://istio.io/docs/tasks/telemetry/kiali/"target="_blank">service graph</a>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">writing a new plant to Firestore...
+</span></span><span class="line"><span class="cl">✅success
+</span></span></code></pre></div><p>Let&rsquo;s say we want to monitor outgoing traffic to Firestore. To do this, we&rsquo;ll add an Istio <a href="https://istio.io/docs/reference/config/networking/v1alpha3/service-entry/"target="_blank">ServiceEntry</a> corresponding to the hostname of the <a href="https://cloud.google.com/firestore/docs/reference/rpc/"target="_blank">Firestore API</a>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ServiceEntry</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">firestore</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;firestore.googleapis.com&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">HTTPS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l">MESH_EXTERNAL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l">DNS</span><span class="w">
+</span></span></span></code></pre></div><p>From here, we can see Firestore appear in Istio&rsquo;s <a href="https://istio.io/docs/tasks/telemetry/kiali/"target="_blank">service graph</a>.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/databases-kiali-no-vs.png"><img class="img" src="/images/databases-kiali-no-vs.png"
         alt="kiali"/></a></p>
 <p>Note that the traffic appears as TCP because the sidecar proxy for <code>plants</code> is receiving the firestore TLS traffic <a href="https://github.com/istio/istio/issues/14933"target="_blank">as plain TCP</a>. The edge of the graph denote the number of request throughput to Firestore, in bits per second.</p>
-<p>Now let's say we want to test <code>plants</code>'s behavior when it cannot connect to the database. We can do this with Istio, without changing any application code.</p>
+<p>Now let&rsquo;s say we want to test <code>plants</code>&rsquo;s behavior when it cannot connect to the database. We can do this with Istio, without changing any application code.</p>
 <p>While Istio currently does not support TCP fault injection, what we can do is create a <a href="https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#TCPRoute"target="_blank">TCP traffic rule</a> to send firestore API traffic to another &ldquo;black hole&rdquo; service, effectively breaking the client connection to Firestore.</p>
 <p>To do this, we can deploy a small <code>echo</code> service inside the cluster, and forward all <code>firestore</code> traffic to the <code>echo</code> service instead:</p>
-<div class="highlight"><pre class="chroma"><code class="language-YAML" data-lang="YAML">apiVersion<span class="p">:</span><span class="w"> </span>networking.istio.io/v1alpha3<span class="w">
-</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>VirtualService<span class="w">
-</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
-</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>fs<span class="w">
-</span><span class="w"></span>spec<span class="p">:</span><span class="w">
-</span><span class="w">  </span>hosts<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>firestore.googleapis.com<span class="w">
-</span><span class="w">  </span>tcp<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>route<span class="p">:</span><span class="w">
-</span><span class="w">    </span>-<span class="w"> </span>destination<span class="p">:</span><span class="w">
-</span><span class="w">        </span>host<span class="p">:</span><span class="w"> </span>echo<span class="w">
-</span><span class="w">        </span>port<span class="p">:</span><span class="w">
-</span><span class="w">          </span>number<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span></code></pre></div><p>When we apply this Istio VirtualService to the cluster, the <code>plants</code> logs report errors:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">writing a new plant to Firestore...
-🚫 Failed adding plant: rpc error: <span class="nv">code</span> <span class="o">=</span> Unavailable <span class="nv">desc</span> <span class="o">=</span> all SubConns are in TransientFailure
-</code></pre></div><p>And in the service graph, we can see that the <code>firestore</code> node has a purple <code>VirtualService</code> icon, meaning we've applied an Istio traffic rule against that service. Eventually, throughput to firestore will appear as <code>0</code> over the last minute, since we've redirected all outgoing connections to the database.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-YAML" data-lang="YAML"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">fs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">firestore.googleapis.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">tcp</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">route</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">echo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span></code></pre></div><p>When we apply this Istio VirtualService to the cluster, the <code>plants</code> logs report errors:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">writing a new plant to Firestore...
+</span></span><span class="line"><span class="cl">🚫 Failed adding plant: rpc error: <span class="nv">code</span> <span class="o">=</span> Unavailable <span class="nv">desc</span> <span class="o">=</span> all SubConns are in TransientFailure
+</span></span></code></pre></div><p>And in the service graph, we can see that the <code>firestore</code> node has a purple <code>VirtualService</code> icon, meaning we&rsquo;ve applied an Istio traffic rule against that service. Eventually, throughput to firestore will appear as <code>0</code> over the last minute, since we&rsquo;ve redirected all outgoing connections to the database.</p>
 <p><a target="_blank" rel="noopener noreferrer" href="/images/databases-kiali.png"><img class="img" src="/images/databases-kiali.png"
         alt="kiali"/></a></p>
 <p>Note that you can also use Istio to manage traffic for databases <em>inside</em> the cluster, including Redis, SQL, and <a href="https://istio.io/blog/2018/egress-mongo/"target="_blank">MongoDB</a>. See the Istio docs to learn more.</p>
 </article>
 </div><section id="footer" class="footer">
     <p>Made with ❤️ by <a href="https://twitter.com/askmeegs">Megan O'Keefe</a> | <a href="https://github.com/askmeegs/istiobyexample">Source</a> | <a href="https://github.com/cntrump/hugo-notepadium">Theme</a></p>
-</section>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-41949399-6', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-</div>
+</section></div>
     </div>
 </body>
-
 </html>
