@@ -10,7 +10,9 @@ hasCJKLanguage = false
 
 enableRobotsTXT = false
 
-googleAnalytics = "UA-41949399-6"
+# Google Analytics 4
+# https://gist.github.com/zjeaton/42246742cdaf2fb46400d04c2eba9a8a 
+googleAnalyticsID = "G-5D1R5MS6PV"
 
 [markup.highlight]
 codeFences = true
