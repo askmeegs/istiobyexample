@@ -10,9 +10,6 @@ hasCJKLanguage = false
 
 enableRobotsTXT = false
 
-# Google Analytics 4
-# https://gist.github.com/zjeaton/42246742cdaf2fb46400d04c2eba9a8a 
-googleAnalyticsID = "G-5D1R5MS6PV"
 
 [markup.highlight]
 codeFences = true
@@ -25,6 +22,8 @@ unsafe = true  # enable raw HTML in Markdown
 logo = "/images/istio-logo.png"  # if you have a logo png
 slogan = ""
 license = ""  # CC License
+GoogleAnalyticsID = "G-5D1R5MS6PV"
+
 
 [params.syntax]
 use = "chroma"  # builtin: "prismjs", "hljs". "none" means Chroma

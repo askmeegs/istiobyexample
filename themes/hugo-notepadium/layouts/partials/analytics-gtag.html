@@ -2,11 +2,11 @@
 <!-- source:
 https://gist.github.com/zjeaton/42246742cdaf2fb46400d04c2eba9a8a
 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.GoogleAnalyticsID }}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{- .Site.Params.GoogleAnalyticsID -}}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '{{ .Site.Params.GoogleAnalyticsID }}');
+  gtag('config', '{{- .Site.Params.GoogleAnalyticsID -}}');
 </script>

@@ -1,4 +1,7 @@
 <meta charset="utf-8">
+{{- partial "analytics-gtag.html" . -}}
+
+
 {{- hugo.Generator -}}
 <link href="https://fonts.googleapis.com/css?family=Chivo|Fira+Code|Noto+Sans&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="/images/spider-web.png">
@@ -20,7 +23,3 @@
 {{- block "title" . -}}{{- end -}}
 
 {{- partial "style.html" . -}}
-
-{{ if .Site.Params.GoogleAnalyticsID }}
-{{ partial "analytics-gtag.html" . }}
-{{ end }}
